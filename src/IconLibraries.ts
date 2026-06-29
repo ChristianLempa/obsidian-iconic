@@ -1,9 +1,10 @@
 /**
- * Additional icon libraries for the customized Iconic fork.
+ * Support for external icon libraries.
  * 
- * IMPORTANT: All SVGs here MUST be monochrome (no brand colors).
- * They use fill="currentColor" so Obsidian's color picker and
- * the plugin's theming can properly tint them.
+ * - simple-icons: Used directly via the official 'simple-icons' package (no hand-crafted SVGs).
+ * - devicons & selfh.st: Curated selection of popular icons sourced from their respective projects.
+ * 
+ * All icons are monochrome (currentColor) so they work with Obsidian's color system.
  * 
  * IDs use prefixes:
  *  - devicon-*
@@ -12,6 +13,7 @@
  */
 
 import { addIcon } from 'obsidian';
+import * as simpleIcons from 'simple-icons/icons';
 
 export interface IconDefinition {
 	id: string;
@@ -125,24 +127,30 @@ export const SELFHOST_ICONS: IconDefinition[] = [
 ];
 
 /**
- * Simple Icons - these are already designed as monochrome.
+ * Simple Icons support using the official simple-icons library.
+ * This way we use the existing library instead of manually creating SVGs.
  */
-export const SIMPLE_ICONS: IconDefinition[] = [
-	// Brands & Productivity
-	{ id: 'github', name: 'GitHub', library: 'simple', svg: '<svg role="img" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path fill="currentColor" d="M12 .297c-6.63 0-12 5.373-12 12 0 5.303 3.438 9.8 8.205 11.385.6.113.82-.258.82-.577 0-.285-.01-1.04-.015-2.04-3.338.724-4.042-1.61-4.042-1.61C4.422 18.07 3.633 17.7 3.633 17.7c-1.087-.744.084-.729.084-.729 1.205.084 1.838 1.236 1.838 1.236 1.07 1.835 2.809 1.305 3.495.998.108-.776.417-1.305.76-1.605-2.665-.3-5.466-1.332-5.466-5.93 0-1.31.465-2.38 1.235-3.22-.135-.303-.54-1.523.105-3.176 0 0 1.005-.322 3.3 1.23.96-.267 1.98-.399 3-.405 1.02.006 2.04.138 3 .405 2.28-1.552 3.285-1.23 3.285-1.23.645 1.653.24 2.873.12 3.176.765.84 1.23 1.91 1.23 3.22 0 4.61-2.805 5.625-5.475 5.92.42.36.81 1.096.81 2.22 0 1.606-.015 2.896-.015 3.286 0 .315.21.69.825.57C20.565 22.092 24 17.592 24 12.297c0-6.627-5.373-12-12-12"/></svg>' },
-	{ id: 'gitlab', name: 'GitLab', library: 'simple', svg: '<svg role="img" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path fill="currentColor" d="m23.6004 9.5927-.0337-.0862L20.3.9814a.851.851 0 0 0-.3362-.405.8748.8748 0 0 0-.9997.0539.8748.8748 0 0 0-.29.4399l-2.2055 6.748H7.5375l-2.2057-6.748a.8573.8573 0 0 0-.29-.4412.8748.8748 0 0 0-.9997-.0537.8585.8585 0 0 0-.3362.4049L.4332 9.5015l-.0325.0862a6.0657 6.0657 0 0 0 2.0119 7.0105l.0113.0087.03.0213 4.976 3.7264 2.462 1.8633 1.4995 1.1321a1.0085 1.0085 0 0 0 1.2197 0l1.4995-1.1321 2.4619-1.8633 5.006-3.7489.0125-.01a6.0682 6.0682 0 0 0 2.0094-7.003z"/></svg>' },
-	{ id: 'atlassian', name: 'Atlassian', library: 'simple', svg: '<svg role="img" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path fill="currentColor" d="M7.12 11.084a.683.683 0 00-1.16.126L.075 22.974a.703.703 0 00.63 1.018h8.19a.678.678 0 00.63-.39c1.767-3.65.696-9.203-2.406-12.52zM11.434.386a15.515 15.515 0 00-.906 15.317l3.95 7.9a.703.703 0 00.628.388h8.19a.703.703 0 00.63-1.017L12.63.38a.664.664 0 00-1.196.006z"/></svg>' },
-	{ id: 'confluence', name: 'Confluence', library: 'simple', svg: '<svg role="img" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path fill="currentColor" d="M.87 18.257c-.248.382-.53.875-.763 1.245a.764.764 0 0 0 .255 1.04l4.965 3.054a.764.764 0 0 0 1.058-.26c.199-.332.454-.763.733-1.221 1.967-3.247 3.945-2.853 7.508-1.146l4.957 2.337a.764.764 0 0 0 1.028-.382l2.364-5.346a.764.764 0 0 0-.382-1 599.851 599.851 0 0 1-4.965-2.361C10.911 10.97 5.224 11.185.87 18.257zM23.131 5.743c.249-.405.531-.875.764-1.25a.764.764 0 0 0-.256-1.034L18.675.404a.764.764 0 0 0-1.058.26c-.195.335-.451.763-.734 1.225-1.966 3.246-3.945 2.85-7.508 1.146L4.437.694a.764.764 0 0 0-1.027.382L1.046 6.422a.764.764 0 0 0 .382 1c1.039.49 3.105 1.467 4.965 2.361 6.698 3.246 12.392 3.029 16.738-4.04z"/></svg>' },
-	{ id: 'jira', name: 'Jira', library: 'simple', svg: '<svg role="img" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path fill="currentColor" d="M11.571 11.513H0a5.218 5.218 0 0 0 5.232 5.215h2.13v2.057A5.215 5.215 0 0 0 12.575 24V12.518a1.005 1.005 0 0 0-1.005-1.005zm5.723-5.756H5.723A5.218 5.218 0 0 0 .491 10.97h10.57a1.004 1.004 0 0 0 1.005-1.005V5.757zM23.132 8.9h-5.723a5.218 5.218 0 0 0 5.232-5.215h-10.57a1.004 1.004 0 0 0-1.004 1.005v5.208a1.004 1.004 0 0 0 1.004 1.005h10.57z"/></svg>' },
-	{ id: 'buffer', name: 'Buffer', library: 'simple', svg: '<svg role="img" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path fill="currentColor" d="M1.371 5.476L11.943 0l10.686 5.476-10.686 5.495zm3.36 4.81l7.212 3.547 7.288-3.547 3.398 1.655-10.686 5.202L1.371 11.94zm0 6.171l7.212 3.911 7.288-3.91 3.398 1.815L11.943 24 1.371 18.273z"/></svg>' },
-	{ id: 'slack', name: 'Slack', library: 'simple', svg: '<svg role="img" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path fill="currentColor" d="M5.042 15.165a2.528 2.528 0 0 1-2.52 2.523A2.528 2.528 0 0 1 0 15.165a2.527 2.527 0 0 1 2.522-2.52h2.52v2.52zM6.313 15.165a2.527 2.527 0 0 1 2.521-2.52 2.527 2.527 0 0 1 2.521 2.52v6.313A2.528 2.528 0 0 1 8.834 24a2.528 2.528 0 0 1-2.521-2.522v-6.313zM8.834 5.042a2.528 2.528 0 0 1-2.521-2.52A2.528 2.528 0 0 1 8.834 0a2.528 2.528 0 0 1 2.521 2.522v2.52H8.834zM15.165 6.313a2.528 2.528 0 0 1 2.523-2.521A2.528 2.528 0 0 1 20.21 6.313a2.528 2.528 0 0 1-2.522 2.521h-2.523V6.313zM17.688 15.165a2.528 2.528 0 0 1 2.523 2.522A2.528 2.528 0 0 1 17.688 20.21a2.528 2.528 0 0 1-2.523-2.523v-2.522h2.523zM15.165 17.688a2.528 2.528 0 0 1-2.52 2.523 2.528 2.528 0 0 1-2.52-2.523V11.37a2.527 2.527 0 0 1 2.52-2.52 2.527 2.527 0 0 1 2.52 2.52v6.318z"/></svg>' },
-	{ id: 'notion', name: 'Notion', library: 'simple', svg: '<svg role="img" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path fill="currentColor" d="M4.459 4.208c.746.606 1.026.56 2.82.518l.013 4.849c0 .98-.377 2.323-1.762 2.323-1.466 0-2.177-1.254-2.177-2.323V4.208zM4.459 19.792c.746.606 1.026.56 2.82.518l.013-4.849c0-.98-.377-2.323-1.762-2.323-1.466 0-2.177 1.254-2.177 2.323v4.331zM9.5 4.208c.746.606 1.026.56 2.82.518l.013 4.849c0 .98-.377 2.323-1.762 2.323-1.466 0-2.177-1.254-2.177-2.323V4.208zM9.5 19.792c.746.606 1.026.56 2.82.518l.013-4.849c0-.98-.377-2.323-1.762-2.323-1.466 0-2.177 1.254-2.177 2.323v4.331zM14.5 4.208c.746.606 1.026.56 2.82.518l.013 4.849c0 .98-.377 2.323-1.762 2.323-1.466 0-2.177-1.254-2.177-2.323V4.208zM14.5 19.792c.746.606 1.026.56 2.82.518l.013-4.849c0-.98-.377-2.323-1.762-2.323-1.466 0-2.177 1.254-2.177 2.323v4.331z"/></svg>' },
-	{ id: 'figma', name: 'Figma', library: 'simple', svg: '<svg role="img" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path fill="currentColor" d="M15.852 8.981h-4.588V0h4.588c2.476 0 4.49 2.014 4.49 4.49s-2.014 4.491-4.49 4.491zM12.735 7.51h3.117c1.242 0 2.25-1.008 2.25-2.25s-1.008-2.25-2.25-2.25h-3.117v4.5zM12.735 0h-3.117c-2.476 0-4.49 2.014-4.49 4.49s2.014 4.49 4.49 4.49h3.117V0zM8.218 8.981H4.63c-2.476 0-4.49 2.014-4.49 4.49s2.014 4.49 4.49 4.49h3.588v-8.98zM4.63 16.96c-1.242 0-2.25-1.008-2.25-2.25s1.008-2.25 2.25-2.25h3.588v4.5H4.63zM15.852 16.96h-3.117c-2.476 0-4.49 2.014-4.49 4.49s2.014 4.49 4.49 4.49h3.117v-8.98z"/></svg>' },
-	{ id: 'linear', name: 'Linear', library: 'simple', svg: '<svg role="img" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path fill="currentColor" d="M2.886 4.18A11.982 11.982 0 0 1 11.99 0C18.624 0 24 5.376 24 12.009c0 3.64-1.62 6.903-4.18 9.105L2.8 7.072A11.97 11.97 0 0 1 2.886 4.18zM19.82 19.82a11.98 11.98 0 0 1-7.83 2.99c-6.634 0-12.01-5.376-12.01-12.01 0-3.64 1.62-6.902 4.18-9.105l17.02 14.042a11.97 11.97 0 0 1-1.36 4.083z"/></svg>' },
-	{ id: 'trello', name: 'Trello', library: 'simple', svg: '<svg role="img" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path fill="currentColor" d="M21.147 0H2.853A2.86 2.86 0 000 2.853v18.294A2.86 2.86 0 002.853 24h18.294A2.86 2.86 0 0024 21.147V2.853A2.86 2.86 0 0021.147 0zM9.735 17.853H4.853V6.147h4.882v11.706zm9.412-4.882h-4.882V6.147h4.882v6.824z"/></svg>' },
-	{ id: 'zoom', name: 'Zoom', library: 'simple', svg: '<svg role="img" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path fill="currentColor" d="M5.033 14.649H.743a.74.74 0 0 1-.686-.458.74.74 0 0 1 .16-.808L3.19 10.41H1.06A1.06 1.06 0 0 1 0 9.3v-3.18A1.06 1.06 0 0 1 1.06 5.06h3.973a1.06 1.06 0 0 1 1.06 1.06v3.18a1.06 1.06 0 0 1-.06.24l2.04 2.04a.74.74 0 0 1 .16.808.74.74 0 0 1-.686.458H5.033zM24 12.12v-1.14a2.22 2.22 0 0 0-2.22-2.22h-3.18a2.22 2.22 0 0 0-2.22 2.22v1.14a2.22 2.22 0 0 0 2.22 2.22h3.18a2.22 2.22 0 0 0 2.22-2.22z"/></svg>' },
-	{ id: 'miro', name: 'Miro', library: 'simple', svg: '<svg role="img" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path fill="currentColor" d="M17.392 0H13.9L17 4.808 10.444 0H6.949l3.102 6.3L3.494 0H0l3.05 8.131L0 24h3.494L10.05 6.985 6.949 2.22h3.495L17 7.02 13.9 0h3.492z"/></svg>' },
+const SIMPLE_ICON_SLUGS = [
+  'github', 'gitlab', 'atlassian', 'confluence', 'jira', 
+  'buffer', 'slack', 'notion', 'figma', 'linear', 
+  'trello', 'zoom', 'miro', 'docker', 'kubernetes'
 ];
+
+export const SIMPLE_ICONS: IconDefinition[] = SIMPLE_ICON_SLUGS
+  .map((slug): IconDefinition | null => {
+    const iconKey = `si${slug.charAt(0).toUpperCase() + slug.slice(1)}`;
+    const icon = (simpleIcons as any)[iconKey];
+    if (!icon) return null;
+
+    return {
+      id: slug,
+      name: icon.title || slug,
+      library: 'simple',
+      svg: `<svg role="img" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path fill="currentColor" d="${icon.path}"/></svg>`
+    };
+  })
+  .filter((i): i is IconDefinition => i !== null);
+
 
 /**
  * Register all additional icons with Obsidian using addIcon().
