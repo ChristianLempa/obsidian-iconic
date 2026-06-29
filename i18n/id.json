@@ -1,0 +1,424 @@
+{
+	"appItems": {
+		"help": "Buka bantuan",
+		"settings": "Buka pengaturan",
+		"pin": "Aktifkan/Matikan sematan",
+		"sidebarLeft": "Buka/Tutup bilah sisi kiri",
+		"sidebarRight": "Buka/Tutup bilah sisi kanan",
+		"minimize": "Minimalkan",
+		"maximize": "Maksimalkan",
+		"unmaximize": "Kecilkan",
+		"close": "Tutup jendela"
+	},
+	"menu": {
+		"changeIcon": "Ubah ikon...",
+		"changeIcons": "Ubah {#} ikon...",
+		"removeIcon": "Hapus ikon",
+		"removeIcons": "Hapus {#} ikon",
+		"resetColor": "Atur ulang warna",
+		"resetColors": "Atur ulang {#} warna",
+		"editRule": "Edit aturan..."
+	},
+	"iconPicker": {
+		"changeIcon": "Ubah ikon",
+		"changeIcons": "Ubah {#} ikon",
+		"changeEmoji": "Ubah emoji",
+		"changeEmojis": "Ubah {#} emoji",
+		"changeMix": "Ubah ikon / emoji",
+		"changeMixes": "Ubah {#} ikon / emoji",
+		"overrulePrefix": "Aturan Anda ",
+		"overruleSuffix": " mengesampingkan ikon ini.",
+		"overrules": "Buku aturan Anda mengesampingkan beberapa ikon ini.",
+		"search": "Search",
+		"searchIcons": "Cari ikon...",
+		"searchEmojis": "Cari emoji...",
+		"searchMix": "Cari ikon / emoji...",
+		"changeColor": "Ganti warna",
+		"resetColor": "Atur ulang warna",
+		"toggleIcons": "Beralih ikon",
+		"toggleEmojis": "Beralih emoji",
+		"icons": "Ikon",
+		"emojis": "Emoji",
+		"mixed": "Campuran",
+		"cancel": "Batal",
+		"save": "Simpan",
+		"colors": {
+			"red": "Merah",
+			"orange": "Oranye",
+			"yellow": "Kuning",
+			"green": "Hijau",
+			"cyan": "Sian",
+			"blue": "Biru",
+			"purple": "Ungu",
+			"pink": "Merah muda",
+			"gray": "Abu-abu"
+		}
+	},
+	"usageChecker": {
+		"unusedIcons": "Ikon yang tidak digunakan",
+		"noUnusedIconsFound": "Tidak ditemukan ikon yang tidak digunakan."
+	},
+	"categories": {
+		"item": "Item",
+		"items": "Item",
+		"appItem": "Tombol",
+		"appItems": "Tombol",
+		"tab": "Tab",
+		"tabs": "Tab",
+		"file": "Berkas",
+		"files": "Berkas",
+		"folder": "Folder",
+		"folders": "Folder",
+		"group": "Grup",
+		"groups": "Grup",
+		"search": "Kueri",
+		"searches": "Kueri",
+		"graph": "Grafik",
+		"graphs": "Grafik",
+		"url": "URL",
+		"urls": "URL",
+		"tag": "Tag",
+		"tags": "Tag",
+		"property": "Properti",
+		"properties": "Properti",
+		"ribbonItem": "Perintah ribbon",
+		"ribbonItems": "Perintah ribbon",
+		"rule": "Aturan",
+		"rules": "Aturan"
+	},
+	"rulePicker": {
+		"selectPage": "Pilih halaman",
+		"fileRules": "Aturan berkas",
+		"folderRules": "Aturan folder",
+		"rules": "Aturan",
+		"addRule": "Tambah aturan",
+		"duplicateRule": "Duplikat aturan",
+		"editRule": "Edit aturan",
+		"moveRuleToTop": "Pindahkan aturan ke atas",
+		"moveRuleToBottom": "Pindahkan aturan ke bawah",
+		"removeRule": "Hapus aturan",
+		"untitledRule": "Aturan tanpa judul",
+		"drag": "Seret untuk menata"
+	},
+	"ruleEditor": {
+		"fileRule": "Aturan berkas",
+		"folderRule": "Aturan folder",
+		"conditions": "Kondisi",
+		"addCondition": "Tambahkan kondisi",
+		"resetCondition": "Atur ulang kondisi",
+		"removeCondition": "Hapus kondisi",
+		"removeRule": "Hapus aturan",
+		"buttonMatch": "1 kecocokan",
+		"buttonMatches": "{#} kecocokan",
+		"buttonNoMatches": "Tidak ada kecocokan",
+		"enterName": "Beri nama pada aturan ini",
+		"enterValue": "Masukkan nilai",
+		"enterRegex": "Masukkan regex",
+		"enterHexCode": "Masukkan #hexcode",
+		"enterNumber": "Masukkan angka",
+		"matchConditions": {
+			"name": "Kecocokan kondisi",
+			"desc": "Pilih berapa banyak kondisi yang perlu dicocokkan.",
+			"all": "Semua",
+			"any": "Apa pun",
+			"none": "Tidak ada"
+		},
+		"source": {
+			"icon": "Ikon",
+			"color": "Warna",
+			"name": "Nama",
+			"filename": "Nama lengkap file",
+			"extension": "Ekstensi",
+			"tree": "Pohon folder",
+			"path": "Jalur dalam brankas",
+			"headings": "Judul",
+			"links": "Tautan",
+			"embeds": "Sematan",
+			"tags": "Tag",
+			"properties": "Properti...",
+			"created": "Waktu dibuat",
+			"modified": "Waktu modifikasi",
+			"clock": "Jam sistem"
+		},
+		"operator": {
+			"is": "adalah",
+			"!is": "bukan",
+			"contains": "berisi",
+			"startsWith": "dimulai dengan",
+			"endsWith": "diakhiri dengan",
+			"matches": "cocok dengan regex",
+			"!contains": "tidak berisi",
+			"!startsWith": "tidak dimulai dengan",
+			"!endsWith": "tidak diakhiri dengan",
+			"!matches": "tidak cocok regex",
+			"includes": "termasuk item",
+			"!includes": "tidak termasuk item",
+			"allAre": "semua adalah",
+			"allContain": "semua berisi",
+			"allStartWith": "semua dimulai dengan",
+			"allEndWith": "semua diakhiri dengan",
+			"allMatch": "semua cocok regex",
+			"anyContain": "ada berisi",
+			"anyStartWith": "ada mulai dengan",
+			"anyEndWith": "ada diakhiri dengan",
+			"anyMatch": "ada cocok regex",
+			"noneContain": "tidak ada berisi",
+			"noneStartWith": "tidak ada mulai dengan",
+			"noneEndWith": "tidak ada diakhiri dengan",
+			"noneMatch": "tidak ada cocok regex",
+			"countIs": "jumlahnya",
+			"!countIs": "jumlahnya tidak",
+			"countIsLess": "jumlahnya kurang dari",
+			"countIsMore": "jumlahnya lebih dari",
+			"isTrue": "benar",
+			"!isTrue": "tidak benar",
+			"isFalse": "salah",
+			"!isFalse": "tidak salah",
+			"equals": "=",
+			"!equals": "≠",
+			"isLess": "<",
+			"isMore": ">",
+			"isDivisible": "dapat dibagi oleh",
+			"!isLess": "tidak kurang dari",
+			"!isMore": "tidak lebih dari",
+			"!isDivisible": "tidak dapat dibagi oleh",
+			"isBefore": "sebelum",
+			"isAfter": "setelah",
+			"isNow": "sekarang",
+			"!isNow": "bukan sekarang",
+			"isBeforeNow": "sebelum sekarang",
+			"isAfterNow": "setelah sekarang",
+			"timeIs": "waktu adalah",
+			"!timeIs": "waktu bukan",
+			"timeIsBefore": "waktu adalah sebelum",
+			"timeIsAfter": "waktu adalah setelah",
+			"timeIsNow": "waktu adalah sekarang",
+			"!timeIsNow": "waktu bukan sekarang",
+			"timeIsBeforeNow": "waktu adalah sebelum sekarang",
+			"timeIsAfterNow": "waktu adalah setelah sekarang",
+			"dateIs": "tanggal adalah",
+			"!dateIs": "tanggal bukan",
+			"dateIsBefore": "tanggal adalah sebelum",
+			"dateIsAfter": "tanggal adalah setelah",
+			"isToday": "tanggal adalah hari ini",
+			"!isToday": "tanggal bukan hari ini",
+			"isBeforeToday": "tanggal sebelum hari ini",
+			"isAfterToday": "tanggal setelah hari ini",
+			"isLessDaysAgo": "kurang dari X hari lalu",
+			"isLessDaysAway": "kurang dari X hari lagi",
+			"isMoreDaysAgo": "lebih dari X hari lalu",
+			"isMoreDaysAway": "lebih dari X hari lagi",
+			"weekdayIs": "hari minggu",
+			"!weekdayIs": "hari minggu bukan",
+			"weekdayIsBefore": "hari sebelum minggu",
+			"weekdayIsAfter": "hari setelah minggu",
+			"monthdayIs": "hari bulan bukan",
+			"!monthdayIs": "hari bulan",
+			"monthdayIsBefore": "hari sebelum bulan",
+			"monthdayIsAfter": "hari setelah bulan",
+			"monthIs": "bulan adalah",
+			"!monthIs": "bulan bukan",
+			"monthIsBefore": "bulan sebelum",
+			"monthIsAfter": "bulan setelah",
+			"yearIs": "tahun adalah",
+			"!yearIs": "tahun bukan",
+			"yearIsBefore": "tahun sebelum",
+			"yearIsAfter": "tahun setelah",
+			"iconIs": "ID adalah",
+			"!iconIs": "ID bukan",
+			"nameIs": "nama adalah",
+			"!nameIs": "nama bukan",
+			"nameContains": "nama berisi",
+			"nameStartsWith": "nama dimulai dengan",
+			"nameEndsWith": "nama diakhiri dengan",
+			"nameMatches": "nama cocok regex",
+			"!nameContains": "nama tidak berisi",
+			"!nameStartsWith": "nama tidak dimulai dengan",
+			"!nameEndsWith": "nama tidak diakhiri dengan",
+			"!nameMatches": "nama tidak cocok regex",
+			"colorIs": "adalah",
+			"!colorIs": "bukan",
+			"hexIs": "kode heks",
+			"!hexIs": "kode heks tidak ada",
+			"hasValue": "ada nilai",
+			"!hasValue": "tidak ada nilai",
+			"hasProperty": "properti ada",
+			"!hasProperty": "properti tidak ada"
+		},
+		"weekday": {
+			"1": "Senin",
+			"2": "Selasa",
+			"3": "Rabu",
+			"4": "Kamis",
+			"5": "Jumat",
+			"6": "Sabtu",
+			"7": "Minggu"
+		},
+		"month": {
+			"1": "Januari",
+			"2": "Februari",
+			"3": "Maret",
+			"4": "April",
+			"5": "Mei",
+			"6": "Juni",
+			"7": "Juli",
+			"8": "Agustus",
+			"9": "September",
+			"10": "Oktober",
+			"11": "November",
+			"12": "Desember"
+		}
+	},
+	"ruleChecker": {
+		"fileMatch": "1 file yang cocok",
+		"folderMatch": "1 folder yang cocok",
+		"filesMatch": "{#} file yang cocok",
+		"foldersMatch": "{#} folder yang cocok",
+		"highlight": "Sorot"
+	},
+	"commands": {
+		"openRulebook": "Buka buku aturan",
+		"toggleBiggerIcons": "Alihkan ikon yang lebih besar",
+		"toggleClickableIcons": {
+			"desktop": "Alihkan ikon yang dapat diklik",
+			"mobile": "Alihkan ikon yang dapat diketuk"
+		},
+		"toggleAllFileIcons": "Beralih semua ikon berkas",
+		"toggleAllFolderIcons": "Beralih semua ikon folder",
+		"toggleMinimalFolderIcons": "Beralih ikon folder minimal",
+		"toggleMarkdownTabIcons": "Beralih ikon tab Markdown",
+		"toggleTitleIcons": "Beralih ikon judul",
+		"toggleTagPillIcons": "Beralih ikon pil tag",
+		"toggleMenuActions": "Beralih tindakan menu",
+		"toggleSuggestionIcons": "Beralih ikon saran",
+		"toggleQuickSwitcherIcons": "Beralih ikon peralih cepat",
+		"toggleMoveFileIcons": "Beralih ikon \"Pindahkan berkas\"",
+		"toggleBiggerSearchResults": "Beralih hasil pencarian yang lebih besar",
+		"changeIconCurrentFile": "Ubah ikon file saat ini"
+	},
+	"settings": {
+		"manage": "Kelola",
+		"values": {
+			"on": "Aktif",
+			"off": "Nonaktif",
+			"desktop": "Hanya desktop",
+			"mobile": "Hanya seluler",
+			"list": "Daftar warna",
+			"rgb": "Pemilih RGB",
+			"none": "Tidak ada"
+		},
+		"rulebook": {
+			"name": "Buku aturan",
+			"desc": "Siapkan aturan otomatis untuk ikon berkas dan folder."
+		},
+		"biggerIcons": {
+			"name": "Ikon yang lebih besar",
+			"desc": "Tampilkan ikon yang lebih besar daripada UI default."
+		},
+		"clickableIcons": {
+			"nameDesktop": "Ikon yang dapat diklik",
+			"nameMobile": "Ikon yang dapat diketuk",
+			"descDesktop": "Klik ikon untuk membuka pemilih ikon.",
+			"descMobile": "Ketuk ikon untuk membuka pemilih ikon."
+		},
+		"headingSidebarsAndTabs": "Bilah sisi dan tab",
+		"showAllFileIcons": {
+			"name": "Tampilkan semua ikon berkas",
+			"desc": "Tampilkan ikon untuk berkas yang tidak memiliki ikon khusus."
+		},
+		"showAllFolderIcons": {
+			"name": "Tampilkan semua ikon folder",
+			"desc": "Tampilkan ikon untuk folder yang tidak memiliki ikon khusus."
+		},
+		"minimalFolderIcons": {
+			"name": "Ikon folder minimal",
+			"desc": "Ganti tanda panah folder dengan ikon folder Anda."
+		},
+		"showMarkdownTabIcons": {
+			"name": "Tampilkan ikon tab Markdown",
+			"desc": "Tampilkan ikon tab untuk file Markdown."
+		},
+		"headingEditor": "Editor",
+		"showTitleIcons": {
+			"name": "Tampilkan ikon judul",
+			"desc": "Tampilkan ikon di judul catatan jika judul sebaris diaktifkan."
+		},
+		"showTagPillIcons": {
+			"name": "Tampilkan ikon pil tag",
+			"desc": "Tampilkan ikon di #hashtags dan properti tags."
+		},
+		"headingMenusAndDialogs": "Menu & dialog",
+		"showMenuActions": {
+			"name": "Tampilkan tindakan menu",
+			"desc": "Tampilkan tindakan terkait ikon dalam menu konteks."
+		},
+		"showSuggestionIcons": {
+			"name": "Tampilkan ikon saran",
+			"desc": "Tampilkan ikon di jendela pop-up saran untuk tautan, tag, dan properti."
+		},
+		"showQuickSwitcherIcons": {
+			"name": "Tampilkan ikon peralih cepat",
+			"desc": "Tampilkan ikon dalam hasil pencarian peralih cepat."
+		},
+		"showMoveFileIcons": {
+			"name": "Tampilkan ikon \"Pindahkan berkas\"",
+			"desc": "Tampilkan ikon folder di dialog \"Pindahkan berkas\"."
+		},
+		"headingIconPicker": "Pemilih ikon",
+		"showItemName": {
+			"name": "Tampilkan nama item",
+			"desc": "Tampilkan nama item yang sedang diedit."
+		},
+		"biggerSearchResults": {
+			"name": "Hasil pencarian yang lebih besar",
+			"desc": "Tampilkan ikon yang lebih besar dalam hasil pencarian."
+		},
+		"maxSearchResults": {
+			"name": "Hasil pencarian maksimal",
+			"desc": "Pilih berapa banyak ikon yang akan ditampilkan sekaligus."
+		},
+		"colorPicker1": {
+			"name": "Pemilih warna utama",
+			"descDesktop": "Muncul saat Anda mengklik gelembung warna.",
+			"descMobile": "Muncul saat Anda menyentuh gelembung warna."
+		},
+		"colorPicker2": {
+			"name": "Pemilih warna kedua",
+			"descDesktop": "Muncul saat Anda mengklik kedua gelembung warna.",
+			"descMobile": "Muncul saat Anda menekan & menahan gelembung warna."
+		},
+		"headingAdvanced": "Lanjutan",
+		"uncolorHover": {
+			"name": "Arahkan tanpa warna",
+			"desc": "Nonaktifkan warna ikon saat mengarahkan kursor ke item."
+		},
+		"uncolorDrag": {
+			"name": "Seret tanpa warna",
+			"desc": "Nonaktifkan warna ikon saat menyeret item."
+		},
+		"uncolorSelect": {
+			"name": "Pilihan tanpa warna",
+			"desc": "Nonaktifkan warna ikon saat item dipilih."
+		},
+		"uncolorQuick": {
+			"name": "Tombol ribbon tanpa warna",
+			"desc": "Nonaktifkan warna ikon untuk akses cepat tombol ribbon di ponsel."
+		},
+		"viewUnusedIcons": {
+			"name": "Lihat ikon yang tidak digunakan",
+			"desc": "Bersihkan ikon yang ditugaskan ke file atau folder yang tidak lagi ada di brankas Anda."
+		},
+		"maxBackups": {
+			"name": "Jumlah maksimum cadangan otomatis",
+			"desc": "Pilih berapa banyak cadangan pengaturan ikon yang ingin Anda simpan. Cadangan disimpan dengan jarak 3 jam.",
+			"openPluginFolder": "Buka folder plugin"
+		}
+	},
+	"backups": {
+		"backupNotice": "Iconic mengalami masalah saat memuat pengaturan ikonnya.",
+		"backupSecondsAgo": "Ikon Anda telah dipulihkan dari cadangan yang disimpan {#} detik yang lalu.",
+		"backupMinutesAgo": "Ikon Anda telah dipulihkan dari cadangan yang disimpan {#} menit yang lalu.",
+		"backupHoursAgo": "Ikon Anda telah dipulihkan dari cadangan yang disimpan {#} jam yang lalu.",
+		"backupDate": "Ikon Anda telah dipulihkan dari cadangan yang disimpan pada {#}."
+	}
+}

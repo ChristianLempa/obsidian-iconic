@@ -1,0 +1,424 @@
+{
+	"appItems": {
+		"help": "Hilfe öffnen",
+		"settings": "Einstellungen öffnen",
+		"pin": "Pin umschalten",
+		"sidebarLeft": "Linke Seitenleiste umschalten",
+		"sidebarRight": "Rechte Seitenleiste umschalten",
+		"minimize": "Minimieren",
+		"maximize": "Maximieren",
+		"unmaximize": "Kleines Fenster wiederherstellen",
+		"close": "Fenster schließen"
+	},
+	"menu": {
+		"changeIcon": "Symbol ändern...",
+		"changeIcons": "{#} Symbole ändern...",
+		"removeIcon": "Symbol entfernen",
+		"removeIcons": "{#} Symbole entfernen",
+		"resetColor": "Farbe zurücksetzen",
+		"resetColors": "{#} Farben zurücksetzen",
+		"editRule": "Regel bearbeiten..."
+	},
+	"iconPicker": {
+		"changeIcon": "Symbol ändern",
+		"changeIcons": "{#} Symbole ändern",
+		"changeEmoji": "Emoji ändern",
+		"changeEmojis": "{#} Emojis ändern",
+		"changeMix": "Symbol/Emoji ändern",
+		"changeMixes": "{#} Symbole/Emojis ändern",
+		"overrulePrefix": "Ihre Regel ",
+		"overruleSuffix": " überschreibt dieses Symbol.",
+		"overrules": "Ihr Regelbuch überschreibt einige dieser Symbole.",
+		"search": "Suchen",
+		"searchIcons": "Symbole suchen...",
+		"searchEmojis": "Emojis suchen...",
+		"searchMix": "Symbole/Emojis suchen...",
+		"changeColor": "Farbe ändern",
+		"resetColor": "Farbe zurücksetzen",
+		"toggleIcons": "Symbole umschalten",
+		"toggleEmojis": "Emojis umschalten",
+		"icons": "Symbole",
+		"emojis": "Emojis",
+		"mixed": "Gemischt",
+		"cancel": "Abbrechen",
+		"save": "Speichern",
+		"colors": {
+			"red": "Rot",
+			"orange": "Orange",
+			"yellow": "Gelb",
+			"green": "Grün",
+			"cyan": "Cyan",
+			"blue": "Blau",
+			"purple": "Violett",
+			"pink": "Rosa",
+			"gray": "Grau"
+		}
+	},
+	"usageChecker": {
+		"unusedIcons": "Nicht verwendete Symbole",
+		"noUnusedIconsFound": "Keine nicht verwendeten Symbole gefunden."
+	},
+	"categories": {
+		"item": "Element",
+		"items": "Elemente",
+		"appItem": "Schaltfläche",
+		"appItems": "Schaltflächen",
+		"tab": "Tab",
+		"tabs": "Tabs",
+		"file": "Datei",
+		"files": "Dateien",
+		"folder": "Ordner",
+		"folders": "Ordner",
+		"group": "Gruppe",
+		"groups": "Gruppen",
+		"search": "Abfrage",
+		"searches": "Abfragen",
+		"graph": "Graph",
+		"graphs": "Graphen",
+		"url": "URL",
+		"urls": "URLs",
+		"tag": "Tag",
+		"tags": "Tags",
+		"property": "Property",
+		"properties": "Properties",
+		"ribbonItem": "Sidebar-Befehl",
+		"ribbonItems": "Sidebar-Befehle",
+		"rule": "Regel",
+		"rules": "Regeln"
+	},
+	"rulePicker": {
+		"selectPage": "Seite auswählen",
+		"fileRules": "Dateiregeln",
+		"folderRules": "Ordnerregeln",
+		"rules": "Regeln",
+		"addRule": "Regel hinzufügen",
+		"duplicateRule": "Regel duplizieren",
+		"editRule": "Regel bearbeiten",
+		"moveRuleToTop": "Regel nach oben verschieben",
+		"moveRuleToBottom": "Regel nach unten verschieben",
+		"removeRule": "Regel entfernen",
+		"untitledRule": "Regel ohne Titel",
+		"drag": "Zum Umordnen ziehen"
+	},
+	"ruleEditor": {
+		"fileRule": "Dateiregel",
+		"folderRule": "Ordnerregel",
+		"conditions": "Bedingungen",
+		"addCondition": "Bedingung hinzufügen",
+		"resetCondition": "Bedingung zurücksetzen",
+		"removeCondition": "Bedingung entfernen",
+		"removeRule": "Regel entfernen",
+		"buttonMatch": "1 Übereinstimmung",
+		"buttonMatches": "{#} Übereinstimmungen",
+		"buttonNoMatches": "Keine Übereinstimmungen",
+		"enterName": "Dieser Regel einen Namen geben",
+		"enterValue": "Einen Wert eingeben",
+		"enterRegex": "Einen regulären Ausdruck eingeben",
+		"enterHexCode": "Einen #Hexcode eingeben",
+		"enterNumber": "Eine Zahl eingeben",
+		"matchConditions": {
+			"name": "Übereinstimmungsbedingungen",
+			"desc": "Wählen Sie aus, wie viele Bedingungen übereinstimmen müssen.",
+			"all": "Alle",
+			"any": "Beliebige",
+			"none": "Keine"
+		},
+		"source": {
+			"icon": "Symbol",
+			"color": "Farbe",
+			"name": "Name",
+			"filename": "Dateiname",
+			"extension": "Dateiendung",
+			"tree": "Ordnerbaum",
+			"path": "Dateipfad",
+			"headings": "Überschriften",
+			"links": "Dateiverknüpfungen",
+			"embeds": "Dateieinbettungen",
+			"tags": "Datei-Tags",
+			"properties": "Dateieinbettungen...",
+			"created": "Erstellt",
+			"modified": "Geändert",
+			"clock": "Systemuhr"
+		},
+		"operator": {
+			"is": "ist",
+			"!is": "ist nicht",
+			"contains": "enthält",
+			"startsWith": "beginnt mit",
+			"endsWith": "endet mit",
+			"matches": "entspricht Regex",
+			"!contains": "enthält nicht",
+			"!startsWith": "beginnt nicht mit",
+			"!endsWith": "endet nicht mit",
+			"!matches": "entspricht Regex nicht",
+			"includes": "enthält Element",
+			"!includes": "enthält kein Element",
+			"allAre": "alle sind",
+			"allContain": "alle enthalten",
+			"allStartWith": "alle beginnen mit",
+			"allEndWith": "alle enden mit",
+			"allMatch": "alle entsprechen Regex",
+			"anyContain": "beliebig enthalten",
+			"anyStartWith": "beliebig beginnen mit",
+			"anyEndWith": "beliebig enden mit",
+			"anyMatch": "beliebig entspricht Regex",
+			"noneContain": "keine enthalten",
+			"noneStartWith": "keine beginnen mit",
+			"noneEndWith": "keine enden mit",
+			"noneMatch": "keine Übereinstimmung mit Regex",
+			"countIs": "Anzahl ist",
+			"!countIs": "Anzahl ist nicht",
+			"countIsLess": "Anzahl ist kleiner als",
+			"countIsMore": "Anzahl ist größer als",
+			"isTrue": "ist wahr",
+			"!isTrue": "ist nicht wahr",
+			"isFalse": "ist falsch",
+			"!isFalse": "ist nicht falsch",
+			"equals": "=",
+			"!equals": "≠",
+			"isLess": "<",
+			"isMore": ">",
+			"isDivisible": "ist teilbar durch",
+			"!isLess": "ist nicht kleiner als",
+			"!isMore": "ist nicht größer als",
+			"!isDivisible": "ist nicht teilbar durch",
+			"isBefore": "ist vor",
+			"isAfter": "ist nach",
+			"isNow": "ist jetzt",
+			"!isNow": "ist nicht jetzt",
+			"isBeforeNow": "ist vor jetzt",
+			"isAfterNow": "ist nach jetzt",
+			"timeIs": "Zeit ist",
+			"!timeIs": "Zeit ist nicht",
+			"timeIsBefore": "Zeit ist vor",
+			"timeIsAfter": "Zeit ist nach",
+			"timeIsNow": "Zeit ist jetzt",
+			"!timeIsNow": "Zeit ist nicht jetzt",
+			"timeIsBeforeNow": "Zeit ist vor jetzt",
+			"timeIsAfterNow": "Zeit ist nach jetzt",
+			"dateIs": "Datum ist",
+			"!dateIs": "Datum ist nicht",
+			"dateIsBefore": "Datum ist vor",
+			"dateIsAfter": "Datum ist nach",
+			"isToday": "Datum ist heute",
+			"!isToday": "Datum ist nicht heute",
+			"isBeforeToday": "Datum ist vor heute",
+			"isAfterToday": "Datum ist nach heute",
+			"isLessDaysAgo": "ist weniger als X Tage her",
+			"isLessDaysAway": "ist weniger als X Tage entfernt",
+			"isMoreDaysAgo": "ist mehr als X Tage her",
+			"isMoreDaysAway": "ist mehr als X Tage entfernt",
+			"weekdayIs": "Wochentag ist",
+			"!weekdayIs": "Wochentag ist nicht",
+			"weekdayIsBefore": "Wochentag ist vor",
+			"weekdayIsAfter": "Wochentag ist nach",
+			"monthdayIs": "Tag des Monats ist",
+			"!monthdayIs": "Tag des Monats ist nicht",
+			"monthdayIsBefore": "Tag des Monats ist vor",
+			"monthdayIsAfter": "Tag des Monats ist nach",
+			"monthIs": "Monatstag ist",
+			"!monthIs": "Monat ist nicht",
+			"monthIsBefore": "Monat ist vor",
+			"monthIsAfter": "Monat ist nach",
+			"yearIs": "Jahr ist",
+			"!yearIs": "Jahr ist nicht",
+			"yearIsBefore": "Jahr ist vor",
+			"yearIsAfter": "Jahr ist nach",
+			"iconIs": "ID ist",
+			"!iconIs": "ID ist nicht",
+			"nameIs": "Name ist",
+			"!nameIs": "Name ist nicht",
+			"nameContains": "Name enthält",
+			"nameStartsWith": "Name beginnt mit",
+			"nameEndsWith": "Name endet mit",
+			"nameMatches": "Name entspricht Regex",
+			"!nameContains": "Name enthält nicht",
+			"!nameStartsWith": "Name beginnt nicht mit",
+			"!nameEndsWith": "Name endet nicht mit",
+			"!nameMatches": "Name entspricht nicht Regex",
+			"colorIs": "ist",
+			"!colorIs": "ist nicht",
+			"hexIs": "Hexcode ist",
+			"!hexIs": "Hexcode ist nicht",
+			"hasValue": "hat einen beliebigen Wert",
+			"!hasValue": "hat keinen Wert",
+			"hasProperty": "Eigenschaft vorhanden",
+			"!hasProperty": "Eigenschaft fehlt"
+		},
+		"weekday": {
+			"1": "Montag",
+			"2": "Dienstag",
+			"3": "Mittwoch",
+			"4": "Donnerstag",
+			"5": "Freitag",
+			"6": "Samstag",
+			"7": "Sonntag"
+		},
+		"month": {
+			"1": "Januar",
+			"2": "Februar",
+			"3": "März",
+			"4": "April",
+			"5": "Mai",
+			"6": "Juni",
+			"7": "Juli",
+			"8": "August",
+			"9": "September",
+			"10": "Oktober",
+			"11": "November",
+			"12": "Dezember"
+		}
+	},
+	"ruleChecker": {
+		"fileMatch": "1 passende Datei",
+		"folderMatch": "1 passender Ordner",
+		"filesMatch": "{#} passende Dateien",
+		"foldersMatch": "{#} passende Ordner",
+		"highlight": "Hervorheben"
+	},
+	"commands": {
+		"openRulebook": "Regelbuch öffnen",
+		"toggleBiggerIcons": "Größere Symbole umschalten",
+		"toggleClickableIcons": {
+			"desktop": "Klickbare Symbole umschalten",
+			"mobile": "Tippbare Symbole umschalten"
+		},
+		"toggleAllFileIcons": "Alle Dateisymbole umschalten",
+		"toggleAllFolderIcons": "Alle Ordnersymbole umschalten",
+		"toggleMinimalFolderIcons": "Minimale Ordnersymbole umschalten",
+		"toggleMarkdownTabIcons": "Markdown-Tabsymbole umschalten",
+		"toggleTitleIcons": "Titelsymbole umschalten",
+		"toggleTagPillIcons": "Tag-Pillensymbole umschalten",
+		"toggleMenuActions": "Menüaktionen umschalten",
+		"toggleSuggestionIcons": "Vorschlagsymbole umschalten",
+		"toggleQuickSwitcherIcons": "Schnellauswahlsymbole umschalten",
+		"toggleMoveFileIcons": "\"Datei verschieben\"-Symbole umschalten",
+		"toggleBiggerSearchResults": "Größere Suchergebnisse umschalten",
+		"changeIconCurrentFile": "Symbol der aktuellen Datei ändern"
+	},
+	"settings": {
+		"manage": "Verwalten",
+		"values": {
+			"on": "Ein",
+			"off": "Aus",
+			"desktop": "Nur Desktop",
+			"mobile": "Nur Mobilgerät",
+			"list": "Farbliste",
+			"rgb": "RGB-Auswahl",
+			"none": "Keine"
+		},
+		"rulebook": {
+			"name": "Regelbuch",
+			"desc": "Automatisierte Regeln für Datei- und Ordnersymbole einrichten."
+		},
+		"biggerIcons": {
+			"name": "Größere Symbole",
+			"desc": "Größere Symbole als die Standard-Benutzeroberfläche anzeigen."
+		},
+		"clickableIcons": {
+			"nameDesktop": "Anklickbare Symbole",
+			"nameMobile": "Tippbare Symbole",
+			"descDesktop": "Klicken Sie auf ein Symbol, um die Symbolauswahl zu öffnen.",
+			"descMobile": "Tippen Sie auf ein Symbol, um die Symbolauswahl zu öffnen."
+		},
+		"headingSidebarsAndTabs": "Seitenleisten und Registerkarten",
+		"showAllFileIcons": {
+			"name": "Alle Dateisymbole anzeigen",
+			"desc": "Symbole für Dateien anzeigen, die kein benutzerdefiniertes Symbol haben."
+		},
+		"showAllFolderIcons": {
+			"name": "Alle Ordnersymbole anzeigen",
+			"desc": "Symbole für Ordner anzeigen, die kein benutzerdefiniertes Symbol haben."
+		},
+		"minimalFolderIcons": {
+			"name": "Minimale Ordnersymbole",
+			"desc": "Ordnerpfeile durch Ihre Ordnersymbole ersetzen."
+		},
+		"showMarkdownTabIcons": {
+			"name": "Markdown-Tabsymbole anzeigen",
+			"desc": "Tabsymbole für Markdown-Dateien anzeigen."
+		},
+		"headingEditor": "Editor",
+		"showTitleIcons": {
+			"name": "Titelsymbole anzeigen",
+			"desc": "Symbole in Notiztiteln anzeigen, wenn Titel in Notiz aktiviert sind."
+		},
+		"showTagPillIcons": {
+			"name": "Tag-Pillensymbole anzeigen",
+			"desc": "Symbole in #Hashtags und der Tags-Property anzeigen."
+		},
+		"headingMenusAndDialogs": "Menüs & Dialoge",
+		"showMenuActions": {
+			"name": "Menüaktionen anzeigen",
+			"desc": "Symbolbezogene Aktionen in Kontextmenüs anzeigen."
+		},
+		"showSuggestionIcons": {
+			"name": "Vorschlagsymbole anzeigen",
+			"desc": "Symbole in Vorschlags-Pop-ups für Links, Tags und Eigenschaften anzeigen."
+		},
+		"showQuickSwitcherIcons": {
+			"name": "Schnellauswahlsymbole anzeigen",
+			"desc": "Symbole in den Suchergebnissen von Schnellauswahl anzeigen."
+		},
+		"showMoveFileIcons": {
+			"name": "\"Datei verschieben\"-Symbole anzeigen",
+			"desc": "Ordnersymbole in \"Datei verschieben\"-Dialogen anzeigen."
+		},
+		"headingIconPicker": "Symbolauswahl",
+		"showItemName": {
+			"name": "Elementnamen anzeigen",
+			"desc": "Den Namen des bearbeiteten Elements anzeigen."
+		},
+		"biggerSearchResults": {
+			"name": "Größere Suchergebnisse",
+			"desc": "Größere Symbole in Suchergebnissen anzeigen."
+		},
+		"maxSearchResults": {
+			"name": "Maximale Suchergebnisse",
+			"desc": "Wählen Sie aus, wie viele Symbole gleichzeitig angezeigt werden sollen."
+		},
+		"colorPicker1": {
+			"name": "Hauptfarbauswahl",
+			"descDesktop": "Erscheint, wenn Sie auf die Farbblase klicken.",
+			"descMobile": "Erscheint, wenn Sie die Farbblase berühren."
+		},
+		"colorPicker2": {
+			"name": "Zweiter Farbwähler",
+			"descDesktop": "Erscheint, wenn Sie mit der rechten Maustaste auf die Farbblase klicken.",
+			"descMobile": "Erscheint, wenn Sie die Farbblase gedrückt halten."
+		},
+		"headingAdvanced": "Erweitert",
+		"uncolorHover": {
+			"name": "Farbloses Hovern",
+			"desc": "Symbolfarbe deaktivieren, während über einem Element schwebt."
+		},
+		"uncolorDrag": {
+			"name": "Farbloses Ziehen",
+			"desc": "Symbolfarbe deaktivieren, wenn ein Element gezogen wird."
+		},
+		"uncolorSelect": {
+			"name": "Farblose Auswahl",
+			"desc": "Symbolfarbe deaktivieren, während das Element ausgewählt ist."
+		},
+		"uncolorQuick": {
+			"name": "Farblose Ribbon-Schaltfläche",
+			"desc": "Symbolfarbe deaktivieren, für die Schnellzugriff zu Ribbon-Schaltfläche auf Mobilgeräten."
+		},
+		"viewUnusedIcons": {
+			"name": "Nicht verwendete Symbole anzeigen",
+			"desc": "Symbole entfernen, die Dateien oder Ordnern zugewiesen sind, die sich nicht mehr in Ihrem Tresor befinden."
+		},
+		"maxBackups": {
+			"name": "Maximale Anzahl automatischer Backups",
+			"desc": "Wählen Sie, wie viele Backups Ihrer Symboleinstellungen gespeichert werden sollen. Backups werden im Abstand von 3 Stunden erstellt.",
+			"openPluginFolder": "Ordner für Erweiterung öffnen"
+		}
+	},
+	"backups": {
+		"backupNotice": "Iconic hatte ein Problem beim Laden der Symboleinstellungen.",
+		"backupSecondsAgo": "Ihre Symbole wurden aus einer Sicherung wiederhergestellt, die vor {#} Sekunden gespeichert wurde.",
+		"backupMinutesAgo": "Ihre Symbole wurden aus einer Sicherung wiederhergestellt, die vor {#} Minuten gespeichert wurde.",
+		"backupHoursAgo": "Ihre Symbole wurden aus einer Sicherung wiederhergestellt, die vor {#} Stunden gespeichert wurde.",
+		"backupDate": "Ihre Symbole wurden aus einer Sicherung wiederhergestellt, die am {#} gespeichert wurde."
+	}
+}

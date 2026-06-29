@@ -1,0 +1,424 @@
+{
+	"appItems": {
+		"help": "Ouvrir l'aide",
+		"settings": "Ouvrir les paramètres",
+		"pin": "Basculer l'épingle",
+		"sidebarLeft": "Basculer la barre latérale gauche",
+		"sidebarRight": "Basculer la barre latérale droite",
+		"minimize": "Minimiser",
+		"maximize": "Maximiser",
+		"unmaximize": "Restaurer",
+		"close": "Fermer la fenêtre"
+	},
+	"menu": {
+		"changeIcon": "Modifier l'icône...",
+		"changeIcons": "Modifier {#} icônes...",
+		"removeIcon": "Supprimer l'icône",
+		"removeIcons": "Supprimer {#} icônes",
+		"resetColor": "Réinitialiser la couleur",
+		"resetColors": "Réinitialiser {#} couleurs",
+		"editRule": "Modifier la règle..."
+	},
+	"iconPicker": {
+		"changeIcon": "Changer l'icône",
+		"changeIcons": "Changer {#} icônes",
+		"changeEmoji": "Changer l'émoji",
+		"changeEmojis": "Changer {#} émojis",
+		"changeMix": "Changer l'icône / l'emoji",
+		"changeMixes": "Changer {#} icônes / emojis",
+		"overrulePrefix": "Votre règle ",
+		"overruleSuffix": " annule cette icône.",
+		"overrules": "Votre livre de règles annule certaines de ces icônes.",
+		"search": "Rechercher",
+		"searchIcons": "Rechercher des icônes...",
+		"searchEmojis": "Rechercher des émojis...",
+		"searchMix": "Rechercher des icônes / emojis...",
+		"changeColor": "Changer la couleur",
+		"resetColor": "Réinitialiser la couleur",
+		"toggleIcons": "Basculer les icônes",
+		"toggleEmojis": "Basculer les emojis",
+		"icons": "Icônes",
+		"emojis": "Émojis",
+		"mixed": "Mélange",
+		"cancel": "Annuler",
+		"save": "Sauvegarder",
+		"colors": {
+			"red": "Rouge",
+			"orange": "Orange",
+			"yellow": "Jaune",
+			"green": "Vert",
+			"cyan": "Cyan",
+			"blue": "Bleu",
+			"purple": "Violet",
+			"pink": "Rose",
+			"gray": "Gris"
+		}
+	},
+	"usageChecker": {
+		"unusedIcons": "Icônes inutilisées",
+		"noUnusedIconsFound": "Aucune icône inutilisée trouvée."
+	},
+	"categories": {
+		"item": "Élément",
+		"items": "Éléments",
+		"appItem": "Bouton",
+		"appItems": "Boutons",
+		"tab": "Onglet",
+		"tabs": "Onglets",
+		"file": "Fichier",
+		"files": "Fichiers",
+		"folder": "Dossier",
+		"folders": "Dossiers",
+		"group": "Groupe",
+		"groups": "Groupes",
+		"search": "Requête",
+		"searches": "Requêtes",
+		"graph": "Graphique",
+		"graphs": "Graphiques",
+		"url": "URL",
+		"urls": "URL",
+		"tag": "Mot-clé",
+		"tags": "Mots-clés",
+		"property": "Propriété",
+		"properties": "Propriétés",
+		"ribbonItem": "Commande du ruban",
+		"ribbonItems": "Commandes du ruban",
+		"rule": "Règle",
+		"rules": "Règles"
+	},
+	"rulePicker": {
+		"selectPage": "Sélectionner une page",
+		"fileRules": "Règles pour les fichiers",
+		"folderRules": "Règles pour les dossiers",
+		"rules": "Règles",
+		"addRule": "Ajouter une règle",
+		"duplicateRule": "Dupliquer la règle",
+		"editRule": "Modifier la règle",
+		"moveRuleToTop": "Déplacer la règle en haut",
+		"moveRuleToBottom": "Déplacer la règle en bas",
+		"removeRule": "Supprimer la règle",
+		"untitledRule": "Règle sans titre",
+		"drag": "Glisser pour réorganiser"
+	},
+	"ruleEditor": {
+		"fileRule": "Règle de fichier",
+		"folderRule": "Règle de dossier",
+		"conditions": "Conditions",
+		"addCondition": "Ajouter une condition",
+		"resetCondition": "Réinitialiser la condition",
+		"removeCondition": "Supprimer la condition",
+		"removeRule": "Supprimer la règle",
+		"buttonMatch": "1 correspondance",
+		"buttonMatches": "{#} correspondances",
+		"buttonNoMatches": "Aucune correspondance",
+		"enterName": "Donnez un nom à cette règle",
+		"enterValue": "Entrez une valeur",
+		"enterRegex": "Entrez une expression régulière",
+		"enterHexCode": "Entrez un #hexcode",
+		"enterNumber": "Entrez un nombre",
+		"matchConditions": {
+			"name": "Conditions de correspondance",
+			"desc": "Choisissez le nombre de conditions à respecter.",
+			"all": "Toutes",
+			"any": "Tout",
+			"none": "Aucune"
+		},
+		"source": {
+			"icon": "Icône",
+			"color": "Couleur",
+			"name": "Nom",
+			"filename": "Nom de fichier",
+			"extension": "Extension",
+			"tree": "Chemin du dossier",
+			"path": "Chemin de coffre",
+			"headings": "Sous-titres",
+			"links": "Liens",
+			"embeds": "Intégrations",
+			"tags": "Mots-clés",
+			"properties": "Propriétés...",
+			"created": "Date de création",
+			"modified": "Date de modification",
+			"clock": "Heure système"
+		},
+		"operator": {
+			"is": "est",
+			"!is": "n'est pas",
+			"contains": "contient",
+			"startsWith": "commence par",
+			"endsWith": "se termine par",
+			"matches": "validé par regex",
+			"!contains": "ne contient pas",
+			"!startsWith": "ne commence pas par",
+			"!endsWith": "ne se termine pas par",
+			"!matches": "invalidé par regex",
+			"includes": "inclut l'élément",
+			"!includes": "n'inclut pas l'élément",
+			"allAre": "tous sont",
+			"allContain": "tous contiennent",
+			"allStartWith": "tous commencent par",
+			"allEndWith": "tous se terminent par",
+			"allMatch": "tous validés par regex",
+			"anyContain": "l'un contient",
+			"anyStartWith": "l'un commence par",
+			"anyEndWith": "l'un se termine par",
+			"anyMatch": "l'un validé par regex",
+			"noneContain": "aucun ne contient",
+			"noneStartWith": "aucun ne commence par",
+			"noneEndWith": "aucun ne se termine par",
+			"noneMatch": "aucun validé par regex",
+			"countIs": "nombre est",
+			"!countIs": "nombre n'est pas",
+			"countIsLess": "nombre est inférieur à",
+			"countIsMore": "nombre est supérieur à",
+			"isTrue": "est vrai",
+			"!isTrue": "n'est pas vrai",
+			"isFalse": "est faux",
+			"!isFalse": "n'est pas faux",
+			"equals": "=",
+			"!equals": "≠",
+			"isLess": "<",
+			"isMore": ">",
+			"isDivisible": "est divisible par",
+			"!isLess": "n'est pas inférieur à",
+			"!isMore": "n'est pas supérieur à",
+			"!isDivisible": "n'est pas divisible par",
+			"isBefore": "est avant",
+			"isAfter": "est après",
+			"isNow": "est maintenant",
+			"!isNow": "n'est pas maintenant",
+			"isBeforeNow": "est avant maintenant",
+			"isAfterNow": "est après maintenant",
+			"timeIs": "heure est",
+			"!timeIs": "heure n'est pas",
+			"timeIsBefore": "heure est avant",
+			"timeIsAfter": "heure est après",
+			"timeIsNow": "heure est maintenant",
+			"!timeIsNow": "heure n'est pas maintenant",
+			"timeIsBeforeNow": "heure est avant maintenant",
+			"timeIsAfterNow": "heure est après maintenant",
+			"dateIs": "date est",
+			"!dateIs": "date n'est pas",
+			"dateIsBefore": "date est avant",
+			"dateIsAfter": "date est après",
+			"isToday": "date est aujourd'hui",
+			"!isToday": "date n'est pas aujourd'hui",
+			"isBeforeToday": "date est avant aujourd'hui",
+			"isAfterToday": "date est après aujourd'hui",
+			"isLessDaysAgo": "il y a moins de X jours",
+			"isLessDaysAway": "dans moins de X jours",
+			"isMoreDaysAgo": "il y a plus de X jours",
+			"isMoreDaysAway": "dans plus de X jours",
+			"weekdayIs": "jour de la semaine est",
+			"!weekdayIs": "jour de la semaine n'est pas",
+			"weekdayIsBefore": "jour de la semaine est avant",
+			"weekdayIsAfter": "jour de la semaine est après",
+			"monthdayIs": "jour du mois est",
+			"!monthdayIs": "jour du mois n'est pas",
+			"monthdayIsBefore": "jour du mois est avant",
+			"monthdayIsAfter": "jour du mois est après",
+			"monthIs": "mois est",
+			"!monthIs": "mois n'est pas",
+			"monthIsBefore": "mois est avant",
+			"monthIsAfter": "mois est après",
+			"yearIs": "année est",
+			"!yearIs": "année n'est pas",
+			"yearIsBefore": "année est avant",
+			"yearIsAfter": "année est après",
+			"iconIs": "ID est",
+			"!iconIs": "ID n'est pas",
+			"nameIs": "nom est",
+			"!nameIs": "nom n'est pas",
+			"nameContains": "nom contient",
+			"nameStartsWith": "nom commence par",
+			"nameEndsWith": "nom se termine par",
+			"nameMatches": "nom validé par regex",
+			"!nameContains": "nom ne contient pas",
+			"!nameStartsWith": "nom ne commence pas par",
+			"!nameEndsWith": "nom ne se termine pas par",
+			"!nameMatches": "nom invalidé par regex",
+			"colorIs": "est",
+			"!colorIs": "n'est pas",
+			"hexIs": "code hex est",
+			"!hexIs": "code hex n'est pas",
+			"hasValue": "a une valeur",
+			"!hasValue": "n'a pas de valeur",
+			"hasProperty": "propriété est présente",
+			"!hasProperty": "propriété est manquante"
+		},
+		"weekday": {
+			"1": "Lundi",
+			"2": "Mardi",
+			"3": "Mercredi",
+			"4": "Jeudi",
+			"5": "Vendredi",
+			"6": "Samedi",
+			"7": "Dimanche"
+		},
+		"month": {
+			"1": "Janvier",
+			"2": "Février",
+			"3": "Mars",
+			"4": "Avril",
+			"5": "Mai",
+			"6": "Juin",
+			"7": "Juillet",
+			"8": "Août",
+			"9": "Septembre",
+			"10": "Octobre",
+			"11": "Novembre",
+			"12": "Décembre"
+		}
+	},
+	"ruleChecker": {
+		"fileMatch": "1 fichier correspondant",
+		"folderMatch": "1 dossier correspondant",
+		"filesMatch": "{#} fichiers correspondants",
+		"foldersMatch": "{#} dossiers correspondants",
+		"highlight": "Surligner"
+	},
+	"commands": {
+		"openRulebook": "Ouvrir le livre de règles",
+		"toggleBiggerIcons": "Basculer les plus grandes icônes",
+		"toggleClickableIcons": {
+			"desktop": "Basculer les icônes cliquables",
+			"mobile": "Basculer les icônes tactiles"
+		},
+		"toggleAllFileIcons": "Basculer toutes les icônes de fichier",
+		"toggleAllFolderIcons": "Basculer toutes les icônes de dossier",
+		"toggleMinimalFolderIcons": "Basculer les icônes de dossier minimales",
+		"toggleMarkdownTabIcons": "Basculer les icônes d'onglets Markdown",
+		"toggleTitleIcons": "Basculer les icônes de titre",
+		"toggleTagPillIcons": "Basculer les icônes des pastilles de mots-clé",
+		"toggleMenuActions": "Basculer les actions du menu",
+		"toggleSuggestionIcons": "Basculer les icônes des suggestions",
+		"toggleQuickSwitcherIcons": "Basculer les icônes de sélecteur rapide",
+		"toggleMoveFileIcons": "Basculer les icônes de \"Déplacer le fichier\"",
+		"toggleBiggerSearchResults": "Basculer les résultats de recherche plus grands",
+		"changeIconCurrentFile": "Changer l'icône du fichier actuel"
+	},
+	"settings": {
+		"manage": "Gérer",
+		"values": {
+			"on": "Activé",
+			"off": "Désactivé",
+			"desktop": "Bureau uniquement",
+			"mobile": "Mobile uniquement",
+			"list": "Liste de couleurs",
+			"rgb": "Sélecteur RVB",
+			"none": "Aucun"
+		},
+		"rulebook": {
+			"name": "Livre de règles",
+			"desc": "Configurer des règles automatisées pour les icônes de fichiers et de dossiers."
+		},
+		"biggerIcons": {
+			"name": "Icônes plus grandes",
+			"desc": "Afficher des icônes plus grandes que l'interface utilisateur par défaut."
+		},
+		"clickableIcons": {
+			"nameDesktop": "Icônes cliquables",
+			"nameMobile": "Icônes tactiles",
+			"descDesktop": "Cliquez sur une icône pour ouvrir le sélecteur d'icônes.",
+			"descMobile": "Appuyez sur une icône pour ouvrir le sélecteur d'icônes."
+		},
+		"headingSidebarsAndTabs": "Barres latérales et onglets",
+		"showAllFileIcons": {
+			"name": "Afficher toutes les icônes de fichiers",
+			"desc": "Afficher les icônes des fichiers qui n'ont pas d'icône personnalisée."
+		},
+		"showAllFolderIcons": {
+			"name": "Afficher toutes les icônes de dossiers",
+			"desc": "Afficher les icônes des dossiers qui n'ont pas d'icône personnalisée."
+		},
+		"minimalFolderIcons": {
+			"name": "Icônes de dossier minimales",
+			"desc": "Remplacez les flèches de dossier par vos icônes de dossier."
+		},
+		"showMarkdownTabIcons": {
+			"name": "Afficher les icônes des onglets Markdown",
+			"desc": "Afficher les icônes des onglets pour les fichiers Markdown."
+		},
+		"headingEditor": "Éditeur",
+		"showTitleIcons": {
+			"name": "Afficher les icônes de titre",
+			"desc": "Afficher les icônes dans les titres de note, si l'option titre comme entête est activée."
+		},
+		"showTagPillIcons": {
+			"name": "Afficher les icônes des pastilles de mots-clé",
+			"desc": "Afficher les icônes dans les #mots-clés et la propriété \"tags\"."
+		},
+		"headingMenusAndDialogs": "Menus et boîtes de dialogue",
+		"showMenuActions": {
+			"name": "Afficher les actions des menus",
+			"desc": "Afficher les actions liées aux icônes dans les menus contextuels."
+		},
+		"showSuggestionIcons": {
+			"name": "Afficher les icônes des suggestions",
+			"desc": "Afficher les icônes dans les fenêtres de suggestion pour les liens, les mots-clés et les propriétés."
+		},
+		"showQuickSwitcherIcons": {
+			"name": "Afficher les icônes des sélecteurs rapides",
+			"desc": "Afficher les icônes dans les résultats de recherche des sélecteurs rapides."
+		},
+		"showMoveFileIcons": {
+			"name": "Afficher les icônes de \"Déplacer le fichier\"",
+			"desc": "Afficher les icônes des dossiers dans les boîtes de dialogue \"Déplacer le fichier\"."
+		},
+		"headingIconPicker": "Sélecteur d'icônes",
+		"showItemName": {
+			"name": "Afficher le nom de l'élément",
+			"desc": "Afficher le nom de l'élément en cours de modification."
+		},
+		"biggerSearchResults": {
+			"name": "Résultats de recherche plus grands.",
+			"desc": "Afficher des icônes plus grandes dans les résultats de recherche."
+		},
+		"maxSearchResults": {
+			"name": "Résultats de recherche maximaux",
+			"desc": "Choisissez le nombre d'icônes à afficher simultanément."
+		},
+		"colorPicker1": {
+			"name": "Sélecteur de couleurs principal",
+			"descDesktop": "S'affiche lorsque vous cliquez sur la bulle de couleur.",
+			"descMobile": "S'affiche lorsque vous touchez la bulle de couleur."
+		},
+		"colorPicker2": {
+			"name": "Deuxième sélecteur de couleurs",
+			"descDesktop": "Apparaît lorsque vous cliquez avec le bouton droit sur la bulle de couleur.",
+			"descMobile": "Apparaît lorsque vous appuyez et maintenez la bulle de couleur."
+		},
+		"headingAdvanced": "Avancé",
+		"uncolorHover": {
+			"name": "Survol incolore",
+			"desc": "Désactiver la couleur de l'icône lorsque vous survolez un élément."
+		},
+		"uncolorDrag": {
+			"name": "Glissement incolore",
+			"desc": "Désactiver la couleur de l'icône lorsque vous faites glisser un élément."
+		},
+		"uncolorSelect": {
+			"name": "Sélection incolore",
+			"desc": "Désactiver la couleur de l'icône lorsque l'élément est sélectionné."
+		},
+		"uncolorQuick": {
+			"name": "Bouton de ruban incolore",
+			"desc": "Désactiver la couleur de l'icône pour le bouton de ruban d'accès rapide sur mobile."
+		},
+		"viewUnusedIcons": {
+			"name": "Afficher les icônes inutilisées",
+			"desc": "Nettoyer les icônes attribuées aux fichiers ou dossiers qui ne se trouvent plus dans votre coffre-fort."
+		},
+		"maxBackups": {
+			"name": "Nombre maximal de sauvegardes automatiques",
+			"desc": "Choisissez le nombre de sauvegardes de vos paramètres d'icônes à conserver. Les sauvegardes sont espacées de 3 heures.",
+			"openPluginFolder": "Ouvrir le dossier des module complémentaire"
+		}
+	},
+	"backups": {
+		"backupNotice": "Iconic a rencontré un problème lors du chargement de ses paramètres d'icônes.",
+		"backupSecondsAgo": "Vos icônes ont été restaurées à partir d'une sauvegarde effectuée il y a {#} secondes.",
+		"backupMinutesAgo": "Vos icônes ont été restaurées à partir d'une sauvegarde effectuée il y a {#} minutes.",
+		"backupHoursAgo": "Vos icônes ont été restaurées à partir d'une sauvegarde effectuée il y a {#} heures.",
+		"backupDate": "Vos icônes ont été restaurées à partir d'une sauvegarde effectuée le {#}."
+	}
+}

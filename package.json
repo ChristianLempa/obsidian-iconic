@@ -1,0 +1,35 @@
+{
+	"name": "iconic-custom",
+	"version": "0.0.1",
+	"description": "Customized fork of Iconic with expanded icon library support (devicons, selfh.st, and more). Private development version.",
+	"main": "main.js",
+	"type": "module",
+	"scripts": {
+		"dev": "node esbuild.config.mjs",
+		"build": "tsc -noEmit -skipLibCheck && node esbuild.config.mjs production",
+		"version": "node version-bump.mjs && git add manifest.json versions.json"
+	},
+	"keywords": [
+		"obsidian",
+		"obsidian-plugin",
+		"icon",
+		"icons",
+		"devicon",
+		"self-hosted"
+	],
+	"author": "Christian Lempa (based on Holo's Iconic)",
+	"license": "MIT-0",
+	"devDependencies": {
+		"@codemirror/language": "^6.12.3",
+		"@codemirror/state": "^6.6.0",
+		"@codemirror/view": "^6.40.0",
+		"@types/node": "^25.5.0",
+		"@typescript-eslint/eslint-plugin": "8.58.0",
+		"@typescript-eslint/parser": "8.58.0",
+		"builtin-modules": "^5.0.0",
+		"esbuild": "^0.27.4",
+		"obsidian": "^1.12.3",
+		"tslib": "2.8.1",
+		"typescript": "6.0.2"
+	}
+}

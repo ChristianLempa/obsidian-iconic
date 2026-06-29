@@ -1,0 +1,424 @@
+{
+	"appItems": {
+		"help": "Abrir ayuda",
+		"settings": "Abrir ajustes",
+		"pin": "Cambiar estado de fijado",
+		"sidebarLeft": "Alternar barra lateral izquierda",
+		"sidebarRight": "Alternar barra lateral derecha",
+		"minimize": "Minimizar",
+		"maximize": "Maximizar",
+		"unmaximize": "Restaurar",
+		"close": "Cerrar ventana"
+	},
+	"menu": {
+		"changeIcon": "Cambiar ícono...",
+		"changeIcons": "Cambiar {#} íconos...",
+		"removeIcon": "Eliminar ícono",
+		"removeIcons": "Eliminar {#} íconos",
+		"resetColor": "Restablecer color",
+		"resetColors": "Restablecer {#} colores",
+		"editRule": "Editar regla..."
+	},
+	"iconPicker": {
+		"changeIcon": "Cambiar ícono",
+		"changeIcons": "Cambiar {#} íconos",
+		"changeEmoji": "Cambiar emoji",
+		"changeEmojis": "Cambiar {#} emojis",
+		"changeMix": "Cambiar ícono/emoji",
+		"changeMixes": "Cambiar {#} íconos/emojis",
+		"overrulePrefix": "Tu regla ",
+		"overruleSuffix": " está anulando este ícono.",
+		"overrules": "Tu libro de reglas está anulando algunos de estos íconos.",
+		"search": "Buscar",
+		"searchIcons": "Buscar íconos...",
+		"searchEmojis": "Buscar emojis...",
+		"searchMix": "Buscar íconos/emojis...",
+		"changeColor": "Cambiar color",
+		"resetColor": "Restablecer color",
+		"toggleIcons": "Alternar íconos",
+		"toggleEmojis": "Alternar emojis",
+		"icons": "Íconos",
+		"emojis": "Emojis",
+		"mixed": "Mixto",
+		"cancel": "Cancelar",
+		"save": "Guardar",
+		"colors": {
+			"red": "Rojo",
+			"orange": "Naranja",
+			"yellow": "Amarillo",
+			"green": "Verde",
+			"cyan": "Cian",
+			"blue": "Azul",
+			"purple": "Púrpura",
+			"pink": "Rosa",
+			"gray": "Gris"
+		}
+	},
+	"usageChecker": {
+		"unusedIcons": "Íconos sin usar",
+		"noUnusedIconsFound": "No se encontraron íconos sin usar."
+	},
+	"categories": {
+		"item": "Elemento",
+		"items": "Elementos",
+		"appItem": "Botón",
+		"appItems": "Botones",
+		"tab": "Pestaña",
+		"tabs": "Pestañas",
+		"file": "Archivo",
+		"files": "Archivos",
+		"folder": "Carpeta",
+		"folders": "Carpetas",
+		"group": "Grupo",
+		"groups": "Grupos",
+		"search": "Consulta",
+		"searches": "Consultas",
+		"graph": "Gráfica",
+		"graphs": "Gráficos",
+		"url": "URL",
+		"urls": "URL",
+		"tag": "Etiqueta",
+		"tags": "Etiquetas",
+		"property": "Propiedad",
+		"properties": "Propiedades",
+		"ribbonItem": "Comando de cinta",
+		"ribbonItems": "Comandos de cinta",
+		"rule": "Regla",
+		"rules": "Reglas"
+	},
+	"rulePicker": {
+		"selectPage": "Seleccionar página",
+		"fileRules": "Reglas de archivo",
+		"folderRules": "Reglas de carpeta",
+		"rules": "Reglas",
+		"addRule": "Agregar regla",
+		"duplicateRule": "Duplicar regla",
+		"editRule": "Editar regla",
+		"moveRuleToTop": "Mover regla al principio",
+		"moveRuleToBottom": "Mover regla al final",
+		"removeRule": "Eliminar regla",
+		"untitledRule": "Regla sin título",
+		"drag": "Arrastre para reordenar"
+	},
+	"ruleEditor": {
+		"fileRule": "Regla de archivo",
+		"folderRule": "Regla de carpeta",
+		"conditions": "Condiciones",
+		"addCondition": "Añadir condición",
+		"resetCondition": "Restablecer condición",
+		"removeCondition": "Eliminar condición",
+		"removeRule": "Eliminar regla",
+		"buttonMatch": "1 coincidencia",
+		"buttonMatches": "{#} coincidencias",
+		"buttonNoMatches": "Ninguna coincidencia",
+		"enterName": "Dale un nombre a esta regla",
+		"enterValue": "Ingresa un valor",
+		"enterRegex": "Ingresa una expresión regular",
+		"enterHexCode": "Ingresa un #códigohexadecimal",
+		"enterNumber": "Ingresa un número",
+		"matchConditions": {
+			"name": "Condiciones de coincidencia",
+			"desc": "Elige cuántas condiciones deben coincidir",
+			"all": "Todas",
+			"any": "Cualquiera",
+			"none": "Ninguno"
+		},
+		"source": {
+			"icon": "Ícono",
+			"color": "Color",
+			"name": "Nombre",
+			"filename": "Nombre de archivo",
+			"extension": "Extensión",
+			"tree": "Árbol de carpetas",
+			"path": "Ruta",
+			"headings": "Encabezados",
+			"links": "Enlaces",
+			"embeds": "Adjuntos",
+			"tags": "Etiquetas",
+			"properties": "Propiedades...",
+			"created": "Creado",
+			"modified": "Modificado",
+			"clock": "Reloj del sistema"
+		},
+		"operator": {
+			"is": "es",
+			"!is": "no es",
+			"contains": "contiene",
+			"startsWith": "comienza con",
+			"endsWith": "termina con",
+			"matches": "coincide con regex",
+			"!contains": "no contiene",
+			"!startsWith": "no comienza con",
+			"!endsWith": "no termina con",
+			"!matches": "no coincide con regex",
+			"includes": "incluye el elemento",
+			"!includes": "no incluye el elemento",
+			"allAre": "todos son",
+			"allContain": "todos contienen",
+			"allStartWith": "todos comienzan con",
+			"allEndWith": "todos terminan con",
+			"allMatch": "todos coinciden con regex",
+			"anyContain": "cualquiera contiene",
+			"anyStartWith": "cualquiera comienza con",
+			"anyEndWith": "cualquiera termina con",
+			"anyMatch": "cualquiera coincide regex",
+			"noneContain": "ninguno contiene",
+			"noneStartWith": "ninguno empieza con",
+			"noneEndWith": "ninguno termina con",
+			"noneMatch": "ninguno coincide con regex",
+			"countIs": "conteo es",
+			"!countIs": "conteo no es",
+			"countIsLess": "conteo es menor que",
+			"countIsMore": "conteo es mayor que",
+			"isTrue": "es verdadero",
+			"!isTrue": "no es verdadero",
+			"isFalse": "es falso",
+			"!isFalse": "no es falso",
+			"equals": "=",
+			"!equals": "≠",
+			"isLess": "<",
+			"isMore": ">",
+			"isDivisible": "es divisible entre",
+			"!isLess": "no es menor que",
+			"!isMore": "no es mayor que",
+			"!isDivisible": "no es divisible entre",
+			"isBefore": "es antes",
+			"isAfter": "es después",
+			"isNow": "es ahora",
+			"!isNow": "no es ahora",
+			"isBeforeNow": "es antes de ahora",
+			"isAfterNow": "es después de ahora",
+			"timeIs": "tiempo es",
+			"!timeIs": "tiempo no es",
+			"timeIsBefore": "tiempo es antes",
+			"timeIsAfter": "tiempo es después",
+			"timeIsNow": "tiempo es ahora",
+			"!timeIsNow": "tiempo no es ahora",
+			"timeIsBeforeNow": "tiempo es antes de ahora",
+			"timeIsAfterNow": "tiempo es después de ahora",
+			"dateIs": "fecha es",
+			"!dateIs": "fecha no es",
+			"dateIsBefore": "fecha es antes",
+			"dateIsAfter": "fecha es después",
+			"isToday": "fecha es hoy",
+			"!isToday": "fecha no es hoy",
+			"isBeforeToday": "fecha es anterior a hoy",
+			"isAfterToday": "fecha es posterior a hoy",
+			"isLessDaysAgo": "hace menos de X días",
+			"isLessDaysAway": "faltan menos de X días",
+			"isMoreDaysAgo": "hace más de X días",
+			"isMoreDaysAway": "faltan más de X días",
+			"weekdayIs": "día de semana es",
+			"!weekdayIs": "día de semana no es",
+			"weekdayIsBefore": "día de semana antes",
+			"weekdayIsAfter": "día de semana después",
+			"monthdayIs": "día del mes es",
+			"!monthdayIs": "día del mes no es",
+			"monthdayIsBefore": "día del mes antes",
+			"monthdayIsAfter": "día del mes después",
+			"monthIs": "mes es",
+			"!monthIs": "mes no es",
+			"monthIsBefore": "mes es antes",
+			"monthIsAfter": "mes es después",
+			"yearIs": "año es",
+			"!yearIs": "año no es",
+			"yearIsBefore": "año es antes",
+			"yearIsAfter": "año es después",
+			"iconIs": "ID es",
+			"!iconIs": "ID no es",
+			"nameIs": "nombre es",
+			"!nameIs": "nombre no es",
+			"nameContains": "nombre contiene",
+			"nameStartsWith": "nombre empieza con",
+			"nameEndsWith": "nombre termina con",
+			"nameMatches": "nombre coincide con regex",
+			"!nameContains": "nombre no contiene",
+			"!nameStartsWith": "nombre no empieza con",
+			"!nameEndsWith": "nombre no termina con",
+			"!nameMatches": "nombre no coincide con regex",
+			"colorIs": "es",
+			"!colorIs": "no es",
+			"hexIs": "código hex es",
+			"!hexIs": "código hex no es",
+			"hasValue": "tiene algún valor",
+			"!hasValue": "no tiene ningún valor",
+			"hasProperty": "propiedad está presente",
+			"!hasProperty": "propiedad no está presente"
+		},
+		"weekday": {
+			"1": "Lunes",
+			"2": "Martes",
+			"3": "Miércoles",
+			"4": "Jueves",
+			"5": "Viernes",
+			"6": "Sábado",
+			"7": "Domingo"
+		},
+		"month": {
+			"1": "Enero",
+			"2": "Febrero",
+			"3": "Marzo",
+			"4": "Abril",
+			"5": "Mayo",
+			"6": "Junio",
+			"7": "Julio",
+			"8": "Agosto",
+			"9": "Septiembre",
+			"10": "Octubre",
+			"11": "Noviembre",
+			"12": "Diciembre"
+		}
+	},
+	"ruleChecker": {
+		"fileMatch": "1 archivo coincidente",
+		"folderMatch": "1 carpeta coincidente",
+		"filesMatch": "{#} archivos coincidentes",
+		"foldersMatch": "{#} carpetas coincidentes",
+		"highlight": "Resaltar"
+	},
+	"commands": {
+		"openRulebook": "Abrir libro de reglas",
+		"toggleBiggerIcons": "Alternar íconos más grandes",
+		"toggleClickableIcons": {
+			"desktop": "Alternar íconos en los que se puede hacer clic",
+			"mobile": "Alternar íconos que se pueden tocar"
+		},
+		"toggleAllFileIcons": "Alternar todos los íconos de archivos",
+		"toggleAllFolderIcons": "Alternar todos los íconos de carpetas",
+		"toggleMinimalFolderIcons": "Alternar íconos de carpeta mínimos",
+		"toggleMarkdownTabIcons": "Alternar íconos de pestañas de Markdown",
+		"toggleTitleIcons": "Alternar íconos de título",
+		"toggleTagPillIcons": "Alternar íconos de píldoras de etiquetas",
+		"toggleMenuActions": "Alternar acciones de menú",
+		"toggleSuggestionIcons": "Alternar íconos de sugerencias",
+		"toggleQuickSwitcherIcons": "Alternar íconos de selector rápido",
+		"toggleMoveFileIcons": "Alternar los íconos de \"Mover archivo\"",
+		"toggleBiggerSearchResults": "Alternar resultados de búsqueda más grandes",
+		"changeIconCurrentFile": "Cambiar el ícono del archivo actual"
+	},
+	"settings": {
+		"manage": "Administrar",
+		"values": {
+			"on": "Activado",
+			"off": "Desactivado",
+			"desktop": "Solo escritorio",
+			"mobile": "Solo móvil",
+			"list": "Lista de colores",
+			"rgb": "Selector RGB",
+			"none": "Ninguno"
+		},
+		"rulebook": {
+			"name": "Libro de reglas",
+			"desc": "Configurar reglas automatizadas para los íconos de archivos y carpetas"
+		},
+		"biggerIcons": {
+			"name": "Íconos más grandes",
+			"desc": "Mostrar íconos más grandes que la interfaz de usuario predeterminada."
+		},
+		"clickableIcons": {
+			"nameDesktop": "Íconos en los que se puede hacer clic",
+			"nameMobile": "Íconos que se pueden tocar",
+			"descDesktop": "Haga clic en un ícono para abrir el selector de íconos.",
+			"descMobile": "Toque un ícono para abrir el selector de íconos."
+		},
+		"headingSidebarsAndTabs": "Barras laterales y pestañas",
+		"showAllFileIcons": {
+			"name": "Mostrar todos los íconos de archivos",
+			"desc": "Mostrar íconos para archivos sin un ícono personalizado."
+		},
+		"showAllFolderIcons": {
+			"name": "Mostrar todos los íconos de carpetas",
+			"desc": "Mostrar íconos para carpetas que no tienen íconos personalizados."
+		},
+		"minimalFolderIcons": {
+			"name": "Íconos de carpeta mínimos",
+			"desc": "Reemplazar las flechas de carpeta con los íconos de carpeta."
+		},
+		"showMarkdownTabIcons": {
+			"name": "Mostrar íconos de pestañas de Markdown",
+			"desc": "Mostrar íconos de pestañas para archivos Markdown."
+		},
+		"headingEditor": "Editor",
+		"showTitleIcons": {
+			"name": "Mostrar íconos de título",
+			"desc": "Mostrar íconos en títulos de notas, si los títulos en una línea están activados."
+		},
+		"showTagPillIcons": {
+			"name": "Mostrar íconos de píldoras de etiquetas",
+			"desc": "Mostrar íconos en #etiquetas y en la propiedad tags."
+		},
+		"headingMenusAndDialogs": "Menús y diálogos",
+		"showMenuActions": {
+			"name": "Mostrar acciones de menú",
+			"desc": "Mostrar acciones relacionadas con íconos en los menús contextuales."
+		},
+		"showSuggestionIcons": {
+			"name": "Mostrar íconos de sugerencias",
+			"desc": "Mostrar íconos en ventanas emergentes de sugerencias para enlaces, etiquetas y propiedades."
+		},
+		"showQuickSwitcherIcons": {
+			"name": "Mostrar íconos de selector rápido",
+			"desc": "Mostrar íconos en los resultados de búsqueda de los selectores rápidos."
+		},
+		"showMoveFileIcons": {
+			"name": "Mostrar los íconos de \"Mover archivo\"",
+			"desc": "Mostrar los íconos de carpetas en los diálogos de \"Mover archivo\"."
+		},
+		"headingIconPicker": "Selector de íconos",
+		"showItemName": {
+			"name": "Mostrar el nombre del elemento",
+			"desc": "Mostrar el nombre del elemento que se está editando."
+		},
+		"biggerSearchResults": {
+			"name": "Resultados de búsqueda más grandes",
+			"desc": "Mostrar íconos más grandes en los resultados de búsqueda."
+		},
+		"maxSearchResults": {
+			"name": "Resultados de búsqueda máximos",
+			"desc": "Elige cuántos íconos quieres mostrar a la vez."
+		},
+		"colorPicker1": {
+			"name": "Selector de color principal",
+			"descDesktop": "Aparece cuando hace clic en la burbuja de color.",
+			"descMobile": "Aparece cuando toca la burbuja de color."
+		},
+		"colorPicker2": {
+			"name": "Segundo selector de color",
+			"descDesktop": "Aparece cuando haces clic secundario en la burbuja de color.",
+			"descMobile": "Aparece cuando mantienes presionada la burbuja de color."
+		},
+		"headingAdvanced": "Avanzado",
+		"uncolorHover": {
+			"name": "Flotador incoloro",
+			"desc": "Desactivar el color del ícono al pasar el cursor sobre un elemento."
+		},
+		"uncolorDrag": {
+			"name": "Arrastre incolora",
+			"desc": "Desactivar el color del ícono al arrastrar un elemento."
+		},
+		"uncolorSelect": {
+			"name": "Selección incolora",
+			"desc": "Desactivar el color del ícono mientras el elemento está seleccionado."
+		},
+		"uncolorQuick": {
+			"name": "Botón de cinta incolora",
+			"desc": "Desactivar el color del ícono para el botón de cinta de acceso rápido en móvile."
+		},
+		"viewUnusedIcons": {
+			"name": "Ver íconos no utilizados",
+			"desc": "Eliminar los íconos asignados a archivos o carpetas que ya no se encuentran en su bóveda."
+		},
+		"maxBackups": {
+			"name": "Copias de seguridad automáticas máximas",
+			"desc": "Elige cuántas copias de seguridad quieres conservar de la configuración de tus íconos. Las copias de seguridad se realizan con un intervalo de 3 horas.",
+			"openPluginFolder": "Abrir la carpeta de complemento"
+		}
+	},
+	"backups": {
+		"backupNotice": "Iconic tuvo un problema al cargar la configuración de sus íconos.",
+		"backupSecondsAgo": "Sus íconos se han restaurado a partir de una copia de seguridad guardada hace {#} segundos.",
+		"backupMinutesAgo": "Sus íconos se han restaurado a partir de una copia de seguridad guardada hace {#} minutos.",
+		"backupHoursAgo": "Sus íconos se han restaurado a partir de una copia de seguridad guardada hace {#} horas.",
+		"backupDate": "Sus íconos se han restaurado a partir de una copia de seguridad guardada el {#}."
+	}
+}
