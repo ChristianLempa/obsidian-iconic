@@ -1,0 +1,21 @@
+package-lock.json
+  s_3a8fef4623e88c::t_da14d1c7bd43ca 12,508-511
+package.json
+  s_3a8fef4623e88c::t_7cbd361ea68a5d 36
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.6.3",
+  "base_commit_sha": "046cc8232e8b284e2d47bbd0e53e4f401e122106",
+  "prompts": {},
+  "sessions": {
+    "s_3a8fef4623e88c": {
+      "agent_id": {
+        "tool": "pi",
+        "id": "019f1225-5c3f-7022-8409-11c24c260c0a",
+        "model": "gpt-5.5"
+      },
+      "human_author": "xcad <christian.lempa@clcreative.de>"
+    }
+  }
+}
