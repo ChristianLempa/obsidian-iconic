@@ -2,7 +2,7 @@ import { Command, Notice, Platform, Plugin, TAbstractFile, TFile, TFolder, View,
 import IconicSettingTab from 'src/IconicSettingTab.js';
 import EMOJIS from 'src/Emojis.js';
 import STRINGS from 'src/Strings.js';
-import { registerIconLibraries, getLibraryIconName, DEVICONS, SELFHOST_ICONS } from 'src/IconLibraries.js';
+import { registerIconLibraries, populateLibraryIcons } from 'src/IconLibraries.js';
 import MenuManager from 'src/managers/MenuManager.js';
 import RuleManager, { RuleTrigger } from 'src/managers/RuleManager.js';
 import IconManager from 'src/managers/IconManager.js';
@@ -209,8 +209,11 @@ export default class IconicPlugin extends Plugin {
 		await this.loadSettings();
 		this.addSettingTab(new IconicSettingTab(this));
 
-		// Register additional icon libraries (devicons, selfh.st, etc.)
+		// Register additional icon libraries (devicons, selfh.st, simple-icons, etc.)
 		registerIconLibraries();
+
+		// Populate custom icons into the ICONS map as early as possible
+		populateLibraryIcons(ICONS);
 
 		this.app.workspace.onLayoutReady(() => {
 			// Generate icon names from available icon IDs
@@ -327,20 +330,12 @@ export default class IconicPlugin extends Plugin {
 			.sort(([, aName], [, bName]) => {
 				return (aName && bName) ? aName.localeCompare(bName) : 0;
 			})
-			// Populate ICONS map
+			// Populate ICONS map (Lucide icons)
 			.forEach(([id, name]) => {
 				if (id && name) ICONS.set(id, name);
 			});
 
-			// Add custom library icons (devicons + selfh.st) to the ICONS map
-			DEVICONS.forEach(icon => {
-				const fullId = `devicon-${icon.id}`;
-				ICONS.set(fullId, `Devicon: ${icon.name}`);
-			});
-			SELFHOST_ICONS.forEach(icon => {
-				const fullId = `selfhst-${icon.id}`;
-				ICONS.set(fullId, `selfh.st: ${icon.name}`);
-			});
+			// Note: Custom library icons (devicon-*, selfhst-*, simple-*) are populated early in onload()
 
 			this.startManagers();
 			this.refreshBody();

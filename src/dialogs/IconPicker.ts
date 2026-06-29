@@ -1,5 +1,6 @@
 import { ButtonComponent, ColorComponent, ExtraButtonComponent, Hotkey, Menu, Modal, Platform, Setting, TextComponent, displayTooltip, prepareFuzzySearch, setTooltip } from 'obsidian';
 import IconicPlugin, { Category, Item, Icon, ICONS, EMOJIS, STRINGS } from 'src/IconicPlugin.js';
+import { isLibraryIcon } from 'src/IconLibraries.js';
 import ColorUtils, { COLORS } from 'src/ColorUtils.js';
 import { RuleItem } from 'src/managers/RuleManager.js';
 import IconManager from 'src/managers/IconManager.js';
@@ -647,24 +648,74 @@ export default class IconPicker extends Modal {
 			...(this.plugin.settings.dialogState.emojiMode ? EMOJIS : []),
 		];
 
-		// Search all icon names
-		if (query) for (const [icon, iconName] of iconEntries) {
-			if (query === icon) { // Recognize emoji input
-				matches.push([0, [icon, iconName]]);
-			} else {
-				const fuzzyMatch = fuzzySearch(iconName);
-				if (fuzzyMatch) matches.push([fuzzyMatch.score, [icon, iconName]]);
+		// When no query, show a selection of icons so libraries are visible immediately.
+		// Explicitly include icons from devicons / selfh.st / simple-icons.
+		if (!query) {
+			const limit = Math.min(this.plugin.settings.maxSearchResults || 60, 80);
+			const libraryIcons = iconEntries.filter(([icon]) => 
+				icon.startsWith('devicon-') || icon.startsWith('selfhst-') || icon.startsWith('simple-')
+			);
+			const otherIcons = iconEntries.filter(([icon]) => 
+				!icon.startsWith('devicon-') && !icon.startsWith('selfhst-') && !icon.startsWith('simple-')
+			);
+			// Prioritize showing icons from the custom libraries so they are discoverable
+			const libCount = Math.min(libraryIcons.length, Math.floor(limit * 0.55));
+			const otherCount = limit - libCount;
+			const toShow = [
+				...otherIcons.slice(0, otherCount),
+				...libraryIcons.slice(0, libCount),
+			];
+			for (const entry of toShow) {
+				matches.push([0, entry]);
+			}
+		} else {
+			// Search all icon names + raw IDs (so devicon-*, selfhst-*, simple-* are findable)
+			for (const [icon, iconName] of iconEntries) {
+				if (query === icon) {
+					matches.push([0, [icon, iconName]]);
+					continue;
+				}
+				const nameMatch = fuzzySearch(iconName);
+				const idMatch = fuzzySearch(icon);   // support searching by ID like "devicon-react" or "react"
+				const best = nameMatch && idMatch 
+					? (nameMatch.score > idMatch.score ? nameMatch : idMatch)
+					: (nameMatch || idMatch);
+				if (best) matches.push([best.score, [icon, iconName]]);
 			}
 		}
 
 		// Sort matches by score
 		matches.sort(([scoreA,], [scoreB,]) => scoreA > scoreB ? -1 : +1);
 
-		// Copy into an unscored array
+		// For searches: ensure ALL matching icons from the custom libraries (devicons, selfh.st, simple-icons)
+		// are ALWAYS included in the results. They come first. Then fill remaining slots with other matches.
+		let finalResults: [string, string][] = [];
+		if (query) {
+			const libMatches = matches.filter(([, [icon]]) => isLibraryIcon(icon));
+			const nonLibMatches = matches.filter(([, [icon]]) => !isLibraryIcon(icon));
+
+			// Sort each group by score desc
+			libMatches.sort(([a], [b]) => b - a);
+			nonLibMatches.sort(([a], [b]) => b - a);
+
+			// Add ALL library matches first (this is the key: search must find all from libraries)
+			finalResults = libMatches.map(m => m[1]);
+
+			// Then add non-library matches until we hit the limit
+			const max = this.plugin.settings.maxSearchResults || 60;
+			for (const m of nonLibMatches) {
+				if (finalResults.length >= max) break;
+				finalResults.push(m[1]);
+			}
+		} else {
+			// no query case - use the matches we already prepared (mixed)
+			finalResults = matches.map(m => m[1]).slice(0, this.plugin.settings.maxSearchResults || 60);
+		}
+
+		// Copy into searchResults
 		this.searchResults.length = 0;
-		for (const [, iconEntry] of matches) {
+		for (const iconEntry of finalResults) {
 			this.searchResults.push(iconEntry);
-			if (this.searchResults.length === this.plugin.settings.maxSearchResults) break;
 		}
 
 		// Preserve UI state
