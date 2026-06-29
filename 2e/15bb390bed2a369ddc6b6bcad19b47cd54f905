@@ -1,0 +1,24 @@
+src/IconLibraries.ts
+  s_3a8fef4623e88c::t_695382c90922e6 2-7,13,16-23,25-28,32-34,37-40,44-56,58-73,75-88,90-95,97-126,128-131,134-135,138-141,146,149-153,157
+  s_3a8fef4623e88c::t_7a5db789243642 74
+package-lock.json
+  s_3a8fef4623e88c::t_263e70ecddd9d8 11-15,508-540
+package.json
+  s_3a8fef4623e88c::t_d9d21bf25b85a4 34-38
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.6.3",
+  "base_commit_sha": "2e15bb390bed2a369ddc6b6bcad19b47cd54f905",
+  "prompts": {},
+  "sessions": {
+    "s_3a8fef4623e88c": {
+      "agent_id": {
+        "tool": "pi",
+        "id": "019f1225-5c3f-7022-8409-11c24c260c0a",
+        "model": "gpt-5.5"
+      },
+      "human_author": "xcad <christian.lempa@clcreative.de>"
+    }
+  }
+}
