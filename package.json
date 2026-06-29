@@ -33,7 +33,7 @@
 		"typescript": "6.0.2"
 	},
 	"dependencies": {
-		"@iconify-json/devicon-plain": "^1.2.57",
+		"@iconify-json/devicon": "^1.2.62",
 		"@iconify-json/selfhst": "^1.2.1",
 		"@iconify-json/simple-icons": "^1.2.87"
 	}

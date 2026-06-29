@@ -1,6 +1,6 @@
 import { addIcon } from 'obsidian';
 import { icons as simpleIconsData } from '@iconify-json/simple-icons';
-import { icons as deviconPlainData } from '@iconify-json/devicon-plain';
+import { icons as deviconData } from '@iconify-json/devicon';
 import { icons as selfhstData } from '@iconify-json/selfhst';
 import type { IconifyJSON, IconifyIcon } from '@iconify/types';
 
@@ -31,7 +31,7 @@ const LIBRARIES: IconLibrarySource[] = [
 		library: 'devicon',
 		idPrefix: 'devicon',
 		label: 'Devicon',
-		data: deviconPlainData,
+		data: deviconData,
 	},
 	{
 		library: 'selfhst',
