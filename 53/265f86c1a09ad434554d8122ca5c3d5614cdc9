@@ -1,0 +1,20 @@
+src/IconLibraries.ts
+  s_3a8fef4623e88c::t_db35ae4abd3e3a 63-77
+  s_3a8fef4623e88c::t_2655b49243e1b2 110-124
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.6.3",
+  "base_commit_sha": "53265f86c1a09ad434554d8122ca5c3d5614cdc9",
+  "prompts": {},
+  "sessions": {
+    "s_3a8fef4623e88c": {
+      "agent_id": {
+        "tool": "pi",
+        "id": "019f1225-5c3f-7022-8409-11c24c260c0a",
+        "model": "grok-build"
+      },
+      "human_author": "xcad <christian.lempa@clcreative.de>"
+    }
+  }
+}
