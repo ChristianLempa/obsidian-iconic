@@ -1,7 +1,7 @@
 {
 	"name": "iconic-custom",
 	"version": "0.0.1",
-	"description": "Customized fork of Iconic with expanded icon library support (devicons, selfh.st, and more). Private development version.",
+	"description": "Customized fork of Iconic with expanded icon library support (Simple Icons and Devicons). Private development version.",
 	"main": "main.js",
 	"type": "module",
 	"scripts": {
@@ -14,8 +14,8 @@
 		"obsidian-plugin",
 		"icon",
 		"icons",
-		"devicon",
-		"self-hosted"
+		"simple-icons",
+		"devicon"
 	],
 	"author": "Christian Lempa (based on Holo's Iconic)",
 	"license": "MIT-0",
@@ -34,7 +34,6 @@
 	},
 	"dependencies": {
 		"@iconify-json/devicon": "^1.2.62",
-		"@iconify-json/selfhst": "^1.2.1",
 		"@iconify-json/simple-icons": "^1.2.87"
 	}
 }

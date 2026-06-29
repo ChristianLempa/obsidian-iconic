@@ -6,9 +6,8 @@ A plugin for iconophiles, designed to blend seamlessly with vanilla Obsidian.
 
 **New in this fork:** Expanded icon support beyond Lucide + Emojis, including:
 
+- [Simple Icons](https://simpleicons.org/) (brand/product logos)
 - [Devicons](https://devicon.dev/) (technology & dev tool logos)
-- [selfh.st Icons](https://selfh.st/icons/) (self-hosted service icons)
-- Planned: more icon sets
 
 Click almost any icon on a tab, sidebar, ribbon, or the title bar to swap in one of the 1,700+ [Lucide icons](https://lucide.dev/) included in the app, or one of the 1,900+ [emojis](https://www.unicode.org/emoji/charts/full-emoji-list.html) that your device supports.
 
@@ -22,8 +21,8 @@ Includes language support for English, Arabic, German, Spanish, French, Indonesi
 
 This version adds support for additional icon libraries:
 
+- **Simple Icons** — Popular brand and product logos
 - **Devicons** — Popular technology logos (programming languages, frameworks, tools, cloud providers, etc.)
-- **selfh.st** — Clean icons for popular self-hosted applications and services
 
 Icon IDs for new libraries are registered using Obsidian's icon system, so they work everywhere Lucide icons do (including rules and colorization).
 
@@ -119,7 +118,7 @@ This plugin is released under an [MIT No Attribution](https://choosealicense.com
 ## Attribution & Fork Notice
 
 - Original Iconic plugin: [gfxholo/iconic](https://github.com/gfxholo/iconic) by Holo
-- This is a private customized fork by Christian Lempa focused on additional icon libraries (devicons, selfh.st, etc.).
+- This is a private customized fork by Christian Lempa focused on additional icon libraries (Simple Icons and Devicons).
 - Not intended for public release at this time.
 
 ## Installing this private version

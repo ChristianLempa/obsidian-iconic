@@ -1,10 +1,9 @@
 import { addIcon } from 'obsidian';
 import { icons as simpleIconsData } from '@iconify-json/simple-icons';
 import { icons as deviconData } from '@iconify-json/devicon';
-import { icons as selfhstData } from '@iconify-json/selfhst';
 import type { IconifyJSON, IconifyIcon } from '@iconify/types';
 
-export type LibraryId = 'simple' | 'devicon' | 'selfhst';
+export type LibraryId = 'simple' | 'devicon';
 
 export interface IconDefinition {
 	id: string;
@@ -32,12 +31,6 @@ const LIBRARIES: IconLibrarySource[] = [
 		idPrefix: 'devicon',
 		label: 'Devicon',
 		data: deviconData,
-	},
-	{
-		library: 'selfhst',
-		idPrefix: 'selfhst',
-		label: 'selfh.st',
-		data: selfhstData,
 	},
 ];
 
@@ -127,8 +120,7 @@ for (const source of LIBRARIES) {
 
 export const SIMPLE_ICONS: IconDefinition[] = LIBRARY_ICONS.get('simple') ?? [];
 export const DEVICONS: IconDefinition[] = LIBRARY_ICONS.get('devicon') ?? [];
-export const SELFHOST_ICONS: IconDefinition[] = LIBRARY_ICONS.get('selfhst') ?? [];
-export const ALL_LIBRARY_ICONS: IconDefinition[] = [...SIMPLE_ICONS, ...DEVICONS, ...SELFHOST_ICONS];
+export const ALL_LIBRARY_ICONS: IconDefinition[] = [...SIMPLE_ICONS, ...DEVICONS];
 
 /**
  * Register all additional third-party icon library icons with Obsidian.
@@ -157,5 +149,5 @@ export function populateLibraryIcons(ICONS: Map<string, string>): void {
  * Check if an ID belongs to a third-party icon library.
  */
 export function isLibraryIcon(id: string): boolean {
-	return id.startsWith('devicon-') || id.startsWith('selfhst-') || id.startsWith('simple-');
+	return id.startsWith('devicon-') || id.startsWith('simple-');
 }

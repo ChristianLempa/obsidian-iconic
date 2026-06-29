@@ -209,7 +209,7 @@ export default class IconicPlugin extends Plugin {
 		await this.loadSettings();
 		this.addSettingTab(new IconicSettingTab(this));
 
-		// Register additional icon libraries (devicons, selfh.st, simple-icons, etc.)
+		// Register additional icon libraries (devicons, simple-icons)
 		registerIconLibraries();
 
 		// Populate custom icons into the ICONS map as early as possible
@@ -335,7 +335,7 @@ export default class IconicPlugin extends Plugin {
 				if (id && name) ICONS.set(id, name);
 			});
 
-			// Note: Custom library icons (devicon-*, selfhst-*, simple-*) are populated early in onload()
+			// Note: Custom library icons (devicon-*, simple-*) are populated early in onload()
 
 			this.startManagers();
 			this.refreshBody();

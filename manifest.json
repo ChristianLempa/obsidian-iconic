@@ -3,7 +3,7 @@
 	"name": "Iconic (Custom)",
 	"version": "0.0.1",
 	"minAppVersion": "1.11.0",
-	"description": "Customized fork of Iconic with expanded icon library support (devicons, selfh.st, and more). Private development version.",
+	"description": "Customized fork of Iconic with expanded icon library support (Simple Icons and Devicons). Private development version.",
 	"author": "Christian Lempa (fork of Holo/gfxholo/iconic)",
 	"authorUrl": "https://github.com/ChristianLempa/obsidian-iconic-custom",
 	"isDesktopOnly": false

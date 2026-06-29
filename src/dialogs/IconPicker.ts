@@ -649,14 +649,14 @@ export default class IconPicker extends Modal {
 		];
 
 		// When no query, show a selection of icons so libraries are visible immediately.
-		// Explicitly include icons from devicons / selfh.st / simple-icons.
+		// Explicitly include icons from devicons / simple-icons.
 		if (!query) {
 			const limit = Math.min(this.plugin.settings.maxSearchResults || 60, 80);
 			const libraryIcons = iconEntries.filter(([icon]) => 
-				icon.startsWith('devicon-') || icon.startsWith('selfhst-') || icon.startsWith('simple-')
+				icon.startsWith('devicon-') || icon.startsWith('simple-')
 			);
 			const otherIcons = iconEntries.filter(([icon]) => 
-				!icon.startsWith('devicon-') && !icon.startsWith('selfhst-') && !icon.startsWith('simple-')
+				!icon.startsWith('devicon-') && !icon.startsWith('simple-')
 			);
 			// Prioritize showing icons from the custom libraries so they are discoverable
 			const libCount = Math.min(libraryIcons.length, Math.floor(limit * 0.55));
@@ -669,7 +669,7 @@ export default class IconPicker extends Modal {
 				matches.push([0, entry]);
 			}
 		} else {
-			// Search all icon names + raw IDs (so devicon-*, selfhst-*, simple-* are findable)
+			// Search all icon names + raw IDs (so devicon-* and simple-* are findable)
 			for (const [icon, iconName] of iconEntries) {
 				if (query === icon) {
 					matches.push([0, [icon, iconName]]);
@@ -687,7 +687,7 @@ export default class IconPicker extends Modal {
 		// Sort matches by score
 		matches.sort(([scoreA,], [scoreB,]) => scoreA > scoreB ? -1 : +1);
 
-		// For searches: ensure ALL matching icons from the custom libraries (devicons, selfh.st, simple-icons)
+		// For searches: ensure ALL matching icons from the custom libraries (devicons, simple-icons)
 		// are ALWAYS included in the results. They come first. Then fill remaining slots with other matches.
 		let finalResults: [string, string][] = [];
 		if (query) {
