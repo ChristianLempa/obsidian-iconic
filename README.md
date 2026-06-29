@@ -121,3 +121,15 @@ This plugin is released under an [MIT No Attribution](https://choosealicense.com
 - Original Iconic plugin: [gfxholo/iconic](https://github.com/gfxholo/iconic) by Holo
 - This is a private customized fork by Christian Lempa focused on additional icon libraries (devicons, selfh.st, etc.).
 - Not intended for public release at this time.
+
+## Installing this private version
+
+1. Use [BRAT](https://github.com/TfTHacker/obsidian42-brat) (recommended for private repos):
+   - Add beta plugin: `ChristianLempa/iconic`
+   - Or specify the `main` branch.
+2. Or manually:
+   - Build with `npm run build`
+   - Copy `main.js`, `manifest.json`, and `styles.css` to your vault's `.obsidian/plugins/iconic-custom/`
+   - Enable the plugin (ID will be `iconic-custom` so it can coexist with the official Iconic).
+
+> The plugin ID is `iconic-custom` to allow testing alongside the official community plugin.
