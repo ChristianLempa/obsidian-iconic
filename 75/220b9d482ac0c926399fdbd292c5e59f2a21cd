@@ -1,0 +1,25 @@
+data.json.backup1
+  s_3a8fef4623e88c::t_f1459a98858fce 1-38
+src/IconLibraries.ts
+  s_3a8fef4623e88c::t_43487f41f8707f 4-6,11,20,24,30-31,36-37,42-43,48-49,54-55,60-61,66-67,72-73,78-79,82-85,88-91,94-97,100-103,106-109,114,116-125,127-155,160,162-165,172
+src/IconicPlugin.ts
+  s_3a8fef4623e88c::t_e973513bead212 5,212,215-217,333,338
+src/dialogs/IconPicker.ts
+  s_3a8fef4623e88c::t_dd4b764ac20ed4 3,651-683,690-715,717
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.6.3",
+  "base_commit_sha": "75220b9d482ac0c926399fdbd292c5e59f2a21cd",
+  "prompts": {},
+  "sessions": {
+    "s_3a8fef4623e88c": {
+      "agent_id": {
+        "tool": "pi",
+        "id": "019f1225-5c3f-7022-8409-11c24c260c0a",
+        "model": "grok-build"
+      },
+      "human_author": "xcad <christian.lempa@clcreative.de>"
+    }
+  }
+}
