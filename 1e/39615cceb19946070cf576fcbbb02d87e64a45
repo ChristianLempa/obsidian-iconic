@@ -1,0 +1,27 @@
+README.md
+  s_3a8fef4623e88c::t_19e86d8f29b415 9,24,121
+src/IconLibraries.ts
+  s_3a8fef4623e88c::t_ada9fc4f8fd0f6 6,123,152
+package.json
+  s_3a8fef4623e88c::t_263e239b4fddee 4,17-18
+src/dialogs/IconPicker.ts
+  s_3a8fef4623e88c::t_d3c25f593c7d2e 652,656,659,672,690
+src/IconicPlugin.ts
+  s_3a8fef4623e88c::t_6ba7938ec6c7ce 212,338
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.6.3",
+  "base_commit_sha": "1e39615cceb19946070cf576fcbbb02d87e64a45",
+  "prompts": {},
+  "sessions": {
+    "s_3a8fef4623e88c": {
+      "agent_id": {
+        "tool": "pi",
+        "id": "019f1225-5c3f-7022-8409-11c24c260c0a",
+        "model": "gpt-5.5"
+      },
+      "human_author": "xcad <christian.lempa@clcreative.de>"
+    }
+  }
+}
