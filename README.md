@@ -125,7 +125,7 @@ This plugin is released under an [MIT No Attribution](https://choosealicense.com
 ## Installing this private version
 
 1. Use [BRAT](https://github.com/TfTHacker/obsidian42-brat) (recommended for private repos):
-   - Add beta plugin: `ChristianLempa/iconic`
+   - Add beta plugin: `ChristianLempa/obsidian-iconic-custom`
    - Or specify the `main` branch.
 2. Or manually:
    - Build with `npm run build`
