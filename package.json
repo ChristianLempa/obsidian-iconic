@@ -31,5 +31,10 @@
 		"obsidian": "^1.12.3",
 		"tslib": "2.8.1",
 		"typescript": "6.0.2"
+	},
+	"dependencies": {
+		"@iconify-json/devicon-plain": "^1.2.57",
+		"@iconify-json/selfhst": "^1.2.1",
+		"@iconify-json/simple-icons": "^1.2.87"
 	}
 }
