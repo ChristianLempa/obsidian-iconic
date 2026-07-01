@@ -51,7 +51,7 @@ export default class FileIconManager extends IconManager {
 					this.refreshIcons();
 					return;
 				} else for (const addedNode of mutation.addedNodes) {
-					if (addedNode instanceof HTMLElement && addedNode.hasClass('tree-item')) {
+					if (addedNode.instanceOf(HTMLElement) && addedNode.hasClass('tree-item')) {
 						this.refreshIcons();
 						return;
 					}
@@ -111,7 +111,7 @@ export default class FileIconManager extends IconManager {
 						}
 
 						// Refresh on folder collapse/expand
-						if (mutation.attributeName === 'class' && mutation.target instanceof HTMLElement) {
+						if (mutation.attributeName === 'class' && mutation.target.instanceOf(HTMLElement)) {
 							const wasCollapsed = mutation.oldValue?.includes('is-collapsed');
 							const isCollapsed = mutation.target.hasClass('is-collapsed');
 

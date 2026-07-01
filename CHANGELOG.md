@@ -2,6 +2,10 @@
 
 ## Unreleased
 
+- Clean up additional Obsidian review warnings in CSS and TypeScript source.
+- Remove broad CSS `:has()` selectors, `!important` declarations, and partially supported multicolumn usage.
+- Replace duplicated dialog hotkey private API access with a typed plugin helper.
+
 ## 0.0.3
 
 - Restore the community plugin ID to `iconic-custom` so review releases match the existing plugin listing.

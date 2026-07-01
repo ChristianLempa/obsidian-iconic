@@ -17,6 +17,8 @@ export interface ConditionItem {
 	value: string;
 }
 
+type ConditionSource = boolean | number | string | (string | null)[] | null | undefined;
+
 /**
  * Handles core rule logic, and tracks which items are currently affected by a ruling.
  */
@@ -581,7 +583,7 @@ export default class RuleManager {
 
 		for (const condition of rule.conditions) {
 			let isConditionMatched = false;
-			let source: boolean | number | string | (string | null)[] | null | undefined = undefined;
+			let source: ConditionSource = undefined;
 			const isNegated = condition.operator.startsWith('!');
 			const operator = condition.operator.replace('!', '');
 			const value = condition.value;
@@ -590,9 +592,10 @@ export default class RuleManager {
 			if (condition.source.startsWith('property:')) {
 				const propId = condition.source.replace('property:', '');
 				if (metadata?.frontmatter) {
-					const fmProps = Object.entries(metadata.frontmatter);
+					const frontmatter = metadata.frontmatter as Record<string, unknown>;
+					const fmProps = Object.entries(frontmatter);
 					const fmProp = fmProps.find(([fmPropId]) => fmPropId.toLowerCase() === propId.toLowerCase());
-					if (Array.isArray(fmProp)) source = fmProp[1];
+					if (Array.isArray(fmProp)) source = RuleManager.normalizeConditionSource(fmProp[1]);
 				}
 			} else switch (condition.source) {
 				case 'icon': {
@@ -616,7 +619,8 @@ export default class RuleManager {
 				case 'embeds': source = metadata?.embeds?.map(embed => embed.link) ?? []; break;
 				case 'tags': {
 					source = [];
-					const propTags = metadata?.frontmatter?.tags ?? [];
+					const frontmatterTags: unknown = metadata?.frontmatter?.tags;
+					const propTags = RuleManager.toStringArray(frontmatterTags);
 					const inlineTags = metadata?.tags?.map(tag => tag.tag.replace('#', '')) ?? [];
 					for (const tag of [...propTags, ...inlineTags]) {
 						if (!source.includes(tag)) source.push(tag);
@@ -944,6 +948,19 @@ export default class RuleManager {
 			}
 		}
 		return true;
+	}
+
+	private static normalizeConditionSource(value: unknown): ConditionSource {
+		if (value === null || value === undefined) return value;
+		if (typeof value === 'boolean' || typeof value === 'number' || typeof value === 'string') return value;
+		if (Array.isArray(value)) return value.map(item => item === null ? null : String(item));
+		return String(value);
+	}
+
+	private static toStringArray(value: unknown): string[] {
+		if (Array.isArray(value)) return value.map(item => String(item));
+		if (typeof value === 'string') return [value];
+		return [];
 	}
 
 	/**

@@ -36,7 +36,7 @@ export default class TagIconManager extends IconManager {
 			// Refresh when tags are added or removed
 			for (const mutation of mutations) {
 				for (const addedNode of mutation.addedNodes) {
-					if (addedNode instanceof HTMLElement && addedNode.hasClass('tree-item')) {
+					if (addedNode.instanceOf(HTMLElement) && addedNode.hasClass('tree-item')) {
 						this.refreshIcons();
 						return;
 					}

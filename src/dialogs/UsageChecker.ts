@@ -19,13 +19,7 @@ export default class UsageChecker extends Modal {
 		this.unusedIcons = new Set(unusedIcons);
 
 		// Allow hotkeys in dialog
-		for (const command of this.plugin.dialogCommands) if (command.callback) {
-			// @ts-expect-error (Private API)
-			const hotkeys: Hotkey[] = this.app.hotkeyManager?.customKeys?.[command.id] ?? [];
-			for (const hotkey of hotkeys) {
-				this.scope.register(hotkey.modifiers, hotkey.key, command.callback);
-			}
-		}
+		this.plugin.registerDialogHotkeys(this.scope);
 	}
 
 	/**

@@ -1,5 +1,13 @@
 import { Menu, MenuItem, MenuPositionDef } from 'obsidian';
 
+interface MenuItemWithSection extends MenuItem {
+	section?: string;
+}
+
+interface MenuWithSections extends Menu {
+	sections?: string[];
+}
+
 /**
  * Intercepts context menus to add custom items.
  */
@@ -60,10 +68,8 @@ export default class MenuManager {
 
 			this.menu.addItem(item => {
 				callback(item);
-				// @ts-expect-error (Private API)
-				const section: string = item.section;
-				// @ts-expect-error (Private API)
-				const sections: string[] = this.menu?.sections ?? [];
+				const section = (item as MenuItemWithSection).section ?? '';
+				const sections = (this.menu as MenuWithSections | null)?.sections ?? [];
 
 				let index = 0;
 				for (const preSection of preSections) {
@@ -98,8 +104,8 @@ export default class MenuManager {
 	 */
 	forSection(section: string, callback: (item: MenuItem, index: number) => void): this {
 		if (this.menu) {
-			// @ts-expect-error (Private API)
-			const items = (this.menu.items as MenuItem[]).filter(item => item.section === section);
+			const items = ((this.menu as Menu & { items?: MenuItemWithSection[] }).items ?? [])
+				.filter(item => item.section === section);
 			items.forEach((item, i) => callback(item, i));
 		} else {
 			this.queuedActions.push(() => this.forSection(section, callback));

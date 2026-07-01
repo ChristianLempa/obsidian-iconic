@@ -1,4 +1,4 @@
-import { ButtonComponent, ColorComponent, ExtraButtonComponent, Hotkey, Menu, Modal, Platform, Setting, TextComponent, displayTooltip, prepareFuzzySearch, setTooltip } from 'obsidian';
+import { ButtonComponent, ColorComponent, ExtraButtonComponent, Menu, Modal, Platform, Setting, TextComponent, displayTooltip, prepareFuzzySearch, setTooltip } from 'obsidian';
 import IconicPlugin, { Category, Item, Icon, ICONS, EMOJIS, STRINGS } from 'src/IconicPlugin.js';
 import { isLibraryIcon } from 'src/IconLibraries.js';
 import ColorUtils, { COLORS } from 'src/ColorUtils.js';
@@ -7,6 +7,14 @@ import IconManager from 'src/managers/IconManager.js';
 import RuleEditor from 'src/dialogs/RuleEditor.js';
 
 const COLOR_KEYS = [...COLORS.keys()];
+
+function isHTMLElement(value: EventTarget | Node | null): value is HTMLElement {
+	return value instanceof Node && value.instanceOf(HTMLElement);
+}
+
+interface MenuItemWithIconElement {
+	iconEl?: HTMLElement;
+}
 
 /**
  * Callback for setting icon & color of a single item.
@@ -116,13 +124,7 @@ export default class IconPicker extends Modal {
 		this.multiCallback = multiCallback;
 
 		// Allow hotkeys in dialog
-		for (const command of this.plugin.dialogCommands) if (command.callback) {
-			// @ts-expect-error (Private API)
-			const hotkeys: Hotkey[] = this.app.hotkeyManager?.customKeys?.[command.id] ?? [];
-			for (const hotkey of hotkeys) {
-				this.scope.register(hotkey.modifiers, hotkey.key, command.callback);
-			}
-		}
+		this.plugin.registerDialogHotkeys(this.scope);
 
 		// Navigation hotkeys
 		this.scope.register(null, 'ArrowUp', event => this.nudgeFocus(event));
@@ -139,7 +141,7 @@ export default class IconPicker extends Modal {
 	 * Nudge the focused element.
 	 */
 	private nudgeFocus(event: KeyboardEvent): void {
-		if (!(event.target instanceof HTMLElement)) return;
+		if (!isHTMLElement(event.target)) return;
 		let focusEl: Element | null = null;
 
 		switch (event.key) {
@@ -168,7 +170,7 @@ export default class IconPicker extends Modal {
 			}
 		}
 
-		if (focusEl instanceof HTMLElement) {
+		if (focusEl?.instanceOf(HTMLElement)) {
 			event.preventDefault();
 			focusEl.focus();
 		}
@@ -178,7 +180,7 @@ export default class IconPicker extends Modal {
 	 * Confirm the focused element.
 	 */
 	private confirmFocus(event: KeyboardEvent): void {
-		if (!(event.target instanceof HTMLElement)) return;
+		if (!isHTMLElement(event.target)) return;
 
 		// Extra setting buttons
 		if (event.target.hasClass('extra-setting-button')) {
@@ -207,7 +209,7 @@ export default class IconPicker extends Modal {
 	 * Delete the focused element.
 	 */
 	private deleteFocus(event: KeyboardEvent): void {
-		if (!(event.target instanceof HTMLElement)) return;
+		if (!isHTMLElement(event.target)) return;
 
 		// Anywhere except the search field
 		if (event.target !== this.searchField.inputEl ) {
@@ -353,7 +355,11 @@ export default class IconPicker extends Modal {
 			}
 		});
 		this.iconManager.setEventListener(this.colorPickerEl, 'wheel', event => {
-			event.deltaY + event.deltaX < 0 ? this.previousColor() : this.nextColor();
+			if (event.deltaY + event.deltaX < 0) {
+				this.previousColor();
+			} else {
+				this.nextColor();
+			}
 		}, { passive: true });
 		this.updateColorPicker();
 
@@ -482,8 +488,8 @@ export default class IconPicker extends Modal {
 					this.updateColorPicker();
 					this.updateSearchResults();
 				});
-				// @ts-expect-error (Private API)
-				this.iconManager.refreshIcon({ icon: 'lucide-paint-bucket', color }, menuItem.iconEl);
+				const iconEl = (menuItem as typeof menuItem & MenuItemWithIconElement).iconEl;
+				if (iconEl) this.iconManager.refreshIcon({ icon: 'lucide-paint-bucket', color }, iconEl);
 			});
 		}
 		menu.showAtPosition({ x, y });
@@ -751,7 +757,7 @@ export default class IconPicker extends Modal {
 		// Restore UI state
 		if (focusedIndex > -1) {
 			const iconEl = controlEl.children[focusedIndex];
-			if (iconEl instanceof HTMLElement) iconEl.focus();
+			if (iconEl?.instanceOf(HTMLElement)) iconEl.focus();
 		}
 		settingEl.scrollLeft = scrollLeft;
 

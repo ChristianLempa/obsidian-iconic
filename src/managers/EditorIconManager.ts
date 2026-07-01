@@ -7,6 +7,19 @@ import IconManager from 'src/managers/IconManager.js';
 import RuleEditor from 'src/dialogs/RuleEditor.js';
 import IconPicker from 'src/dialogs/IconPicker.js';
 
+interface MetadataEditorLike {
+	propertyListEl?: HTMLElement;
+}
+
+interface MarkdownViewWithPrivateElements extends MarkdownView {
+	metadataEditor?: MetadataEditorLike;
+	inlineTitleEl?: HTMLElement;
+}
+
+interface EditorWithCodeMirror extends Editor {
+	cm?: EditorView;
+}
+
 /**
  * Handles icons in the editor window of Markdown tabs.
  */
@@ -32,9 +45,9 @@ export default class EditorIconManager extends IconManager {
 
 					// Get both tag elements
 					const beginEl = update.view.domAtPos(nodeRef.to).node.parentElement;
-					if (!(beginEl instanceof HTMLElement)) return;
+					if (!beginEl?.instanceOf(HTMLElement)) return;
 					const endEl = beginEl?.nextElementSibling;
-					if (!(endEl instanceof HTMLElement) || !endEl.hasClass('cm-hashtag-end')) return;
+					if (!endEl?.instanceOf(HTMLElement) || !endEl.hasClass('cm-hashtag-end')) return;
 
 					// Get tag
 					const tagId = endEl.getText();
@@ -92,8 +105,7 @@ export default class EditorIconManager extends IconManager {
 		this.observeEditingMode(view);
 
 		// Properties list
-		// @ts-expect-error (Private API)
-		const propsEl: HTMLElement = view.metadataEditor?.propertyListEl;
+		const propsEl = (view as MarkdownViewWithPrivateElements).metadataEditor?.propertyListEl;
 		if (!propsEl) return;
 		this.observeProperties(propsEl, view, true);
 
@@ -118,12 +130,12 @@ export default class EditorIconManager extends IconManager {
 			childList: true,
 			subtree: true,
 		}, mutation => {
-			if (mutation.target instanceof HTMLElement && mutation.target.hasClass('metadata-property-icon')) {
+			if (mutation.target.instanceOf(HTMLElement) && mutation.target.hasClass('metadata-property-icon')) {
 				this.refreshViewIcons(view);
 				return;
 			}
 			for (const addedNode of mutation.addedNodes) {
-				if (addedNode instanceof HTMLElement && addedNode.hasClass('tree-item')) {
+				if (addedNode.instanceOf(HTMLElement) && addedNode.hasClass('tree-item')) {
 					this.refreshViewIcons(view);
 					return;
 				}
@@ -134,7 +146,7 @@ export default class EditorIconManager extends IconManager {
 			const pointEls = event.doc.elementsFromPoint(event.x, event.y);
 			const iconEl = pointEls.find(el => el.hasClass('metadata-property-icon'));
 			const propEl = pointEls.find(el => el.hasClass('metadata-property'));
-			if (iconEl && propEl instanceof HTMLElement) {
+			if (iconEl && propEl?.instanceOf(HTMLElement)) {
 				const domPropId = propEl.dataset.propertyKey; // Lowercase
 				const prop = domPropId ? this.plugin.getPropertyItem(domPropId) : null;
 				if (!prop) return;
@@ -155,7 +167,7 @@ export default class EditorIconManager extends IconManager {
 				const pointEls = event.doc.elementsFromPoint(event.x, event.y);
 				const iconEl = pointEls.find(el => el.hasClass('metadata-property-icon'));
 				const propEl = pointEls.find(el => el.hasClass('metadata-property'));
-				if (iconEl && propEl instanceof HTMLElement) {
+				if (iconEl && propEl?.instanceOf(HTMLElement)) {
 					const domPropId = propEl.dataset.propertyKey; // Lowercase
 					const prop = domPropId ? this.plugin.getPropertyItem(domPropId) : null;
 					if (prop) this.onPropertyContextMenu(prop.id);
@@ -193,12 +205,11 @@ export default class EditorIconManager extends IconManager {
 		this.refreshTitleIcon(view, unloading);
 
 		// Refresh property icons
-		// @ts-expect-error
-		const propsEl: HTMLElement = view.metadataEditor?.propertyListEl;
+		const propsEl = (view as MarkdownViewWithPrivateElements).metadataEditor?.propertyListEl;
 		const props = this.plugin.getPropertyItems(unloading);
-		this.observeProperties(propsEl, view, false);
+		if (propsEl) this.observeProperties(propsEl, view, false);
 		this.refreshPropertyIcons(props, view);
-		this.observeProperties(propsEl, view, true);
+		if (propsEl) this.observeProperties(propsEl, view, true);
 
 		// Refresh `tags` property
 		const tags = this.plugin.getTagItems(unloading);
@@ -215,11 +226,10 @@ export default class EditorIconManager extends IconManager {
 	 */
 	private refreshTitleIcon(view: MarkdownView, unloading?: boolean): void {
 		if (!view.file) return;
-		// @ts-expect-error (Private API)
-		const titleEl = view.inlineTitleEl;
-		if (!(titleEl instanceof HTMLElement)) return;
+		const titleEl = (view as MarkdownViewWithPrivateElements).inlineTitleEl;
+		if (!titleEl?.instanceOf(HTMLElement)) return;
 		const headerEl = titleEl.closest('.mod-header, .cm-sizer');
-		if (!(headerEl instanceof HTMLElement)) return;
+		if (!headerEl?.instanceOf(HTMLElement)) return;
 
 		// Check whether title is highlighted
 		const selection = titleEl.win.getSelection();
@@ -322,8 +332,7 @@ export default class EditorIconManager extends IconManager {
 	 * Refresh all property icons in a single MarkdownView.
 	 */
 	private refreshPropertyIcons(props: PropertyItem[], view: MarkdownView): void {
-		// @ts-expect-error (Private API)
-		const propListEl: HTMLElement = view.metadataEditor?.propertyListEl;
+		const propListEl = (view as MarkdownViewWithPrivateElements).metadataEditor?.propertyListEl;
 		if (!propListEl) return;
 		const propEls = propListEl.findAll(':scope > .metadata-property');
 
@@ -346,8 +355,7 @@ export default class EditorIconManager extends IconManager {
 	 * Refresh all tag icons in the `tags` property.
 	 */
 	private refreshTagsPropertyIcons(tags: TagItem[], view: MarkdownView, unloading?: boolean): void {
-		// @ts-expect-error (Private API)
-		const propListEl: HTMLElement = view.metadataEditor?.propertyListEl;
+		const propListEl = (view as MarkdownViewWithPrivateElements).metadataEditor?.propertyListEl;
 		if (!propListEl) return;
 		const propTagEls = view.contentEl.findAll('.metadata-property[data-property-key="tags"] .multi-select-pill');
 		if (!propTagEls) return;
@@ -381,8 +389,7 @@ export default class EditorIconManager extends IconManager {
 	 * Refresh the entire live preview editor.
 	 */
 	private refreshLivePreviewMode(editor: Editor): void {
-		// @ts-expect-error (Private API)
-		const cm = editor.cm;
+		const cm = (editor as EditorWithCodeMirror).cm;
 		if (cm instanceof EditorView) cm.dispatch();
 	}
 

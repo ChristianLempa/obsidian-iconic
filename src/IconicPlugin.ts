@@ -1,4 +1,4 @@
-import { Command, Notice, Platform, Plugin, TAbstractFile, TFile, TFolder, View, WorkspaceFloating, WorkspaceLeaf, WorkspaceRoot, getIconIds, getLanguage, normalizePath } from 'obsidian';
+import { Command, Hotkey, Notice, Platform, Plugin, Scope, TAbstractFile, TFile, TFolder, View, WorkspaceFloating, WorkspaceLeaf, WorkspaceRoot, getIconIds, getLanguage, normalizePath } from 'obsidian';
 import IconicSettingTab from 'src/IconicSettingTab.js';
 import EMOJIS from 'src/Emojis.js';
 import STRINGS from 'src/Strings.js';
@@ -156,6 +156,49 @@ interface WorkspaceWithRibbon {
 	leftRibbon?: {
 		items?: RibbonItemBase[];
 	};
+}
+
+interface HotkeyManagerBase {
+	customKeys?: Record<string, Hotkey[]>;
+}
+
+interface AppWithHotkeys {
+	hotkeyManager?: HotkeyManagerBase;
+}
+
+interface AppWithCustomCss {
+	customCss?: {
+		theme?: string;
+	};
+}
+
+interface AppWithPlugins {
+	plugins?: {
+		plugins?: Record<string, unknown>;
+	};
+}
+
+interface MetadataCacheWithTags {
+	getTags(): Record<string, number>;
+}
+
+interface WorkspaceLeafWithElements {
+	containerEl?: HTMLElement;
+	tabHeaderInnerIconEl?: HTMLElement;
+	tabHeaderEl?: HTMLElement;
+	parent?: {
+		isStacked?: boolean;
+	};
+}
+
+interface WorkspaceSplitWithMobileTabs {
+	activeTabContentEl?: HTMLElement;
+	activeTabIconEl?: HTMLElement;
+}
+
+interface WorkspaceWithMobileSplits {
+	leftSplit?: WorkspaceSplitWithMobileTabs;
+	rightSplit?: WorkspaceSplitWithMobileTabs;
 }
 
 /**
@@ -737,6 +780,23 @@ export default class IconicPlugin extends Plugin {
 	}
 
 	/**
+	 * Register this plugin's dialog hotkeys in a modal scope.
+	 */
+	registerDialogHotkeys(scope: Scope): void {
+		for (const command of this.dialogCommands) {
+			if (!command.callback) continue;
+			for (const hotkey of this.getCommandHotkeys(command.id)) {
+				scope.register(hotkey.modifiers, hotkey.key, command.callback);
+			}
+		}
+	}
+
+	private getCommandHotkeys(commandId: string): Hotkey[] {
+		const hotkeyManager = (this.app as unknown as AppWithHotkeys).hotkeyManager;
+		return hotkeyManager?.customKeys?.[commandId] ?? [];
+	}
+
+	/**
 	 * Refresh any classes or attributes on every document body.
 	 * @param unloading Remove all classes if true
 	 */
@@ -744,9 +804,8 @@ export default class IconicPlugin extends Plugin {
 		// Check all open windows
 		const bodyEls = new Set<HTMLElement>();
 		this.app.workspace.iterateAllLeaves(leaf => {
-			// @ts-expect-error (Private API)
-			const bodyEl = leaf?.containerEl?.doc?.body;
-			if (bodyEl instanceof HTMLElement) bodyEls.add(bodyEl);
+			const bodyEl = (leaf as WorkspaceLeafWithElements).containerEl?.doc.body;
+			if (bodyEl?.instanceOf(HTMLElement)) bodyEls.add(bodyEl);
 		});
 
 		// Refresh classes and theme attribute
@@ -759,8 +818,7 @@ export default class IconicPlugin extends Plugin {
 			bodyEl.toggleClass('iconic-uncolor-drag', unloading ? false : this.settings.uncolorDrag);
 			bodyEl.toggleClass('iconic-uncolor-select', unloading ? false : this.settings.uncolorSelect);
 
-			// @ts-expect-error (Private API)
-			const theme = this.app.customCss?.theme;
+			const theme = (this.app as unknown as AppWithCustomCss).customCss?.theme;
 			if (theme) {
 				bodyEl.setAttr('data-theme', theme);
 			} else {
@@ -781,8 +839,7 @@ export default class IconicPlugin extends Plugin {
 	 * Check whether a community plugin is installed and enabled.
 	 */
 	isPluginEnabled(pluginId: string): boolean {
-		// @ts-expect-error (Private API)
-		return Object.prototype.hasOwnProperty.call(this.app.plugins?.plugins ?? {}, pluginId);
+		return Object.prototype.hasOwnProperty.call((this.app as unknown as AppWithPlugins).plugins?.plugins ?? {}, pluginId);
 	}
 
 	/**
@@ -862,27 +919,22 @@ export default class IconicPlugin extends Plugin {
 	 * Create tab definition.
 	 */
 	private defineTabItem(leaf: WorkspaceLeaf, unloading?: boolean): TabItem {
-		// @ts-expect-error (Private API)
-		let iconEl: HTMLElement | null = leaf.tabHeaderInnerIconEl;
+		const privateLeaf = leaf as WorkspaceLeafWithElements;
+		const mobileWorkspace = this.app.workspace as unknown as WorkspaceWithMobileSplits;
+		let iconEl: HTMLElement | null = privateLeaf.tabHeaderInnerIconEl ?? null;
 		if (Platform.isMobile) {
-			// @ts-expect-error (Private API)
-			if (leaf.containerEl?.parentElement === this.app.workspace.leftSplit.activeTabContentEl) {
-				// @ts-expect-error (Private API)
-				iconEl = this.app.workspace.leftSplit.activeTabIconEl;
-				// @ts-expect-error (Private API)
-			} else if (leaf.containerEl?.parentElement === this.app.workspace.rightSplit.activeTabContentEl) {
-				// @ts-expect-error (Private API)
-				iconEl = this.app.workspace.rightSplit.activeTabIconEl;
+			if (privateLeaf.containerEl?.parentElement === mobileWorkspace.leftSplit?.activeTabContentEl) {
+				iconEl = mobileWorkspace.leftSplit?.activeTabIconEl ?? null;
+			} else if (privateLeaf.containerEl?.parentElement === mobileWorkspace.rightSplit?.activeTabContentEl) {
+				iconEl = mobileWorkspace.rightSplit?.activeTabIconEl ?? null;
 			}
 		}
 
 		const tabType = leaf.view.getViewType();
-		// @ts-expect-error (Private API)
-		const isActive = leaf.view === this.app.workspace.getActiveViewOfType(View) || leaf.tabHeaderEl?.hasClass('is-active');
+		const isActive = leaf.view === this.app.workspace.getActiveViewOfType(View) || privateLeaf.tabHeaderEl?.hasClass('is-active') === true;
 		const isRoot = leaf.getRoot() instanceof WorkspaceRoot || leaf.getRoot() instanceof WorkspaceFloating;
 
-		// @ts-expect-error (Private API)
-		const isStacked = leaf.parent?.isStacked === true;
+		const isStacked = privateLeaf.parent?.isStacked === true;
 		const filePath = leaf.view.getState().file; // Used because view.file is undefined on deferred views
 
 		if (filePath && !PLUGIN_TAB_TYPES.includes(tabType)) {
@@ -902,8 +954,7 @@ export default class IconicPlugin extends Plugin {
 				isRoot: isRoot,
 				isStacked: isStacked,
 				iconEl: iconEl ?? null,
-				// @ts-expect-error (Private API)
-				tabEl: leaf.tabHeaderEl ?? null,
+				tabEl: privateLeaf.tabHeaderEl ?? null,
 			}
 		} else {
 			const tabIcon = this.settings.tabIcons[tabType] ?? {};
@@ -925,8 +976,7 @@ export default class IconicPlugin extends Plugin {
 				isRoot: isRoot,
 				isStacked: isStacked,
 				iconEl: iconEl ?? null,
-				// @ts-expect-error (Private API)
-				tabEl: leaf.tabHeaderEl ?? null,
+				tabEl: privateLeaf.tabHeaderEl ?? null,
 			}
 		}
 	}
@@ -1139,8 +1189,7 @@ export default class IconicPlugin extends Plugin {
 	 * Get array of tag definitions.
 	 */
 	getTagItems(unloading?: boolean): TagItem[] {
-		// @ts-expect-error (Private API)
-		const tagHashes: string[] = Object.keys(this.app.metadataCache.getTags()) ?? [];
+		const tagHashes = Object.keys((this.app.metadataCache as unknown as MetadataCacheWithTags).getTags());
 		const tagBases = tagHashes.map(tagHash => {
 			return {
 				id: tagHash.replace('#', ''),
@@ -1155,8 +1204,7 @@ export default class IconicPlugin extends Plugin {
 	 */
 	getTagItem(tagId: string, unloading?: boolean): TagItem | null {
 		const tagHash = '#' + tagId;
-		// @ts-expect-error (Private API)
-		const tagHashes: string[] = Object.keys(this.app.metadataCache.getTags()) ?? [];
+		const tagHashes = Object.keys((this.app.metadataCache as unknown as MetadataCacheWithTags).getTags());
 		return tagHashes.includes(tagHash)
 			? this.defineTagItem({
 				id: tagId,
@@ -1422,7 +1470,12 @@ export default class IconicPlugin extends Plugin {
 			// Try to read `data.json`
 			if (await adapter.exists(dataPath)) {
 				const dataJson = await adapter.read(dataPath);
-				try { dataObject = JSON.parse(dataJson) } catch (e) { /* Ignore */ }
+				try {
+				const parsedData: unknown = JSON.parse(dataJson);
+				if (parsedData && typeof parsedData === 'object') {
+					dataObject = parsedData;
+				}
+			} catch { /* Ignore */ }
 			}
 
 			// If `data.json` is missing or corrupted, restore the backup
@@ -1432,7 +1485,11 @@ export default class IconicPlugin extends Plugin {
 		}
 
 		// Load `data.json`
-		this.settings = Object.assign({}, DEFAULT_SETTINGS, await this.loadData());
+		const loadedData: unknown = await this.loadData();
+		const settingsPatch = loadedData && typeof loadedData === 'object'
+			? loadedData as Partial<IconicSettings>
+			: {};
+		this.settings = Object.assign({}, DEFAULT_SETTINGS, settingsPatch);
 	}
 
 	/**

@@ -47,7 +47,7 @@ export default class BookmarkIconManager extends IconManager {
 		}, mutation => {
 			// Refresh when bookmarks are renamed
 			if (mutation.attributeName === 'class'
-				&& mutation.target instanceof HTMLElement
+				&& mutation.target.instanceOf(HTMLElement)
 				&& mutation.oldValue?.includes('is-being-renamed')
 				&& !mutation.target.hasClass('is-being-renamed')
 			) {
@@ -56,7 +56,7 @@ export default class BookmarkIconManager extends IconManager {
 			}
 			// Refresh when bookmarks are added or moved
 			for (const addedNode of mutation.addedNodes) {
-				if (addedNode instanceof HTMLElement && addedNode.hasClass('tree-item')) {
+				if (addedNode.instanceOf(HTMLElement) && addedNode.hasClass('tree-item')) {
 					this.refreshIcons();
 					return;
 				}
@@ -106,7 +106,7 @@ export default class BookmarkIconManager extends IconManager {
 					attributeFilter: ['class'],
 					attributeOldValue: true
 				}, mutation => {
-					if (mutation.target instanceof HTMLElement && mutation.target.hasClass('is-collapsed') !== mutation.oldValue?.includes('is-collapsed')) {
+					if (mutation.target.instanceOf(HTMLElement) && mutation.target.hasClass('is-collapsed') !== mutation.oldValue?.includes('is-collapsed')) {
 						const childItemEls = itemEl.findAll(':scope > .tree-item-children > .tree-item');
 						if (bmark.items && childItemEls) {
 							this.refreshChildIcons([bmark, ...bmark.items], [itemEl, ...childItemEls]);

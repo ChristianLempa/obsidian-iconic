@@ -25,9 +25,6 @@ body {
 }
 
 /* Right sidebar toggle */
-.sidebar-toggle-button.mod-right .clickable-icon.iconic-icon:not(:has(.sidebar-toggle-button-icon)) {
-	transform: unset;
-}
 
 /* Tabs */
 .iconic-markdown-tab-icons .workspace .mod-root .workspace-tab-header[data-type="markdown"] .workspace-tab-header-inner-icon,
@@ -262,10 +259,10 @@ a.tag {
 	box-shadow: 0 0 0 2px var(--background-modifier-border-focus);
 }
 .is-phone .iconic-search-results {
-	flex-direction: row !important;
+	flex-direction: row;
 }
 .is-phone .iconic-search-results > .setting-item-control {
-	width: auto !important;
+	width: auto;
 }
 
 /* Search result */
@@ -305,18 +302,18 @@ a.tag {
 }
 .iconic-rule,
 .iconic-condition {
-	column-gap: var(--size-4-2);
+	gap: var(--size-4-2);
 	transition: background-color 0.25s ease, border-top-color 0.25s ease, border-radius 0.25s ease, box-shadow 0.25s ease;
 }
 .is-phone .iconic-rule,
 .is-phone .iconic-condition {
-	flex-direction: row !important;
-	align-items: center !important;
-	padding: var(--size-4-4) !important;
+	flex-direction: row;
+	align-items: center;
+	padding: var(--size-4-4);
 }
 .is-phone .iconic-rule > .setting-item-control,
 .is-phone .iconic-condition > .setting-item-control {
-	width: auto !important;
+	width: auto;
 }
 .iconic-rule > *:first-child,
 .iconic-condition > *:first-child {
@@ -527,14 +524,14 @@ a.tag {
 .iconic-uncolor-hover .tree-item-self:hover > .tree-item-icon.iconic-icon > .svg-icon,
 .iconic-uncolor-hover .side-dock-ribbon-action.iconic-icon:hover > .svg-icon,
 .iconic-uncolor-hover .iconic-search-result:hover > .svg-icon {
-	color: currentColor !important;
+	color: currentColor;
 }
 .iconic-uncolor-drag > .drag-ghost .svg-icon {
-	color: currentColor !important;
+	color: currentColor;
 }
 .iconic-uncolor-select .workspace-tab-header.is-active .iconic-icon > .svg-icon,
 .iconic-uncolor-select .tree-item-self.is-active > .tree-item-icon.iconic-icon > .svg-icon {
-	color: currentColor !important;
+	color: currentColor;
 }
 
 /* Theme: Blue Topaz */
@@ -546,12 +543,6 @@ body[data-theme="Blue Topaz"] .workspace-leaf-content[data-type="file-explorer"]
 }
 body[data-theme="Blue Topaz"] .workspace-leaf-content[data-type="file-explorer"] .nav-file-title .nav-file-title-content:not(.mk-tree-text)::before {
 	display: none;
-}
-body[data-theme="Blue Topaz"] .workspace-leaf-content[data-type="file-explorer"] .nav-folder-title:has(.collapse-icon.iconic-icon) > .collapse-icon::before {
-	display: none;
-}
-body[data-theme="Blue Topaz"] .workspace-leaf-content[data-type="file-explorer"] .nav-folder-title:has(.collapse-icon.iconic-icon) > .collapse-icon > svg {
-	display: flex;
 }
 
 /* Theme: Catppuccin */
@@ -592,9 +583,6 @@ body[data-theme="ITS Theme"] .workspace-leaf-content[data-type="file-explorer"] 
 body[data-theme="ITS Theme"] .workspace-leaf-content[data-type="file-explorer"] .nav-folder-collapse-indicator {
 	display: flex;
 }
-body[data-theme="ITS Theme"] .workspace-leaf-content[data-type="file-explorer"] .nav-folder-title:not(:has(.iconic-sidekick)) > .nav-folder-title-content {
-	margin-inline-start: var(--size-4-5);
-}
 body[data-theme="ITS Theme"] .workspace-leaf-content[data-type="file-explorer"] .iconic-sidekick {
 	margin-inline-start: var(--size-4-5);
 }
@@ -609,10 +597,6 @@ body[data-theme="LYT Mode"] .workspace-leaf-content:is([data-type="file-explorer
 }
 body[data-theme="LYT Mode"] .workspace-leaf-content:is([data-type="file-explorer"], [data-type="bookmarks"]) .tree-item-icon:not(.collapse-icon) {
 	margin-inline-start: calc(-0.5 * var(--size-4-5));
-}
-body[data-theme="LYT Mode"] .workspace-leaf-content:is([data-type="file-explorer"], [data-type="bookmarks"]) .mod-collapsible:not(:has(.iconic-sidekick)) > .tree-item-inner {
-	padding-inline-start: var(--size-4-2);
-	margin-inline-start: var(--size-4-2);
 }
 body[data-theme="LYT Mode"] .workspace-leaf-content:is([data-type="file-explorer"], [data-type="bookmarks"]) :not(.mod-collapsible) > .tree-item-inner {
 	margin-inline-start: var(--size-4-2);
@@ -643,18 +627,7 @@ body[data-theme="Minimal Edge"] .tree-item-self .tree-item-icon {
 }
 
 /* Theme: Primary */
-body[data-theme="Primary"] .modal-container:has(+ .modal-container) {
-	backdrop-filter: unset;
-}
-body[data-theme="Primary"] .modal-container:has(+ .modal-container) > .modal-bg {
-	background-color: unset;
-}
-
 /* Theme: Sanctum */
-body[data-theme="Sanctum"] .workspace-leaf-content[data-type="file-explorer"] .nav-folder-title:has(.iconic-sidekick) > .nav-folder-title-content::before {
-	display: none;
-}
-
 /* Theme: Shiba Inu */
 body[data-theme="Shiba Inu"].theme-light:not(.default-light-theme, .lily-light, .ivory-light, .sky-light, .stone-light) {
 	--color-red: rgb(240, 68, 114);

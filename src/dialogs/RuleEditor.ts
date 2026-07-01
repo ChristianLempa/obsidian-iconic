@@ -267,11 +267,6 @@ const VALUE_OPERATORS = [
 	'!hasValue',
 ];
 
-const PROPERTY_OPERATORS = [
-	'hasProperty',
-	'!hasProperty',
-];
-
 const WEEKDAY_VALUES = [
 	1,
 	2,
@@ -492,13 +487,7 @@ export default class RuleEditor extends Modal {
 		this.callback = callback;
 
 		// Allow hotkeys in dialog
-		for (const command of this.plugin.dialogCommands) if (command.callback) {
-			// @ts-expect-error (Private API)
-			const hotkeys: Hotkey[] = this.app.hotkeyManager?.customKeys?.[command.id] ?? [];
-			for (const hotkey of hotkeys) {
-				this.scope.register(hotkey.modifiers, hotkey.key, command.callback);
-			}
-		}
+		this.plugin.registerDialogHotkeys(this.scope);
 	}
 
 	/**
@@ -572,7 +561,7 @@ export default class RuleEditor extends Modal {
 					buttonEls.forEach(buttonEl => buttonEl.removeClass('iconic-button-selected'));
 					button.buttonEl.addClass('iconic-button-selected');
 					this.rule.match = 'all';
-					void this.updateMatchesButton();
+					this.updateMatchesButton();
 				});
 				buttonEls.push(button.buttonEl);
 			})
@@ -584,7 +573,7 @@ export default class RuleEditor extends Modal {
 					buttonEls.forEach(buttonEl => buttonEl.removeClass('iconic-button-selected'));
 					button.buttonEl.addClass('iconic-button-selected');
 					this.rule.match = 'any';
-					void this.updateMatchesButton();
+					this.updateMatchesButton();
 				});
 				buttonEls.push(button.buttonEl);
 			})
@@ -596,7 +585,7 @@ export default class RuleEditor extends Modal {
 					buttonEls.forEach(buttonEl => buttonEl.removeClass('iconic-button-selected'));
 					button.buttonEl.addClass('iconic-button-selected');
 					this.rule.match = 'none';
-					void this.updateMatchesButton();
+					this.updateMatchesButton();
 				});
 				buttonEls.push(button.buttonEl);
 			});
@@ -656,7 +645,7 @@ export default class RuleEditor extends Modal {
 				: ['mod-cta']
 			);
 
-		void this.updateMatchesButton();
+		this.updateMatchesButton();
 	}
 
 	/**
@@ -668,16 +657,16 @@ export default class RuleEditor extends Modal {
 				this.setConditionSource(condSetting, source);
 				this.setConditionOperator(condSetting, condition.operator);
 				this.setConditionValue(condSetting, condition.value);
-				void this.updateMatchesButton();
+				this.updateMatchesButton();
 			})
 			.onOperatorChange(operator => {
 				this.setConditionOperator(condSetting, operator);
 				this.setConditionValue(condSetting, condition.value);
-				void this.updateMatchesButton();
+				this.updateMatchesButton();
 			})
 			.onValueChange(value => {
 				this.setConditionValue(condSetting, value);
-				void this.updateMatchesButton();
+				this.updateMatchesButton();
 			})
 			.onRemove(() => this.removeCondition(condSetting))
 			.onDragStart((x, y) => this.onDragStart(condSetting, x, y))
@@ -690,7 +679,7 @@ export default class RuleEditor extends Modal {
 		this.setConditionValue(condSetting, condition.value);
 		this.scrollerEl.append(condSetting.settingEl);
 
-		void this.updateMatchesButton();
+		this.updateMatchesButton();
 	}
 
 	/**
@@ -881,7 +870,7 @@ export default class RuleEditor extends Modal {
 		setting.valDropdown.selectEl.empty();
 		if (dropdownValues && dropdownLabels) {
 			for (const value of dropdownValues) {
-				const label = dropdownLabels[value as keyof typeof dropdownLabels];
+				const label = dropdownLabels[value];
 				setting.valDropdown.addOption(value.toString(), label ?? '');
 			}
 			if (dropdownValues.includes(setting.condition.value)) {
@@ -1025,19 +1014,18 @@ export default class RuleEditor extends Modal {
 	private removeCondition(setting: ConditionSetting): void {
 		setting.settingEl.remove();
 		this.rule.conditions.remove(setting.condition);
-		void this.updateMatchesButton();
+		this.updateMatchesButton();
 	}
 
 	/**
 	 * Update number displayed on the matches button.
 	 */
-	private async updateMatchesButton(): Promise<void> {
+	private updateMatchesButton(): void {
 		if (!this.matchesButton) return;
 
 		// Show a loading spinner if check takes longer than 100ms
 		const timeoutId = this.modalEl.win.setTimeout(() => {
-			// @ts-expect-error (Private API)
-			this.matchesButton.setLoading(true);
+			this.setMatchesButtonLoading(true);
 			this.matchesButton.setDisabled(true);
 		}, 100);
 
@@ -1059,9 +1047,12 @@ export default class RuleEditor extends Modal {
 				break;
 			}
 		}
-		// @ts-expect-error (Private API)
-		this.matchesButton.setLoading(false);
+		this.setMatchesButtonLoading(false);
 		this.matchesButton.setDisabled(this.matches.length === 0);
+	}
+
+	private setMatchesButtonLoading(loading: boolean): void {
+		(this.matchesButton as ButtonComponent & { setLoading?: (value: boolean) => void }).setLoading?.(loading);
 	}
 
 	/**

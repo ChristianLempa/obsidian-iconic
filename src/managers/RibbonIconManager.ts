@@ -4,6 +4,26 @@ import MenuManager from 'src/managers/MenuManager.js';
 import IconManager from 'src/managers/IconManager.js';
 import IconPicker from 'src/dialogs/IconPicker.js';
 
+interface WorkspaceRibbonLike {
+	leftRibbon?: {
+		ribbonItemsEl?: HTMLElement;
+	};
+}
+
+interface AppWithMobileNavbar {
+	mobileNavbar?: {
+		ribbonMenuItemEl?: HTMLElement;
+	};
+}
+
+interface VaultWithConfig {
+	getConfig?: (key: string) => string | null;
+}
+
+interface MenuItemWithIconElement {
+	iconEl?: HTMLElement;
+}
+
 /**
  * Handles icons in the app ribbon.
  */
@@ -12,8 +32,8 @@ export default class RibbonIconManager extends IconManager {
 		super(plugin);
 		this.refreshIcons();
 
-		// @ts-expect-error (Private API)
-		const containerEl: HTMLElement = this.app.workspace.leftRibbon.ribbonItemsEl;
+		const containerEl = (this.app.workspace as unknown as WorkspaceRibbonLike).leftRibbon?.ribbonItemsEl;
+		if (!containerEl) return;
 
 		// Prevent ribbon from eating auxclick events
 		this.setEventListener(containerEl, 'auxclick', event => {
@@ -30,11 +50,10 @@ export default class RibbonIconManager extends IconManager {
 			const ribbonItems = this.plugin.getRibbonItems();
 			this.plugin.menuManager?.forSection('order', item => {
 				const firstItem = ribbonItems.first();
-				// @ts-expect-error (Private API)
-				if (firstItem && item.iconEl.childElementCount > 0) { // Ribbon Divider compatibility
+				const itemIconEl = (item as typeof item & MenuItemWithIconElement).iconEl;
+				if (firstItem && itemIconEl && itemIconEl.childElementCount > 0) { // Ribbon Divider compatibility
 					item.setIcon(firstItem.icon);
-					// @ts-expect-error (Private API)
-					this.refreshIcon(firstItem, item.iconEl);
+					this.refreshIcon(firstItem, itemIconEl);
 					ribbonItems.shift();
 				}
 			});
@@ -44,7 +63,7 @@ export default class RibbonIconManager extends IconManager {
 		this.setMutationObserver(activeDocument.body, { childList: true }, mutation => {
 			for (const addedNode of mutation.addedNodes) {
 				// Very fragile dialog detection
-				if (addedNode instanceof HTMLElement
+				if (addedNode.instanceOf(HTMLElement)
 					&& addedNode.hasClass('modal-container')
 					&& addedNode.find('.modal-content > div > .mobile-option-setting-item')
 					&& addedNode.find('.modal-content > .modal-button-container')) {
@@ -60,20 +79,18 @@ export default class RibbonIconManager extends IconManager {
 	 */
 	refreshIcons(unloading?: boolean): void {
 		if (Platform.isPhone) {
-			// @ts-expect-error (Private API)
-			const ribbonButtonEl = this.app.mobileNavbar.ribbonMenuItemEl;
+			const ribbonButtonEl = (this.app as unknown as AppWithMobileNavbar).mobileNavbar?.ribbonMenuItemEl;
 			if (!ribbonButtonEl) return;
 
-			// @ts-expect-error (Private API)
-			const quickItemId = this.app.vault.getConfig('mobileQuickRibbonItem');
+			const quickItemId = (this.app.vault as unknown as VaultWithConfig).getConfig?.('mobileQuickRibbonItem');
 			const ribbonButtonListener = () => {
 				const firstRibItem = this.plugin.getRibbonItems().filter(item => !item.isHidden);
 				this.plugin.menuManager?.forSection('', item => {
 					const ribbonItem = firstRibItem[0];
 					if (ribbonItem) {
 						item.setIcon(ribbonItem.icon);
-						// @ts-expect-error (Private API)
-						this.refreshIcon(ribbonItem, item.iconEl);
+						const itemIconEl = (item as typeof item & MenuItemWithIconElement).iconEl;
+						if (itemIconEl) this.refreshIcon(ribbonItem, itemIconEl);
 						firstRibItem.shift();
 					}
 				});
@@ -122,8 +139,7 @@ export default class RibbonIconManager extends IconManager {
 				this.refreshConfigIcons(containerEl);
 			});
 
-			// @ts-expect-error (Private API)
-			const quickItemId = this.app.vault.getConfig('mobileQuickRibbonItem');
+			const quickItemId = (this.app.vault as unknown as VaultWithConfig).getConfig?.('mobileQuickRibbonItem');
 			if (quickItemId) {
 				const quickItem = this.plugin.getRibbonItem(quickItemId);
 				const quickIconEl = containerEl.find('.setting-item-control > .extra-setting-button');
