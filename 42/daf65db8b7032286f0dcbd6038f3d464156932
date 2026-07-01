@@ -1,0 +1,31 @@
+src/managers/MenuManager.ts
+  s_0488b037885391::t_f049819230ed2f 10-13,16-18
+  s_0488b037885391::t_100bc4d835f961 7-9,14-15,27-28,33-34,44,83,118
+  s_0488b037885391::t_0f51ed0ada1d1e 35
+src/managers/SuggestionDialogIconManager.ts
+  s_0488b037885391::t_6d1d4586cfecc4 8,59,64,68-70,72,76,81,86,94,102,107,111-113,115,119-120,126
+src/managers/FileIconManager.ts
+  s_0488b037885391::t_6d00af11c88dbc 70,74,76,81-82
+  s_0488b037885391::t_7bb8ebfd3f7303 83,86,89,147
+  s_0488b037885391::t_0b794737c47764 93,129,133-134,202,205
+src/IconicPlugin.ts
+  s_0488b037885391::t_0a75c9bf75ab35 1000,1003,1009,1037-1038
+src/managers/SuggestionIconManager.ts
+  s_0488b037885391::t_b1a5760b1d13a3 28,60,65-67,69,87,107,112-114,116,134
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.6.8",
+  "base_commit_sha": "42daf65db8b7032286f0dcbd6038f3d464156932",
+  "prompts": {},
+  "sessions": {
+    "s_0488b037885391": {
+      "agent_id": {
+        "tool": "pi",
+        "id": "019f1dda-b888-7502-930c-9ae4565945d6",
+        "model": "gpt-5.5"
+      },
+      "human_author": "xcad <christian.lempa@clcreative.de>"
+    }
+  }
+}
