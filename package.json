@@ -6,7 +6,8 @@
 	"type": "module",
 	"scripts": {
 		"dev": "node esbuild.config.mjs",
-		"build": "tsc -noEmit -skipLibCheck && node esbuild.config.mjs production",
+		"generate:icons": "node scripts/generate-icon-library-data.mjs",
+		"build": "npm run generate:icons && tsc -noEmit -skipLibCheck && node esbuild.config.mjs production",
 		"version": "node version-bump.mjs && git add manifest.json versions.json",
 		"typecheck": "tsc -noEmit -skipLibCheck",
 		"ci": "npm run build && npm run version:check",
@@ -30,7 +31,6 @@
 		"@types/node": "^25.5.0",
 		"@typescript-eslint/eslint-plugin": "8.58.0",
 		"@typescript-eslint/parser": "8.58.0",
-		"builtin-modules": "^5.0.0",
 		"esbuild": "^0.27.4",
 		"obsidian": "^1.12.3",
 		"tslib": "2.8.1",
@@ -38,6 +38,7 @@
 	},
 	"dependencies": {
 		"@iconify-json/devicon": "^1.2.62",
-		"@iconify-json/simple-icons": "^1.2.87"
+		"@iconify-json/simple-icons": "^1.2.87",
+		"fflate": "^0.8.3"
 	}
 }

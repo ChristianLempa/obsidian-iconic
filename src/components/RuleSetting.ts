@@ -206,7 +206,7 @@ export default class RuleSetting extends Setting {
 
 		// Highlight rule until menu closes
 		this.settingEl.addClass('has-active-menu');
-		menu.onHide(() => activeWindow.requestAnimationFrame(() => {
+		menu.onHide(() => window.requestAnimationFrame(() => {
 			this.settingEl.removeClass('has-active-menu');
 		}));
 

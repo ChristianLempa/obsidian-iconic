@@ -454,7 +454,7 @@ export default class IconPicker extends Modal {
 			);
 
 		// Hack to guarantee initial focus
-		activeWindow.requestAnimationFrame(() => this.searchField.inputEl.select());
+		window.requestAnimationFrame(() => this.searchField.inputEl.select());
 
 		this.updateSearchResults();
 	}
@@ -844,6 +844,6 @@ export default class IconPicker extends Modal {
 		this.contentEl.empty();
 		this.iconManager.stopEventListeners();
 		this.iconManager.stopMutationObservers();
-		this.plugin.saveSettings(); // Save any changes to dialogState
+		void this.plugin.saveSettings(); // Save any changes to dialogState
 	}
 }

@@ -24,9 +24,9 @@ Better Icons currently supports:
 - **Lucide** — built-in app icons
 - **Emojis** — device-supported emoji glyphs
 - **Simple Icons** — popular brand and product logos
-- **Devicon** — popular technology logos (programming languages, frameworks, tools, cloud providers, etc.)
+- **Devicon** — popular technology logos (programming languages, frameworks, tools, cloud providers, etc.; wordmark variants are omitted to keep the plugin bundle sync-friendly)
 
-The Simple Icons and Devicon sets are bundled into `main.js`; there are no separate icon-library files to upload to your vault.
+The Simple Icons and Devicon sets are compressed and bundled into `main.js`; there are no separate icon-library files to upload to your vault.
 
 > Note: This is an early release (0.0.1). Icon sets will be expanded iteratively.
 
@@ -98,6 +98,10 @@ There are several types of conditions you can add to a rule:
 - `System clock` checks the date & time on your device
 
 Date & time conditions are checked once every minute, so you can use them to modify your icons in real time.
+
+### Privacy and vault access
+
+Better Icons runs locally and does not make network requests. It enumerates vault files and folders so custom icons and rule conditions can be matched against paths, names, tags, links, headings, properties, and timestamps.
 
 ## What makes this plugin different from [Iconize](https://github.com/FlorianWoelki/obsidian-iconize)?
 

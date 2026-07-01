@@ -429,7 +429,7 @@ export default class Strings {
 	}
 
 	static {
-		Strings.localize();
+		void Strings.localize();
 	}
 
 	/**

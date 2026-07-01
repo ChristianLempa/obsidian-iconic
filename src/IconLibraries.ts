@@ -1,9 +1,11 @@
 import { addIcon } from 'obsidian';
-import { icons as simpleIconsData } from '@iconify-json/simple-icons';
-import { icons as deviconData } from '@iconify-json/devicon';
-import type { IconifyJSON, IconifyIcon } from '@iconify/types';
+import { inflateSync, strFromU8 } from 'fflate';
+import { COMPRESSED_ICON_LIBRARY_DATA } from 'src/generated/IconLibraryData.js';
 
 export type LibraryId = 'simple' | 'devicon';
+
+type IconDimensions = 0 | [left: number, top: number, width: number, height: number];
+type SerializedIconDefinition = [id: string, name: string, body: string, dimensions: IconDimensions];
 
 export interface IconDefinition {
 	id: string;
@@ -12,125 +14,38 @@ export interface IconDefinition {
 	library: LibraryId;
 }
 
-interface IconLibrarySource {
-	library: LibraryId;
-	idPrefix: string;
-	label: string;
-	data: IconifyJSON;
+function decodeIconData(): SerializedIconDefinition[] {
+	const binary = activeWindow.atob(COMPRESSED_ICON_LIBRARY_DATA);
+	const compressed = Uint8Array.from(binary, (char: string) => char.charCodeAt(0));
+	return JSON.parse(strFromU8(inflateSync(compressed))) as SerializedIconDefinition[];
 }
 
-const LIBRARIES: IconLibrarySource[] = [
-	{
-		library: 'simple',
-		idPrefix: 'simple',
-		label: 'Simple Icons',
-		data: simpleIconsData,
-	},
-	{
-		library: 'devicon',
-		idPrefix: 'devicon',
-		label: 'Devicon',
-		data: deviconData,
-	},
-];
-
-function titleFromSlug(slug: string): string {
-	return slug
-		.replace(/[-_]+/g, ' ')
-		.replace(/\b\w/g, char => char.toUpperCase())
-		.replace(/\bJs\b/g, 'JS')
-		.replace(/\bCss\b/g, 'CSS')
-		.replace(/\bHtml\b/g, 'HTML')
-		.replace(/\bApi\b/g, 'API')
-		.replace(/\bUi\b/g, 'UI')
-		.replace(/\bOs\b/g, 'OS')
-		.replace(/\bDb\b/g, 'DB')
-		.trim();
-}
-
-function resolveIcon(data: IconifyJSON, name: string, seen = new Set<string>()): IconifyIcon | null {
-	if (seen.has(name)) return null;
-	seen.add(name);
-
-	const direct = data.icons[name];
-	if (direct) return direct;
-
-	const alias = data.aliases?.[name];
-	if (!alias?.parent) return null;
-
-	const parent = resolveIcon(data, alias.parent, seen);
-	if (!parent) return null;
-
-	return {
-		...parent,
-		...alias,
-		body: parent.body,
-		width: alias.width ?? parent.width,
-		height: alias.height ?? parent.height,
-		left: alias.left ?? parent.left,
-		top: alias.top ?? parent.top,
-	};
-}
-
-function forceCurrentColor(svgBody: string): string {
-	return svgBody
-		// Replace explicit fill/stroke colors, while preserving fill="none" and stroke="none".
-		.replace(/\s(fill|stroke)="(?!none\b|currentColor\b)[^"]*"/gi, ' $1="currentColor"')
-		// Replace inline CSS fill/stroke colors, while preserving none/currentColor.
-		.replace(/(fill|stroke)\s*:\s*(?!none\b|currentColor\b)[^;"']+/gi, '$1:currentColor');
-}
-
-function iconToSvg(data: IconifyJSON, icon: IconifyIcon): string {
-	const left = icon.left ?? 0;
-	const top = icon.top ?? 0;
-	const width = icon.width ?? data.width ?? 16;
-	const height = icon.height ?? data.height ?? 16;
-	const body = forceCurrentColor(icon.body);
-
+function iconToSvg(body: string, dimensions: IconDimensions): string {
+	const [left, top, width, height] = dimensions || [0, 0, 16, 16];
 	return `<svg role="img" viewBox="${left} ${top} ${width} ${height}" xmlns="http://www.w3.org/2000/svg" fill="currentColor">${body}</svg>`;
 }
 
-function buildLibraryIcons(source: IconLibrarySource): IconDefinition[] {
-	const ids = new Set<string>([
-		...Object.keys(source.data.icons),
-		...Object.keys(source.data.aliases ?? {}),
-	]);
-
-	return [...ids]
-		.sort((a, b) => a.localeCompare(b))
-		.map((id): IconDefinition | null => {
-			const icon = resolveIcon(source.data, id);
-			if (!icon?.body) return null;
-
-			const name = titleFromSlug(id);
-			return {
-				id,
-				name: `${source.label}: ${name}`,
-				library: source.library,
-				svg: iconToSvg(source.data, icon),
-			};
-		})
-		.filter((icon): icon is IconDefinition => icon !== null);
+function getLibrary(id: string): LibraryId {
+	return id.startsWith('simple-') ? 'simple' : 'devicon';
 }
 
-const LIBRARY_ICONS = new Map<LibraryId, IconDefinition[]>();
-for (const source of LIBRARIES) {
-	LIBRARY_ICONS.set(source.library, buildLibraryIcons(source));
-}
+const ALL_LIBRARY_ICONS: IconDefinition[] = decodeIconData().map(([id, name, body, dimensions]) => ({
+	id,
+	name,
+	library: getLibrary(id),
+	svg: iconToSvg(body, dimensions),
+}));
 
-export const SIMPLE_ICONS: IconDefinition[] = LIBRARY_ICONS.get('simple') ?? [];
-export const DEVICONS: IconDefinition[] = LIBRARY_ICONS.get('devicon') ?? [];
-export const ALL_LIBRARY_ICONS: IconDefinition[] = [...SIMPLE_ICONS, ...DEVICONS];
+export const SIMPLE_ICONS: IconDefinition[] = ALL_LIBRARY_ICONS.filter(icon => icon.library === 'simple');
+export const DEVICONS: IconDefinition[] = ALL_LIBRARY_ICONS.filter(icon => icon.library === 'devicon');
 
 /**
- * Register all additional third-party icon library icons with Obsidian.
+ * Register all additional third-party icon library icons.
  * All SVG data is generated from package data, not hand-written custom SVGs.
  */
 export function registerIconLibraries(): void {
 	for (const icon of ALL_LIBRARY_ICONS) {
-		const source = LIBRARIES.find(library => library.library === icon.library);
-		if (!source) continue;
-		addIcon(`${source.idPrefix}-${icon.id}`, icon.svg);
+		addIcon(icon.id, icon.svg);
 	}
 }
 
@@ -139,9 +54,7 @@ export function registerIconLibraries(): void {
  */
 export function populateLibraryIcons(ICONS: Map<string, string>): void {
 	for (const icon of ALL_LIBRARY_ICONS) {
-		const source = LIBRARIES.find(library => library.library === icon.library);
-		if (!source) continue;
-		ICONS.set(`${source.idPrefix}-${icon.id}`, icon.name);
+		ICONS.set(icon.id, icon.name);
 	}
 }
 
