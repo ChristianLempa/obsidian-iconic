@@ -1,10 +1,17 @@
-import { AbstractInputSuggest, TextComponent, prepareFuzzySearch } from 'obsidian';
+import { AbstractInputSuggest, SearchMatches, TextComponent, prepareFuzzySearch } from 'obsidian';
 import IconicPlugin, { Category } from 'src/IconicPlugin.js';
+
+interface RuleNameSuggestion {
+	type: 'rule';
+	matches: SearchMatches;
+	score: number;
+	text: string;
+}
 
 /**
  * Popover that suggests names for a rule.
  */
-export default class RuleNameSuggest extends AbstractInputSuggest<any> {
+export default class RuleNameSuggest extends AbstractInputSuggest<RuleNameSuggestion> {
 	private readonly plugin: IconicPlugin;
 	private readonly page: Category;
 	private readonly inputComponent: TextComponent;
@@ -19,9 +26,9 @@ export default class RuleNameSuggest extends AbstractInputSuggest<any> {
 	/**
 	 * @override
 	 */
-	protected getSuggestions(query: string): any[] | Promise<any[]> {
+	protected getSuggestions(query: string): RuleNameSuggestion[] | Promise<RuleNameSuggestion[]> {
 		const currentName = this.inputComponent.getValue();
-		const suggestions: any[] = [];
+		const suggestions: RuleNameSuggestion[] = [];
 		const fuzzySearch = prepareFuzzySearch(query);
 		const rules = this.plugin.ruleManager!.getRules(this.page);
 		const names = new Set(rules.map(rule => rule.name));
@@ -53,14 +60,14 @@ export default class RuleNameSuggest extends AbstractInputSuggest<any> {
 	/**
 	 * @override
 	 */
-	renderSuggestion(suggestion: any, el: HTMLElement): void {
+	renderSuggestion(suggestion: RuleNameSuggestion, el: HTMLElement): void {
 		el.setText(suggestion.text);
 	}
 
 	/**
 	 * @override
 	 */
-	selectSuggestion(suggestion: any): void {
+	selectSuggestion(suggestion: RuleNameSuggestion): void {
 		this.inputComponent.setValue(suggestion.text);
 		this.inputComponent.onChanged();
 		this.close();

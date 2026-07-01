@@ -1,6 +1,6 @@
 # Better Icons
 
-A custom fork of [gfxholo/iconic](https://github.com/gfxholo/iconic) by Christian Lempa. It uses the unique plugin ID `better-icons` so it can coexist with the official Iconic plugin.
+A custom fork of [gfxholo/iconic](https://github.com/gfxholo/iconic) by Christian Lempa. It uses the existing community plugin ID `iconic-custom` so Obsidian can associate releases with the correct plugin.
 
 A plugin for iconophiles, designed to blend seamlessly with your vault.
 
@@ -28,7 +28,7 @@ Better Icons currently supports:
 
 The Simple Icons and Devicon sets are compressed and bundled into `main.js`; there are no separate icon-library files to upload to your vault.
 
-> Note: This is an early release (0.0.1). Icon sets will be expanded iteratively.
+> Note: This is an early release. Icon sets will be expanded iteratively.
 
 ## Supported items
 
@@ -137,7 +137,7 @@ After approval, install from Obsidian's Community Plugins browser.
 Download the latest release and copy these files into:
 
 ```text
-<vault>/.obsidian/plugins/better-icons/
+<vault>/.obsidian/plugins/iconic-custom/
 ```
 
 Required files:
@@ -165,8 +165,8 @@ npm run ci
 3. Create and push a matching SemVer tag without a leading `v`, for example:
 
 ```bash
-git tag 0.0.1
-git push origin 0.0.1
+git tag <version>
+git push origin <version>
 ```
 
 The release workflow publishes the Obsidian-supported assets:
@@ -175,4 +175,4 @@ The release workflow publishes the Obsidian-supported assets:
 - `manifest.json`
 - `styles.css`
 
-> The plugin ID is `better-icons` to allow installing this fork alongside the official Iconic plugin.
+> The plugin ID is `iconic-custom` to match the existing community plugin listing.

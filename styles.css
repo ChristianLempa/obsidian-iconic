@@ -57,7 +57,7 @@ body {
 	color: unset;
 	transform: unset;
 }
-.mod-rtl .tree-item-self > .tree-item-icon.collapse-icon.iconic-icon > .svg-icon:not(var(--ltr-icons)) {
+.mod-rtl .tree-item-self > .tree-item-icon.collapse-icon.iconic-icon > .svg-icon:not(.lucide-check):not(.lucide-help-circle):not(.sidebar-left):not(.sidebar-right) {
 	transform: scale(-1, 1);
 }
 .tree-item-self > .iconic-sidekick {

@@ -22,13 +22,13 @@ export default class ConditionSetting extends Setting {
 	readonly removeEl: HTMLElement;
 
 	// Callbacks
-	private sourceChangeCallback: ((source: string) => any) | null = null;
-	private operatorChangeCallback: ((operator: string) => any) | null = null;
-	private valueChangeCallback: ((value: string) => any) | null = null;
-	private dragStartCallback: ((x: number, y: number) => any) | null = null;
-	private dragCallback: ((x: number, y: number) => any) | null = null;
-	private dragEndCallback: (() => any) | null = null;
-	private removeCallback: (() => any) | null = null;
+	private sourceChangeCallback: ((source: string) => void) | null = null;
+	private operatorChangeCallback: ((operator: string) => void) | null = null;
+	private valueChangeCallback: ((value: string) => void) | null = null;
+	private dragStartCallback: ((x: number, y: number) => void) | null = null;
+	private dragCallback: ((x: number, y: number) => void) | null = null;
+	private dragEndCallback: (() => void) | null = null;
+	private removeCallback: (() => void) | null = null;
 
 	constructor(containerEl: HTMLElement, condition: ConditionItem,) {
 		super(containerEl);
@@ -100,37 +100,37 @@ export default class ConditionSetting extends Setting {
 		this.gripEl.addEventListener('touchcancel', () => this.dragEndCallback?.());
 	}
 
-	onSourceChange(callback: (source: string) => any): this {
+	onSourceChange(callback: (source: string) => void): this {
 		this.sourceChangeCallback = callback;
 		return this;
 	}
 
-	onOperatorChange(callback: (operator: string) => any): this {
+	onOperatorChange(callback: (operator: string) => void): this {
 		this.operatorChangeCallback = callback;
 		return this;
 	}
 
-	onValueChange(callback: (value: string) => any): this {
+	onValueChange(callback: (value: string) => void): this {
 		this.valueChangeCallback = callback;
 		return this;
 	}
 
-	onRemove(callback: () => any): this {
+	onRemove(callback: () => void): this {
 		this.removeCallback = callback;
 		return this;
 	}
 
-	onDragStart(callback: (x: number, y: number) => any): this {
+	onDragStart(callback: (x: number, y: number) => void): this {
 		this.dragStartCallback = callback;
 		return this;
 	}
 
-	onDrag(callback: (x: number, y: number) => any): this {
+	onDrag(callback: (x: number, y: number) => void): this {
 		this.dragCallback = callback;
 		return this;
 	}
 
-	onDragEnd(callback: () => any): this {
+	onDragEnd(callback: () => void): this {
 		this.dragEndCallback = callback;
 		return this;
 	}

@@ -15,20 +15,20 @@ export default class RuleSetting extends Setting {
 	ghostRuleEl: HTMLElement | null = null;
 
 	// Callbacks
-	private renameCallback: ((name: string) => any) | null = null;
-	private toggleCallback: ((enabled: boolean) => any) | null = null;
-	private iconClickCallback: (() => any) | null = null;
-	private editClickCallback: (() => any) | null = null;
-	private dragStartCallback: ((x: number, y: number) => any) | null = null;
-	private dragCallback: ((x: number, y: number) => any) | null = null;
-	private dragEndCallback: (() => any) | null = null;
+	private renameCallback: ((name: string) => void) | null = null;
+	private toggleCallback: ((enabled: boolean) => void) | null = null;
+	private iconClickCallback: (() => void) | null = null;
+	private editClickCallback: (() => void) | null = null;
+	private dragStartCallback: ((x: number, y: number) => void) | null = null;
+	private dragCallback: ((x: number, y: number) => void) | null = null;
+	private dragEndCallback: (() => void) | null = null;
 
 	// Menu callbacks
-	private addCallback: (() => any) | null = null;
-	private duplicateCallback: (() => any) | null = null;
+	private addCallback: (() => void) | null = null;
+	private duplicateCallback: (() => void) | null = null;
 	private edgeCheckCallback: ((edge: 'top' | 'bottom') => boolean) | null = null;
-	private edgeMoveCallback: ((edge: 'top' | 'bottom') => any) | null = null;
-	private removeCallback: (() => any) | null = null;
+	private edgeMoveCallback: ((edge: 'top' | 'bottom') => void) | null = null;
+	private removeCallback: (() => void) | null = null;
 
 	constructor(containerEl: HTMLElement, rule: RuleItem) {
 		super(containerEl);
@@ -112,7 +112,7 @@ export default class RuleSetting extends Setting {
 	/**
 	 * Set the callback used when the name field is changed.
 	 */
-	onRename(callback: (name: string) => any): this {
+	onRename(callback: (name: string) => void): this {
 		this.renameCallback = callback;
 		return this;
 	}
@@ -120,7 +120,7 @@ export default class RuleSetting extends Setting {
 	/**
 	 * Set the callback used when the enabled toggle changes.
 	 */
-	onToggle(callback: (enabled: boolean) => any): this {
+	onToggle(callback: (enabled: boolean) => void): this {
 		this.toggleCallback = callback;
 		return this;
 	}
@@ -128,7 +128,7 @@ export default class RuleSetting extends Setting {
 	/**
 	 * Set the callback used when the icon button is clicked.
 	 */
-	onIconClick(callback: () => any): this {
+	onIconClick(callback: () => void): this {
 		this.iconClickCallback = callback;
 		return this;
 	}
@@ -136,22 +136,22 @@ export default class RuleSetting extends Setting {
 	/**
 	 * Set the callback used when the edit button is clicked.
 	 */
-	onEditClick(callback: () => any): this {
+	onEditClick(callback: () => void): this {
 		this.editClickCallback = callback;
 		return this;
 	}
 
-	onDragStart(callback: ((x: number, y: number) => any) | null): this {
+	onDragStart(callback: ((x: number, y: number) => void) | null): this {
 		this.dragStartCallback = callback;
 		return this;
 	}
 
-	onDrag(callback: ((x: number, y: number) => any) | null): this {
+	onDrag(callback: ((x: number, y: number) => void) | null): this {
 		this.dragCallback = callback;
 		return this;
 	}
 
-	onDragEnd(callback: (() => any) | null): this {
+	onDragEnd(callback: (() => void) | null): this {
 		this.dragEndCallback = callback;
 		return this;
 	}
@@ -159,7 +159,7 @@ export default class RuleSetting extends Setting {
 	/**
 	 * Set the callback used when "Add rule" is selected.
 	 */
-	onAdd(callback: () => any): this {
+	onAdd(callback: () => void): this {
 		this.addCallback = callback;
 		return this;
 	}
@@ -167,7 +167,7 @@ export default class RuleSetting extends Setting {
 	/**
 	 * Set the callback used when "Duplicate rule" is selected.
 	 */
-	onDuplicate(callback: () => any): this {
+	onDuplicate(callback: () => void): this {
 		this.duplicateCallback = callback;
 		return this;
 	}
@@ -184,7 +184,7 @@ export default class RuleSetting extends Setting {
 	/**
 	 * Set the callback used when "Move to top" or "Move to bottom" are selected.
 	 */
-	onEdgeMove(callback: (edge: 'top' | 'bottom') => any): this {
+	onEdgeMove(callback: (edge: 'top' | 'bottom') => void): this {
 		this.edgeMoveCallback = callback;
 		return this;
 	}
@@ -192,7 +192,7 @@ export default class RuleSetting extends Setting {
 	/**
 	 * Set the callback used when "Remove rule" is selected.
 	 */
-	onRemove(callback: () => any): this {
+	onRemove(callback: () => void): this {
 		this.removeCallback = callback;
 		return this;
 	}
