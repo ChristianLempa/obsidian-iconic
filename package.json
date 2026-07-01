@@ -7,11 +7,12 @@
 	"scripts": {
 		"dev": "node esbuild.config.mjs",
 		"generate:icons": "node scripts/generate-icon-library-data.mjs",
-		"build": "npm run generate:icons && tsc -noEmit -skipLibCheck && node esbuild.config.mjs production",
+		"build": "npm run generate:icons && tsc -noEmit -skipLibCheck && node esbuild.config.mjs production && node scripts/check-bundle-size.mjs",
 		"version": "node version-bump.mjs && git add manifest.json versions.json",
 		"typecheck": "tsc -noEmit -skipLibCheck",
 		"ci": "npm run build && npm run version:check",
 		"version:check": "node scripts/check-version.mjs",
+		"size:check": "node scripts/check-bundle-size.mjs",
 		"release:notes": "node scripts/extract-release-notes.mjs"
 	},
 	"keywords": [

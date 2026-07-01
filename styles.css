@@ -218,6 +218,9 @@ a.tag {
 .iconic-icon-picker .setting-item-control input[type="text"] {
 	width: 100%;
 }
+.iconic-icon-picker .setting-item-control select.dropdown {
+	max-width: 12em;
+}
 .iconic-icon-picker .setting-item-control .search-input-container {
 	width: 100%;
 }
@@ -266,10 +269,18 @@ a.tag {
 }
 
 /* Search result */
+.iconic-search-result {
+	overflow: visible;
+}
 .iconic-search-result > * {
+	width: var(--icon-size);
 	height: var(--icon-size);
+	overflow: visible;
 	--icon-size: calc(var(--icon-l) * 1.25);
 	--icon-stroke: calc(var(--icon-l-stroke-width) * 6/7);
+}
+.iconic-search-result svg {
+	overflow: visible;
 }
 .iconic-bigger-search-results .iconic-search-result > * {
 	--icon-size: var(--icon-xl);
