@@ -2,6 +2,15 @@
 
 ## Unreleased
 
+## 0.0.6
+
+- Add a library dropdown to the icon picker so searches are scoped to one icon library at a time.
+- Fix clipped Simple Icons and Devicons by preserving their correct default SVG viewBox dimensions.
+- Lazy-load full third-party icon libraries when the picker opens and only register already-used library icons at startup.
+- Reduce unnecessary settings writes from the icon picker and remember the last selected library.
+- Add a release bundle size check to protect Obsidian Sync compatibility.
+- Show a fallback icon when a stored icon ID is unavailable.
+
 ## 0.0.5
 
 - Fix remaining source review warnings around proxy typing, unbound methods, `this` aliasing, and RuleEditor promise-like condition checks.
