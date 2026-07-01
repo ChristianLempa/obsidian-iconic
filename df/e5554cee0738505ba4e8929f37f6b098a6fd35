@@ -1,0 +1,49 @@
+styles.css
+  s_0488b037885391::t_37367c5b7417c6 221-223,272-274,276,278,282-284
+scripts/check-bundle-size.mjs
+  s_0488b037885391::t_2b7efe34bb7c2c 1-17
+src/managers/IconManager.ts
+  s_0488b037885391::t_5907449669a6ae 42-43
+src/IconLibraries.ts
+  s_0488b037885391::t_ceb8805b1d1fbb 17,20,35,37-45,47-51,54,57,59-61,71,73-77
+  s_0488b037885391::t_f377c1872a68c9 18-19,58,62-63,65,67
+  s_0488b037885391::t_e343038028d961 31-34
+  s_0488b037885391::t_b3544fd18cd9cd 36
+package.json
+  s_0488b037885391::t_25ac2b312c5520 10,15
+src/dialogs/IconPicker.ts
+  s_0488b037885391::t_92c4c5cf3dcbbd 760-762
+  s_0488b037885391::t_cb1e22c0dde914 243-246,536
+  s_0488b037885391::t_ad3b2d6b5895c5 598
+  s_0488b037885391::t_bd5192899f4daa 600,603
+  s_0488b037885391::t_e5ad4344572043 329-337,339
+  s_0488b037885391::t_c03ce3ba4b9379 532-535,537-546
+  s_0488b037885391::t_09b9048bbd2890 2-3,106,128
+  s_0488b037885391::t_5dbfd10c8a6e41 10,126-127
+  s_0488b037885391::t_208cb4fa09c25d 582-590
+  s_0488b037885391::t_bde487f72e9550 1,99,105,338,340
+  s_0488b037885391::t_7269e27621fe5a 416,419-425,428,434-435
+  s_0488b037885391::t_83965c18eef825 625-626
+src/Strings.ts
+  s_0488b037885391::t_5ad8afd5eb07f1 236-241
+src/IconicPlugin.ts
+  s_0488b037885391::t_63afbbcd450878 5,26,234,274,315-319
+  s_0488b037885391::t_e0f83f91ec96da 1445-1467
+  s_0488b037885391::t_07d3d9f902c013 1519
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.6.8",
+  "base_commit_sha": "dfe5554cee0738505ba4e8929f37f6b098a6fd35",
+  "prompts": {},
+  "sessions": {
+    "s_0488b037885391": {
+      "agent_id": {
+        "tool": "pi",
+        "id": "019f1dda-b888-7502-930c-9ae4565945d6",
+        "model": "gpt-5.5"
+      },
+      "human_author": "xcad <christian.lempa@clcreative.de>"
+    }
+  }
+}
