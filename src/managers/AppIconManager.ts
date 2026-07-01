@@ -152,7 +152,7 @@ export default class AppIconManager extends IconManager {
 				this.minimizeEl.empty();
 				this.minimizeEl.removeClass('iconic-icon');
 				const rectEl = this.minimizeEl.createSvg('svg', SVG_INFO).createSvg('rect', MINIMIZE_RECT);
-				if (item.color) rectEl.style.fill = ColorUtils.toRgb(item.color);
+				if (item.color) rectEl.setAttr('fill', ColorUtils.toRgb(item.color));
 			}
 			if (this.plugin.settings.showMenuActions) {
 				this.setEventListener(this.minimizeEl, 'contextmenu', event => {
@@ -182,8 +182,8 @@ export default class AppIconManager extends IconManager {
 				const pathEl1 = svgEl.createSvg('path', CLOSE_PATH_1);
 				const pathEl2 = svgEl.createSvg('path', CLOSE_PATH_2);
 				if (item.color) {
-					pathEl1.style.fill = ColorUtils.toRgb(item.color);
-					pathEl2.style.fill = ColorUtils.toRgb(item.color);
+					pathEl1.setAttr('fill', ColorUtils.toRgb(item.color));
+					pathEl2.setAttr('fill', ColorUtils.toRgb(item.color));
 				}
 			}
 			if (this.plugin.settings.showMenuActions) {
@@ -217,16 +217,16 @@ export default class AppIconManager extends IconManager {
 				this.maximizeEl.removeClass('iconic-icon');
 				const svgEl = this.maximizeEl.createSvg('svg', SVG_INFO);
 				if (isMaximized) {
-					svgEl.style.fill = 'none';
+					svgEl.setAttr('fill', 'none');
 					const pathEl1 = svgEl.createSvg('path', UNMAXIMIZE_PATH_1);
 					const pathEl2 = svgEl.createSvg('path', UNMAXIMIZE_PATH_2);
 					if (item.color) {
-						pathEl1.style.stroke = ColorUtils.toRgb(item.color);
-						pathEl2.style.fill = ColorUtils.toRgb(item.color);
+						pathEl1.setAttr('stroke', ColorUtils.toRgb(item.color));
+						pathEl2.setAttr('fill', ColorUtils.toRgb(item.color));
 					}
 				} else {
 					const rectEl = svgEl.createSvg('rect', MAXIMIZE_RECT);
-					if (item.color) rectEl.style.stroke = ColorUtils.toRgb(item.color);
+					if (item.color) rectEl.setAttr('stroke', ColorUtils.toRgb(item.color));
 				}
 			}
 			if (this.plugin.settings.showMenuActions) {

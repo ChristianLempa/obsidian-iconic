@@ -46,12 +46,12 @@ export default class RuleManager {
 			}
 			folderRuleIds.push(ruleBase.id);
 		}
-		this.plugin.saveSettings();
+		void this.plugin.saveSettings();
 
 		// Initialize rulings
 		this.updateRulings('file');
 		this.updateRulings('folder');
-		this.startTriggerTimer();
+		void this.startTriggerTimer();
 	}
 
 	/**
@@ -71,8 +71,8 @@ export default class RuleManager {
 		// Recalculate delay every minute to avoid timing drift
 		const delay = 60000 - (Date.now() % 60000);
 		// Start the next timer
-		this.triggerTimerId = activeWindow.setTimeout(() => {
-			this.startTriggerTimer();
+		this.triggerTimerId = window.setTimeout(() => {
+			void this.startTriggerTimer();
 		}, delay);
 	}
 
@@ -207,7 +207,7 @@ export default class RuleManager {
 			enabled: duplicateRule.enabled,
 		});
 
-		this.plugin.saveSettings();
+		void this.plugin.saveSettings();
 		return duplicateRule;
 	}
 
@@ -223,7 +223,7 @@ export default class RuleManager {
 		ruleBases.splice(index, 1);
 		ruleBases.splice(toIndex, 0, ruleBase);
 
-		this.plugin.saveSettings();
+		void this.plugin.saveSettings();
 		return this.updateRulings(page);
 	}
 
@@ -259,7 +259,7 @@ export default class RuleManager {
 		if (typeof newRule.enabled === 'boolean') ruleBase.enabled = newRule.enabled;
 		else delete ruleBase.enabled;
 
-		this.plugin.saveSettings();
+		void this.plugin.saveSettings();
 		return this.updateRulings(page);
 	}
 
@@ -272,7 +272,7 @@ export default class RuleManager {
 		if (index === -1) return false;
 		ruleBases.splice(index, 1);
 
-		this.plugin.saveSettings();
+		void this.plugin.saveSettings();
 		return this.updateRulings(page);
 	}
 
@@ -987,6 +987,6 @@ export default class RuleManager {
 	 * Stop the trigger timer.
 	 */
 	unload(): void {
-		activeWindow.clearTimeout(this.triggerTimerId);
+		window.clearTimeout(this.triggerTimerId);
 	}
 }

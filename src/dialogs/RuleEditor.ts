@@ -572,7 +572,7 @@ export default class RuleEditor extends Modal {
 					buttonEls.forEach(buttonEl => buttonEl.removeClass('iconic-button-selected'));
 					button.buttonEl.addClass('iconic-button-selected');
 					this.rule.match = 'all';
-					this.updateMatchesButton();
+					void this.updateMatchesButton();
 				});
 				buttonEls.push(button.buttonEl);
 			})
@@ -584,7 +584,7 @@ export default class RuleEditor extends Modal {
 					buttonEls.forEach(buttonEl => buttonEl.removeClass('iconic-button-selected'));
 					button.buttonEl.addClass('iconic-button-selected');
 					this.rule.match = 'any';
-					this.updateMatchesButton();
+					void this.updateMatchesButton();
 				});
 				buttonEls.push(button.buttonEl);
 			})
@@ -596,7 +596,7 @@ export default class RuleEditor extends Modal {
 					buttonEls.forEach(buttonEl => buttonEl.removeClass('iconic-button-selected'));
 					button.buttonEl.addClass('iconic-button-selected');
 					this.rule.match = 'none';
-					this.updateMatchesButton();
+					void this.updateMatchesButton();
 				});
 				buttonEls.push(button.buttonEl);
 			});
@@ -656,7 +656,7 @@ export default class RuleEditor extends Modal {
 				: ['mod-cta']
 			);
 
-		this.updateMatchesButton();
+		void this.updateMatchesButton();
 	}
 
 	/**
@@ -668,16 +668,16 @@ export default class RuleEditor extends Modal {
 				this.setConditionSource(condSetting, source);
 				this.setConditionOperator(condSetting, condition.operator);
 				this.setConditionValue(condSetting, condition.value);
-				this.updateMatchesButton();
+				void this.updateMatchesButton();
 			})
 			.onOperatorChange(operator => {
 				this.setConditionOperator(condSetting, operator);
 				this.setConditionValue(condSetting, condition.value);
-				this.updateMatchesButton();
+				void this.updateMatchesButton();
 			})
 			.onValueChange(value => {
 				this.setConditionValue(condSetting, value);
-				this.updateMatchesButton();
+				void this.updateMatchesButton();
 			})
 			.onRemove(() => this.removeCondition(condSetting))
 			.onDragStart((x, y) => this.onDragStart(condSetting, x, y))
@@ -690,7 +690,7 @@ export default class RuleEditor extends Modal {
 		this.setConditionValue(condSetting, condition.value);
 		this.scrollerEl.append(condSetting.settingEl);
 
-		this.updateMatchesButton();
+		void this.updateMatchesButton();
 	}
 
 	/**
@@ -961,7 +961,7 @@ export default class RuleEditor extends Modal {
 		settingEl.addClass('drag-ghost-hidden');
 
 		// Hack to hide the browser-native drag ghost
-		settingEl.style.opacity = '0%';
+		settingEl.setCssStyles({ opacity: '0%' });
 		settingEl.win.requestAnimationFrame(() => settingEl.style.removeProperty('opacity'));
 	}
 
@@ -1025,7 +1025,7 @@ export default class RuleEditor extends Modal {
 	private removeCondition(setting: ConditionSetting): void {
 		setting.settingEl.remove();
 		this.rule.conditions.remove(setting.condition);
-		this.updateMatchesButton();
+		void this.updateMatchesButton();
 	}
 
 	/**

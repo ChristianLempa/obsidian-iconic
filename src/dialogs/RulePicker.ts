@@ -240,8 +240,8 @@ export default class RulePicker extends Modal {
 			// Display drop zone effect
 			settingEl.addClass('drag-ghost-hidden');
 			// Hack to hide the browser-native drag ghost
-			settingEl.style.opacity = '0%';
-			activeWindow.requestAnimationFrame(() => settingEl.style.removeProperty('opacity'));
+			settingEl.setCssStyles({ opacity: '0%' });
+			window.requestAnimationFrame(() => settingEl.style.removeProperty('opacity'));
 		})
 		.onDrag((x, y) => {
 			// Ignore initial (0, 0) event
@@ -322,6 +322,6 @@ export default class RulePicker extends Modal {
 		for (const ghostEl of this.modalEl.doc.body.findAll(':scope > .iconic-rule-dragger')) {
 			ghostEl.remove();
 		}
-		this.plugin.saveSettings(); // Save any changes to dialogState
+		void this.plugin.saveSettings(); // Save any changes to dialogState
 	}
 }
