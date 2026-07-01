@@ -997,16 +997,16 @@ export default class IconicPlugin extends Plugin {
 	/**
 	 * Get file definition.
 	 */
-	getFileItem(fileId: string, unloading?: boolean): FileItem {
+	getFileItem(fileId: string, unloading?: boolean, includeChildren = true): FileItem {
 		const { path } = this.splitFilePath(fileId); // Ignore subpath
 		const tFile = this.app.vault.getAbstractFileByPath(path);
-		return this.defineFileItem(tFile, fileId, unloading);
+		return this.defineFileItem(tFile, fileId, unloading, includeChildren);
 	}
 
 	/**
 	 * Create file definition.
 	 */
-	private defineFileItem(tFile: TAbstractFile | null, fileId: string, unloading?: boolean): FileItem {
+	private defineFileItem(tFile: TAbstractFile | null, fileId: string, unloading?: boolean, includeChildren = true): FileItem {
 		const { filename, basename, extension } = this.splitFilePath(fileId);
 		const fileIcon = this.settings.fileIcons[fileId] ?? {};
 		let iconDefault = null;
@@ -1034,8 +1034,8 @@ export default class IconicPlugin extends Plugin {
 			iconDefault: unloading ? null : iconDefault,
 			icon: unloading ? null : fileIcon.icon ?? null,
 			color: unloading ? null : fileIcon.color ?? null,
-			items: tFile instanceof TFolder
-				? tFile.children.map(tChild => this.defineFileItem(tChild, tChild.path, unloading))
+			items: tFile instanceof TFolder && includeChildren
+				? tFile.children.map(tChild => this.defineFileItem(tChild, tChild.path, unloading, includeChildren))
 				: null,
 		}
 	}

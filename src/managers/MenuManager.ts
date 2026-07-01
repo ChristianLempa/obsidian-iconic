@@ -4,8 +4,18 @@ interface MenuItemWithSection extends MenuItem {
 	section?: string;
 }
 
-interface MenuWithSections extends Menu {
-	sections?: string[];
+type ShowAtPositionMethod = (this: Menu, position: MenuPositionDef, doc?: Document) => Menu;
+
+function getMenuItems(menu: Menu): MenuItemWithSection[] {
+	const items = Reflect.get(menu, 'items');
+	return Array.isArray(items)
+		? items.filter((item): item is MenuItemWithSection => item instanceof MenuItem)
+		: [];
+}
+
+function getMenuSections(menu: Menu): unknown[] {
+	const sections = Reflect.get(menu, 'sections');
+	return Array.isArray(sections) ? sections : [];
 }
 
 /**
@@ -14,14 +24,15 @@ interface MenuWithSections extends Menu {
 export default class MenuManager {
 	private menu: Menu | null = null;
 	private queuedActions: (() => void)[] = [];
-	private showAtPositionOriginal: typeof Menu.prototype.showAtPosition;
-	private showAtPositionProxy: typeof Menu.prototype.showAtPosition;
+	private showAtPositionOriginal: ShowAtPositionMethod;
+	private showAtPositionProxy: ShowAtPositionMethod;
 
 	constructor() {
 		const menuPrototype = Menu.prototype;
 
-		// Store original method
-		this.showAtPositionOriginal = menuPrototype.showAtPosition;
+		// Store original method. Use Reflect.get to avoid capturing a method through
+		// property access; the proxy still receives the concrete Menu instance.
+		this.showAtPositionOriginal = Reflect.get(menuPrototype, 'showAtPosition');
 
 		// Catch menus as they open
 		this.showAtPositionProxy = new Proxy(this.showAtPositionOriginal, {
@@ -30,7 +41,7 @@ export default class MenuManager {
 				if (this.queuedActions.length > 0) {
 					this.runQueuedActions(); // Menu is unhappy with your customer service
 				}
-				return Reflect.apply(showAtPosition, menu, args) as Menu;
+				return Reflect.apply(showAtPosition, menu, args);
 			}
 		});
 
@@ -69,7 +80,7 @@ export default class MenuManager {
 			this.menu.addItem((item: MenuItemWithSection) => {
 				callback(item);
 				const section = item.section ?? '';
-				const sections = (this.menu as MenuWithSections | null)?.sections ?? [];
+				const sections = getMenuSections(this.menu!);
 
 				let index = 0;
 				for (const preSection of preSections) {
@@ -104,8 +115,7 @@ export default class MenuManager {
 	 */
 	forSection(section: string, callback: (item: MenuItem, index: number) => void): this {
 		if (this.menu) {
-			const items = ((this.menu as Menu & { items?: MenuItemWithSection[] }).items ?? [])
-				.filter(item => item.section === section);
+			const items = getMenuItems(this.menu).filter(item => item.section === section);
 			items.forEach((item, i) => callback(item, i));
 		} else {
 			this.queuedActions.push(() => this.forSection(section, callback));
