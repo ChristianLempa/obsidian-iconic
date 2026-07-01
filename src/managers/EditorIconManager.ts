@@ -34,7 +34,11 @@ export default class EditorIconManager extends IconManager {
 			this.refreshReadingModeHashtags(tags, tagEls);
 		});
 
-		const manager = this;
+		const getTagItem = (tagId: string) => this.plugin.getTagItem(tagId);
+		const handleTagContextMenu = (tagId: string) => this.onTagContextMenu(tagId, true);
+		const refreshTag = (tagEl: HTMLElement, tag: TagItem | null, onContextMenu: (event: MouseEvent) => void) => {
+			this.refreshTag(tagEl, tag, onContextMenu);
+		};
 		plugin.registerEditorExtension(ViewPlugin.fromClass(class {
 			update(update: ViewUpdate): void {
 				let viewport = update.view.viewport;
@@ -51,15 +55,15 @@ export default class EditorIconManager extends IconManager {
 
 					// Get tag
 					const tagId = endEl.getText();
-					const tag = manager.plugin.getTagItem(tagId);
+					const tag = getTagItem(tagId);
 
 					// Refresh tag
 					const onContextMenu = () => {
-						if (tag) manager.onTagContextMenu(tag.id, true);
+						if (tag) handleTagContextMenu(tag.id);
 					};
-					manager.refreshTag(beginEl, tag, onContextMenu);
+					refreshTag(beginEl, tag, onContextMenu);
 					if (tag) tag.icon = null;
-					manager.refreshTag(endEl, tag, onContextMenu);
+					refreshTag(endEl, tag, onContextMenu);
 				}})
 			}
 		}));
