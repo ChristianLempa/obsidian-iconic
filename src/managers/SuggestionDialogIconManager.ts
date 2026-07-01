@@ -5,7 +5,7 @@ import IconManager from 'src/managers/IconManager.js';
 type UnknownSuggestModal = SuggestModal<unknown>;
 type OnOpenMethod = (this: UnknownSuggestModal) => void | Promise<void>;
 type SetInstructionsMethod = (this: UnknownSuggestModal, instructions: Instruction[]) => void;
-type RenderSuggestionMethod = (this: UnknownSuggestModal, value: unknown, el: HTMLElement) => void;
+type RenderSuggestionMethod = (value: unknown, el: HTMLElement) => void;
 
 type PluginModal = UnknownSuggestModal & { plugin: Plugin };
 interface BookmarkSuggestionBase {
@@ -56,45 +56,42 @@ export default class SuggestionDialogIconManager extends IconManager {
 		this.onOpenProxy = new Proxy(this.onOpenOriginal, {
 			apply: (onOpen, modal: UnknownSuggestModal, args: []) => {
 				if (this.isDisabled()) {
-					Reflect.apply(onOpen, modal, args);
-					return;
+					return Reflect.apply(onOpen, modal, args);
 				}
 
 				const modalType = this.getModalType(modal);
 				if (!modalType) {
-					Reflect.apply(onOpen, modal, args);
-					return;
+					return Reflect.apply(onOpen, modal, args);
 				}
 
 				// Proxy renderSuggestion() for each instance
-				modal.renderSuggestion = new Proxy(modal.renderSuggestion as RenderSuggestionMethod, {
-					apply: (renderSuggestion, renderModal: UnknownSuggestModal, renderArgs: [unknown, HTMLElement]) => {
+				const renderSuggestionOriginal: RenderSuggestionMethod = modal.renderSuggestion.bind(modal);
+				modal.renderSuggestion = new Proxy(renderSuggestionOriginal, {
+					apply: (renderSuggestion, _renderModal, renderArgs: [unknown, HTMLElement]) => {
 						// Call base method first to pre-populate elements
-						Reflect.apply(renderSuggestion, renderModal, renderArgs);
+						renderSuggestion(...renderArgs);
 
 						switch (modalType) {
 							case QUICK_SWITCHER: {
-								renderModal.modalEl.addClass('iconic-prompt');
+								modal.modalEl.addClass('iconic-prompt');
 								this.refreshSuggestionIconQS(...renderArgs);
 								break;
 							}
 							case QUICK_SWITCHER_PP: {
-								renderModal.modalEl.addClass('iconic-prompt');
+								modal.modalEl.addClass('iconic-prompt');
 								this.refreshSuggestionIconQSPP(...renderArgs);
 								break;
 							}
 							case MOVE_FILE_DIALOG: {
-								renderModal.modalEl.addClass('iconic-prompt');
+								modal.modalEl.addClass('iconic-prompt');
 								this.refreshSuggestionIconMFD(...renderArgs);
 								break;
 							}
 						}
-						return;
 					}
 				});
 
-				Reflect.apply(onOpen, modal, args);
-				return;
+				return Reflect.apply(onOpen, modal, args);
 			}
 		});
 
@@ -102,34 +99,31 @@ export default class SuggestionDialogIconManager extends IconManager {
 		this.setInstructionsProxy = new Proxy(this.setInstructionsOriginal, {
 			apply: (setInstructions, modal: UnknownSuggestModal, args: [Instruction[]]) => {
 				if (this.isDisabled()) {
-					Reflect.apply(setInstructions, modal, args);
-					return;
+					return Reflect.apply(setInstructions, modal, args);
 				}
 
 				const modalType = this.getModalType(modal);
 				if (modalType !== ANOTHER_QUICK_SWITCHER) {
-					Reflect.apply(setInstructions, modal, args);
-					return;
+					return Reflect.apply(setInstructions, modal, args);
 				}
 
 				// Proxy renderSuggestion() for every instance
-				modal.renderSuggestion = new Proxy(modal.renderSuggestion as RenderSuggestionMethod, {
-					apply: (renderSuggestion, renderModal: UnknownSuggestModal, renderArgs: [unknown, HTMLElement]) => {
+				const renderSuggestionOriginal: RenderSuggestionMethod = modal.renderSuggestion.bind(modal);
+				modal.renderSuggestion = new Proxy(renderSuggestionOriginal, {
+					apply: (renderSuggestion, _renderModal, renderArgs: [unknown, HTMLElement]) => {
 						if (this.isDisabled()) {
-							Reflect.apply(renderSuggestion, renderModal, renderArgs);
+							renderSuggestion(...renderArgs);
 							return;
 						}
 						// Call base method first to pre-populate elements
-						Reflect.apply(renderSuggestion, renderModal, renderArgs);
-						renderModal.modalEl.addClass('iconic-another-quick-switcher');
+						renderSuggestion(...renderArgs);
+						modal.modalEl.addClass('iconic-another-quick-switcher');
 						// Refresh suggestions
 						this.refreshSuggestionIconAQS(...renderArgs);
-						return;
 					}
 				});
 
-				Reflect.apply(setInstructions, modal, args);
-				return;
+				return Reflect.apply(setInstructions, modal, args);
 			}
 		});
 

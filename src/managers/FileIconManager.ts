@@ -66,31 +66,31 @@ export default class FileIconManager extends IconManager {
 	 * Refresh all file icons.
 	 */
 	refreshIcons(unloading?: boolean): void {
-		const files = this.plugin.getFileItems(unloading);
 		const itemEls = this.containerEl?.findAll(':scope > .tree-item');
-		if (itemEls) this.refreshChildIcons(files, itemEls, unloading);
+		if (itemEls) this.refreshChildIcons(itemEls, unloading);
 	}
 
 	/**
-	 * Refresh an array of file icons, including any subitems.
+	 * Refresh an array of visible file icons, including any expanded subitems.
 	 */
-	private refreshChildIcons(files: FileItem[], itemEls: HTMLElement[], unloading?: boolean): void {
+	private refreshChildIcons(itemEls: HTMLElement[], unloading?: boolean): void {
 		for (const itemEl of itemEls) {
 			itemEl.addClass('iconic-item');
 
 			const selfEl = itemEl.find(':scope > .tree-item-self');
-			const file = files.find(file => file.id === selfEl?.dataset.path);
-			if (!file) continue;
+			const fileId = selfEl?.dataset.path;
+			if (!selfEl || !fileId) continue;
+			const file = this.plugin.getFileItem(fileId, unloading, false);
 
 			// Check for an icon ruling
-			const page = file.items ? 'folder' : 'file';
+			const page = file.category === 'folder' ? 'folder' : 'file';
 			const rule = this.plugin.ruleManager?.checkRuling(page, file.id, unloading) ?? file;
 
-			if (file.items) {
+			if (file.category === 'folder') {
 				// Refresh children immediately if folder is expanded
 				if (!itemEl.hasClass('is-collapsed')) {
 					const childItemEls = itemEl.findAll(':scope > .tree-item-children > .tree-item');
-					if (childItemEls) this.refreshChildIcons(file.items, childItemEls, unloading);
+					if (childItemEls) this.refreshChildIcons(childItemEls, unloading);
 				}
 
 				// Set up mutation observer with performance optimizations:
@@ -126,12 +126,12 @@ export default class FileIconManager extends IconManager {
 					}
 
 					if (shouldRefreshSelf) {
-						this.refreshChildIcons([file], [itemEl]);
+						this.refreshChildIcons([itemEl]);
 					}
 					if (shouldRefreshChildren) {
 						const childItemEls = itemEl.findAll(':scope > .tree-item-children > .tree-item');
-						if (file.items && childItemEls) {
-							this.debouncedRefresh(file.items, childItemEls);
+						if (childItemEls) {
+							this.debouncedRefresh(childItemEls);
 						}
 					}
 				});
@@ -144,7 +144,7 @@ export default class FileIconManager extends IconManager {
 				innerEl?.insertAdjacentElement('beforebegin', iconEl);
 			}
 
-			if (file.items) {
+			if (file.category === 'folder') {
 				// Toggle default icon based on expand/collapse state
 				if (rule.iconDefault) rule.iconDefault = iconEl.hasClass('is-collapsed')
 					? 'lucide-folder-closed'
@@ -199,10 +199,10 @@ export default class FileIconManager extends IconManager {
 	 * Debounced version of refreshChildIcons that prevents multiple rapid refreshes.
 	 * Waits for 100ms of no new refresh requests before executing.
 	 */
-	private debouncedRefresh(files: FileItem[], itemEls: HTMLElement[]): void {
+	private debouncedRefresh(itemEls: HTMLElement[]): void {
 		window.clearTimeout(this.refreshTimerId);
 		this.refreshTimerId = window.setTimeout(() => {
-			this.refreshChildIcons(files, itemEls);
+			this.refreshChildIcons(itemEls);
 		}, 100);
 	}
 
