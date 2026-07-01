@@ -1,0 +1,69 @@
+package.json
+  s_b6049ed916deb1::t_bb176773d78449 9-10
+  s_b6049ed916deb1::t_80e2112783961c 41-42
+src/dialogs/RuleEditor.ts
+  s_b6049ed916deb1::t_92e21f36280f65 575,587,599,659,671,676,680,693,1028
+  s_b6049ed916deb1::t_8e92989b0410bf 964
+manifest.json
+  s_b6049ed916deb1::t_6c711eaf4e4539 8
+src/Strings.ts
+  s_b6049ed916deb1::t_4e02fee5ef1c46 432
+src/IconicSettingTab.ts
+  s_b6049ed916deb1::t_6815806ad9c3fe 68,98,118,132,146,160,178,192,210,224,237,250,276,299,316,339,363,381,395,409,423,467
+  s_b6049ed916deb1::t_180646535be1d1 435-436,473-481
+  s_b6049ed916deb1::t_67a1a4457801d4 482-483
+src/managers/AppIconManager.ts
+  s_b6049ed916deb1::t_c836c337b21356 220,224-225,229
+  s_b6049ed916deb1::t_14dc505edac0ed 155,185-186
+src/IconicPlugin.ts
+  s_b6049ed916deb1::t_2eed8041eb616a 1435
+  s_b6049ed916deb1::t_6815806ad9c3fe 357,381,425,446,458,469,480,491,502,513,524,536,546,556,576,1205,1213,1225,1244,1265,1292,1301,1309,1323,1331
+src/dialogs/IconPicker.ts
+  s_b6049ed916deb1::t_9c9832fbea2c88 457
+  s_b6049ed916deb1::t_6815806ad9c3fe 847
+src/managers/RuleManager.ts
+  s_b6049ed916deb1::t_9c9832fbea2c88 74,990
+  s_b6049ed916deb1::t_6815806ad9c3fe 49,210,226,262,275
+  s_b6049ed916deb1::t_92e21f36280f65 54,75
+src/generated/IconLibraryData.ts
+  s_b6049ed916deb1::t_362c46431434e3 1-2
+CHANGELOG.md
+  s_b6049ed916deb1::t_8ed87bd9ad8991 5-10
+scripts/generate-icon-library-data.mjs
+  s_b6049ed916deb1::t_c9682123fd7723 1-83
+src/IconLibraries.ts
+  s_b6049ed916deb1::t_b8cd9168ddd085 2-3,7-9,17-18,20,23-24,28-29,32-37,39-40,43,48,57
+  s_b6049ed916deb1::t_a499df84c5e20d 19
+src/components/RuleSetting.ts
+  s_b6049ed916deb1::t_9c9832fbea2c88 209
+README.md
+  s_b6049ed916deb1::t_4fdc715c79cda8 27,29,102-104
+  s_b6049ed916deb1::t_f4c32967d4db94 105
+src/dialogs/RulePicker.ts
+  s_b6049ed916deb1::t_ecd3d0f75c6399 243
+  s_b6049ed916deb1::t_6815806ad9c3fe 325
+  s_b6049ed916deb1::t_9c9832fbea2c88 244
+esbuild.config.mjs
+  s_b6049ed916deb1::t_fcad13fbe15d57 3,35
+src/ColorUtils.ts
+  s_b6049ed916deb1::t_72a1dce4596c11 205
+  s_b6049ed916deb1::t_f8a6ad791ca0a2 182,192,195
+package-lock.json
+  s_b6049ed916deb1::t_380ddfcdf66ca1 13-14,937-942
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.6.8",
+  "base_commit_sha": "b124a6e3ba43a1b680580fb59097c8bef00b24ed",
+  "prompts": {},
+  "sessions": {
+    "s_b6049ed916deb1": {
+      "agent_id": {
+        "tool": "pi",
+        "id": "019f1ce2-8284-780c-921a-8ee880f41164",
+        "model": "gpt-5.5"
+      },
+      "human_author": "xcad <christian.lempa@clcreative.de>"
+    }
+  }
+}
