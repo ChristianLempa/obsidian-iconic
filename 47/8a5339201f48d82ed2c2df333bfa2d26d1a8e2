@@ -1,0 +1,64 @@
+src/components/ConditionSetting.ts
+  s_3a98ccf5f44952::t_c10368faf3d773 25-31,103,108,113,118,123,128,133
+src/components/RuleNameSuggest.ts
+  s_3a98ccf5f44952::t_ae5b08f6163dbf 1,4-10,14,29,31,63,70
+src/managers/RuleManager.ts
+  s_3a98ccf5f44952::t_cb59ffa34ceb0e 535
+  s_3a98ccf5f44952::t_c620927fd94ea4 2,129,259
+  s_3a98ccf5f44952::t_f014c98c1fec11 526,532
+  s_3a98ccf5f44952::t_fc633629b4f003 130-137,145-146
+src/components/ConditionValueSuggest.ts
+  s_3a98ccf5f44952::t_1515071a0acfac 1,13-19,23,65,67,184,191
+src/managers/SuggestionIconManager.ts
+  s_3a98ccf5f44952::t_dd7dbe7f99b805 10-18,54,62,106,114,148-149,164-167,171-173,194-196,227-229
+manifest.json
+  s_3a98ccf5f44952::t_93f56e348dac7e 2,4
+src/IconicPlugin.ts
+  s_3a98ccf5f44952::t_3efed2e8911ae2 1
+  s_3a98ccf5f44952::t_7fe31d6e584efa 80-160,192-200,663,1397
+  s_3a98ccf5f44952::t_51bea3bb9760c4 1085-1086,1094-1095,1101-1102,1108-1109,1244-1245,1247-1248
+  s_3a98ccf5f44952::t_e51bacbc54fc6e 1187-1188,1197-1199,1207-1208,1213-1214
+  s_3a98ccf5f44952::t_6d294bd3ccfc6d 1318,1345
+  s_3a98ccf5f44952::t_2907867b1ed419 785
+  s_3a98ccf5f44952::t_6b39abd1687733 1021,1029-1030,1044,1047-1050,1122,1129-1130,1170,1206,1209,1227,1235-1236,1243
+styles.css
+  s_3a98ccf5f44952::t_05f6a21d05296c 60
+src/Strings.ts
+  s_3a98ccf5f44952::t_e81d628f72b674 470,472-475
+  s_3a98ccf5f44952::t_743df5a2833861 439,453-463
+package.json
+  s_3a98ccf5f44952::t_93f56e348dac7e 2-3
+CHANGELOG.md
+  s_3a98ccf5f44952::t_e61a55280882b2 5-9,22
+src/components/RuleSetting.ts
+  s_3a98ccf5f44952::t_51d5c1b1241a6c 18-24,27-28,30-31,115,123,131,139,144,149,154,162,170,187,195
+src/managers/IconManager.ts
+  s_3a98ccf5f44952::t_a43bb78851644d 12,98
+  s_3a98ccf5f44952::t_fab492b3aa2d86 88
+src/managers/SuggestionDialogIconManager.ts
+  s_3a98ccf5f44952::t_98cbccda59e58a 175,191-193,208-209
+  s_3a98ccf5f44952::t_37c86ce7ad3ddb 174
+  s_3a98ccf5f44952::t_f792c47473ad8a 2,5-16,21,61,93,105,130,157-159,251-252,270-272,294-306
+versions.json
+  s_3a98ccf5f44952::t_93f56e348dac7e 3-4
+README.md
+  s_3a98ccf5f44952::t_613f597c186e47 3,31,140,168-169,178
+package-lock.json
+  s_3a98ccf5f44952::t_5c630694710911 2-3,8-9
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.6.8",
+  "base_commit_sha": "478a5339201f48d82ed2c2df333bfa2d26d1a8e2",
+  "prompts": {},
+  "sessions": {
+    "s_3a98ccf5f44952": {
+      "agent_id": {
+        "tool": "pi",
+        "id": "019f1d03-ec11-7c27-89ef-d5797fd07d5c",
+        "model": "gpt-5.5"
+      },
+      "human_author": "xcad <christian.lempa@clcreative.de>"
+    }
+  }
+}
