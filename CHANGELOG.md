@@ -2,6 +2,12 @@
 
 ## Unreleased
 
+## 0.0.7
+
+- Address source review warnings for proxied menu and suggestion methods.
+- Properly return promise-capable suggestion dialog hook results.
+- Reduce broad vault enumeration during file explorer icon refreshes by refreshing visible tree nodes directly.
+
 ## 0.0.6
 
 - Add a library dropdown to the icon picker so searches are scoped to one icon library at a time.
