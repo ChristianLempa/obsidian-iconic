@@ -12,6 +12,16 @@ const UNMAXIMIZE_PATH_2 = { attr: { d: 'M4 2H10V8H9V9H11V1H3V3H4V2Z', fill: 'cur
 const CLOSE_PATH_1 = { attr: { fill: 'currentColor', 'fill-rule': 'evenodd', d: 'M10.052 10.968 1.03 1.93l.849-.848 9.023 9.037-.849.848Z' } };
 const CLOSE_PATH_2 = { attr: { fill: 'currentColor', 'fill-rule': 'evenodd', d: 'M1.023 10.112 10.06 1.09l.848.85-9.037 9.023-.848-.85Z' } };
 
+interface ElectronWindowApi {
+	electron?: {
+		remote?: {
+			getCurrentWindow?: () => {
+				isMaximized?: () => boolean;
+			};
+		};
+	};
+}
+
 /**
  * Handles icons of system buttons in the window frame and vault switcher.
  */
@@ -200,8 +210,8 @@ export default class AppIconManager extends IconManager {
 	 * Refresh maximize icon only. This button can have two states: maximized or unmaximized.
 	 */
 	private refreshMaximizeIcon(unloading?: boolean): void {
-		// @ts-expect-error (Electron API)
-		const isMaximized = activeWindow.electron.remote.getCurrentWindow().isMaximized() ?? true;
+		const isMaximized = (activeWindow as Window & ElectronWindowApi)
+			.electron?.remote?.getCurrentWindow?.().isMaximized?.() ?? true;
 
 		this.stopMutationObserver(this.maximizeEl);
 		if (!activeDocument.contains(this.maximizeEl)) {

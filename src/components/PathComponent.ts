@@ -70,19 +70,19 @@ export default class PathComponent extends BaseComponent {
 	/**
 	 * Set click behavior for the icon button.
 	 */
-	onIconClick(callback: () => unknown | Promise<unknown>): this {
-		this.iconButton.onClick(() => callback());
+	onIconClick(callback: () => void | Promise<void>): this {
+		this.iconButton.onClick(() => { void callback(); });
 		return this;
 	}
 
 	/**
 	 * Set click behavior for the remove button.
 	 */
-	onRemoveClick(callback: () => unknown | Promise<unknown>): this {
+	onRemoveClick(callback: () => void | Promise<void>): this {
 		if (!this.removeButton) {
 			this.removeButton = new ExtraButtonComponent(this.pathEl).setIcon('lucide-x');
 		}
-		this.removeButton.onClick(() => callback());
+		this.removeButton.onClick(() => { void callback(); });
 		return this;
 	}
 

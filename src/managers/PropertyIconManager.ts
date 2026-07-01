@@ -30,7 +30,7 @@ export default class PropertyIconManager extends IconManager {
 				childList: true,
 			}, mutation => {
 				for (const addedNode of mutation.addedNodes) {
-					if (addedNode instanceof HTMLElement && addedNode.hasClass('tree-item')) {
+					if (addedNode.instanceOf(HTMLElement) && addedNode.hasClass('tree-item')) {
 						this.refreshIcons();
 						return;
 					}
@@ -47,7 +47,7 @@ export default class PropertyIconManager extends IconManager {
 				childList: true,
 			}, mutation => {
 				for (const addedNode of mutation.addedNodes) {
-					if (addedNode instanceof HTMLElement && addedNode.hasClass('metadata-property')) {
+					if (addedNode.instanceOf(HTMLElement) && addedNode.hasClass('metadata-property')) {
 						this.refreshIcons();
 						return;
 					}
@@ -107,7 +107,7 @@ export default class PropertyIconManager extends IconManager {
 		const propEls = this.filePropsContainerEl?.findAll('.metadata-property') ?? [];
 		for (const propEl of propEls) {
 			const propInputEl = propEl.find('.metadata-property-key-input');
-			if (!(propInputEl instanceof HTMLInputElement)) continue;
+			if (!propInputEl.instanceOf(HTMLInputElement)) continue;
 
 			const propId = propInputEl.value;
 			if (!propId) continue;
@@ -120,8 +120,8 @@ export default class PropertyIconManager extends IconManager {
 			// Refresh icon
 			if (this.plugin.isSettingEnabled('clickableIcons')) {
 				this.refreshIcon(prop, iconEl, event => {
-					IconPicker.openSingle(this.plugin, prop!, (newIcon, newColor) => {
-						this.plugin.savePropertyIcon(prop!, newIcon, newColor);
+					IconPicker.openSingle(this.plugin, prop, (newIcon, newColor) => {
+						this.plugin.savePropertyIcon(prop, newIcon, newColor);
 						this.plugin.refreshManagers('property');
 					});
 					event.stopPropagation();

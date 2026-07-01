@@ -3,6 +3,13 @@ import IconicPlugin, { FileItem, STRINGS } from 'src/IconicPlugin.js';
 import RulePicker from 'src/dialogs/RulePicker.js';
 import UsageChecker from 'src/dialogs/UsageChecker.js';
 
+interface AppWithSettingsUI {
+	setting?: {
+		close: () => void;
+	};
+	openWithDefaultApp?: (path: string) => void | Promise<void>;
+}
+
 /**
  * Exposes UI settings for the plugin.
  */
@@ -33,7 +40,7 @@ export default class IconicSettingTab extends PluginSettingTab {
 		const groupTop = new SettingGroup(this.containerEl);
 
 		// SETTING: Rules
-		groupTop.addSetting(setting => setting
+		groupTop.addSetting(setting => void setting
 			.setName(STRINGS.settings.rulebook.name)
 			.setDesc(STRINGS.settings.rulebook.desc)
 			.addButton(button => { button
@@ -41,15 +48,14 @@ export default class IconicSettingTab extends PluginSettingTab {
 				.onClick(() => {
 					// Silently no-op if rulebook hasn't finished loading
 					if (!this.plugin.ruleManager) return;
-					// @ts-expect-error (Private API)
-					this.app.setting.close();
+					(this.app as unknown as AppWithSettingsUI).setting?.close();
 					RulePicker.open(this.plugin);
 				});
 			})
 		);
 
 		// SETTING: Bigger icons
-		groupTop.addSetting(setting => setting
+		groupTop.addSetting(setting => void setting
 			.setName(STRINGS.settings.biggerIcons.name)
 			.setDesc(STRINGS.settings.biggerIcons.desc)
 			.addExtraButton(indicator => {
@@ -73,7 +79,7 @@ export default class IconicSettingTab extends PluginSettingTab {
 		);
 
 		// SETTING: Clickable icons
-		groupTop.addSetting(setting => setting
+		groupTop.addSetting(setting => void setting
 			.setName(Platform.isDesktop
 				? STRINGS.settings.clickableIcons.nameDesktop
 				: STRINGS.settings.clickableIcons.nameMobile
@@ -108,7 +114,7 @@ export default class IconicSettingTab extends PluginSettingTab {
 			.setHeading(STRINGS.settings.headingSidebarsAndTabs);
 
 		// SETTING: Show all file icons
-		groupSidebarsAndTabs.addSetting(setting => setting
+		groupSidebarsAndTabs.addSetting(setting => void setting
 			.setName(STRINGS.settings.showAllFileIcons.name)
 			.setDesc(STRINGS.settings.showAllFileIcons.desc)
 			.addToggle(toggle => toggle
@@ -122,7 +128,7 @@ export default class IconicSettingTab extends PluginSettingTab {
 		);
 
 		// SETTING: Show all folder icons
-		groupSidebarsAndTabs.addSetting(setting => setting
+		groupSidebarsAndTabs.addSetting(setting => void setting
 			.setName(STRINGS.settings.showAllFolderIcons.name)
 			.setDesc(STRINGS.settings.showAllFolderIcons.desc)
 			.addToggle(toggle => toggle
@@ -136,7 +142,7 @@ export default class IconicSettingTab extends PluginSettingTab {
 		);
 
 		// SETTING: Minimal folder icons
-		groupSidebarsAndTabs.addSetting(setting => setting
+		groupSidebarsAndTabs.addSetting(setting => void setting
 			.setName(STRINGS.settings.minimalFolderIcons.name)
 			.setDesc(STRINGS.settings.minimalFolderIcons.desc)
 			.addToggle(toggle => toggle
@@ -150,7 +156,7 @@ export default class IconicSettingTab extends PluginSettingTab {
 		);
 
 		// SETTING: Show Markdown tab icons
-		groupSidebarsAndTabs.addSetting(setting => setting
+		groupSidebarsAndTabs.addSetting(setting => void setting
 			.setName(STRINGS.settings.showMarkdownTabIcons.name)
 			.setDesc(STRINGS.settings.showMarkdownTabIcons.desc)
 			.addToggle(toggle => toggle
@@ -168,7 +174,7 @@ export default class IconicSettingTab extends PluginSettingTab {
 			.setHeading(STRINGS.settings.headingEditor);
 
 		// SETTING: Show title icons
-		groupEditor.addSetting(setting => setting
+		groupEditor.addSetting(setting => void setting
 			.setName(STRINGS.settings.showTitleIcons.name)
 			.setDesc(STRINGS.settings.showTitleIcons.desc)
 			.addToggle(toggle => toggle
@@ -182,7 +188,7 @@ export default class IconicSettingTab extends PluginSettingTab {
 		);
 
 		// SETTING: Show tag pill icons
-		groupEditor.addSetting(setting => setting
+		groupEditor.addSetting(setting => void setting
 			.setName(STRINGS.settings.showTagPillIcons.name)
 			.setDesc(STRINGS.settings.showTagPillIcons.desc)
 			.addToggle(toggle => toggle
@@ -200,7 +206,7 @@ export default class IconicSettingTab extends PluginSettingTab {
 			.setHeading(STRINGS.settings.headingMenusAndDialogs);
 
 		// SETTING: Show menu actions
-		groupMenusAndDialogs.addSetting(setting => setting
+		groupMenusAndDialogs.addSetting(setting => void setting
 			.setName(STRINGS.settings.showMenuActions.name)
 			.setDesc(STRINGS.settings.showMenuActions.desc)
 			.addToggle(toggle => toggle
@@ -214,7 +220,7 @@ export default class IconicSettingTab extends PluginSettingTab {
 		);
 
 		// SETTING: Show suggestion icons
-		groupMenusAndDialogs.addSetting(setting => setting
+		groupMenusAndDialogs.addSetting(setting => void setting
 			.setName(STRINGS.settings.showSuggestionIcons.name)
 			.setDesc(STRINGS.settings.showSuggestionIcons.desc)
 			.addToggle(toggle => toggle
@@ -227,7 +233,7 @@ export default class IconicSettingTab extends PluginSettingTab {
 		);
 
 		// SETTING: Show quick switcher icons
-		groupMenusAndDialogs.addSetting(setting => setting
+		groupMenusAndDialogs.addSetting(setting => void setting
 			.setName(STRINGS.settings.showQuickSwitcherIcons.name)
 			.setDesc(STRINGS.settings.showQuickSwitcherIcons.desc)
 			.addToggle(toggle => toggle
@@ -240,7 +246,7 @@ export default class IconicSettingTab extends PluginSettingTab {
 		);
 
 		// SETTING: Show "Move file" dialog icons
-		groupMenusAndDialogs.addSetting(setting => setting
+		groupMenusAndDialogs.addSetting(setting => void setting
 			.setName(STRINGS.settings.showMoveFileIcons.name)
 			.setDesc(STRINGS.settings.showMoveFileIcons.desc)
 			.addToggle(toggle => toggle
@@ -257,7 +263,7 @@ export default class IconicSettingTab extends PluginSettingTab {
 			.setHeading(STRINGS.settings.headingIconPicker);
 
 		// SETTING: Show item name
-		groupIconPicker.addSetting(setting => setting
+		groupIconPicker.addSetting(setting => void setting
 			.setName(STRINGS.settings.showItemName.name)
 			.setDesc(STRINGS.settings.showItemName.desc)
 			.addExtraButton(indicator => {
@@ -280,7 +286,7 @@ export default class IconicSettingTab extends PluginSettingTab {
 		);
 
 		// SETTING: Bigger search results
-		groupIconPicker.addSetting(setting => setting
+		groupIconPicker.addSetting(setting => void setting
 			.setName(STRINGS.settings.biggerSearchResults.name)
 			.setDesc(STRINGS.settings.biggerSearchResults.desc)
 			.addExtraButton(indicator => {
@@ -304,7 +310,7 @@ export default class IconicSettingTab extends PluginSettingTab {
 		);
 
 		// SETTING: Maximum search results
-		groupIconPicker.addSetting(setting => setting
+		groupIconPicker.addSetting(setting => void setting
 			.setName(STRINGS.settings.maxSearchResults.name)
 			.setDesc(STRINGS.settings.maxSearchResults.desc)
 			.addSlider(slider => slider
@@ -319,7 +325,7 @@ export default class IconicSettingTab extends PluginSettingTab {
 		);
 
 		// SETTING: Main color picker
-		groupIconPicker.addSetting(setting => setting
+		groupIconPicker.addSetting(setting => void setting
 			.setName(STRINGS.settings.colorPicker1.name)
 			.setDesc(Platform.isDesktop
 				? STRINGS.settings.colorPicker1.descDesktop
@@ -343,7 +349,7 @@ export default class IconicSettingTab extends PluginSettingTab {
 		);
 
 		// SETTING: Second color picker
-		groupIconPicker.addSetting(setting => setting
+		groupIconPicker.addSetting(setting => void setting
 			.setName(STRINGS.settings.colorPicker2.name)
 			.setDesc(Platform.isDesktop
 				? STRINGS.settings.colorPicker2.descDesktop
@@ -371,7 +377,7 @@ export default class IconicSettingTab extends PluginSettingTab {
 			.setHeading(STRINGS.settings.headingAdvanced);
 
 		// SETTING: Colorless hover
-		groupAdvanced.addSetting(setting => setting
+		groupAdvanced.addSetting(setting => void setting
 			.setName(STRINGS.settings.uncolorHover.name)
 			.setDesc(STRINGS.settings.uncolorHover.desc)
 			.addToggle(toggle => toggle
@@ -385,7 +391,7 @@ export default class IconicSettingTab extends PluginSettingTab {
 		);
 
 		// SETTING: Colorless drag
-		groupAdvanced.addSetting(setting => setting
+		groupAdvanced.addSetting(setting => void setting
 			.setName(STRINGS.settings.uncolorDrag.name)
 			.setDesc(STRINGS.settings.uncolorDrag.desc)
 			.addToggle(toggle => toggle
@@ -399,7 +405,7 @@ export default class IconicSettingTab extends PluginSettingTab {
 		);
 
 		// SETTING: Colorless selection
-		groupAdvanced.addSetting(setting => setting
+		groupAdvanced.addSetting(setting => void setting
 			.setName(STRINGS.settings.uncolorSelect.name)
 			.setDesc(STRINGS.settings.uncolorSelect.desc)
 			.addToggle(toggle => toggle
@@ -413,7 +419,7 @@ export default class IconicSettingTab extends PluginSettingTab {
 		);
 
 		// SETTING: Colorless ribbon button
-		groupAdvanced.addSetting(setting => setting
+		groupAdvanced.addSetting(setting => void setting
 			.setName(STRINGS.settings.uncolorQuick.name)
 			.setDesc(STRINGS.settings.uncolorQuick.desc)
 			.addToggle(toggle => toggle
@@ -427,7 +433,7 @@ export default class IconicSettingTab extends PluginSettingTab {
 		);
 
 		// SETTING: View unused icons
-		groupAdvanced.addSetting(setting => setting
+		groupAdvanced.addSetting(setting => void setting
 			.setName(STRINGS.settings.viewUnusedIcons.name)
 			.setDesc(STRINGS.settings.viewUnusedIcons.desc)
 			.addButton(button => button
@@ -439,15 +445,16 @@ export default class IconicSettingTab extends PluginSettingTab {
 		);
 
 		// SETTING: Maximum automatic backups
-		groupAdvanced.addSetting(setting => setting
+		groupAdvanced.addSetting(setting => void setting
 			.setName(STRINGS.settings.maxBackups.name)
 			.setDesc(STRINGS.settings.maxBackups.desc)
 			.then(setting => {
 				if (Platform.isDesktop) setting.addExtraButton(button => button
 					.setIcon('lucide-folder-open')
 					.setTooltip(STRINGS.settings.maxBackups.openPluginFolder)
-					// @ts-expect-error (Private API)
-					.onClick(() => this.app.openWithDefaultApp(this.plugin.manifest.dir ?? ''))
+					.onClick(() => {
+						void (this.app as unknown as AppWithSettingsUI).openWithDefaultApp?.(this.plugin.manifest.dir ?? '');
+					})
 				)
 			})
 			.addDropdown(dropdown => dropdown

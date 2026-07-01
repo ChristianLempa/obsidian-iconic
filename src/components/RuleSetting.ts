@@ -250,8 +250,7 @@ export default class RuleSetting extends Setting {
 			.setTitle(STRINGS.rulePicker.removeRule)
 			.setSection('danger')
 			.onClick(() => this.removeCallback?.());
-			// @ts-expect-error (Private API)
-			item.dom?.addClass?.('is-warning');
+			(item as typeof item & { dom?: HTMLElement }).dom?.addClass('is-warning');
 		});
 
 		menu.showAtMouseEvent(event);

@@ -4,6 +4,21 @@ import IconManager from 'src/managers/IconManager.js';
 import RuleEditor from 'src/dialogs/RuleEditor.js';
 import IconPicker from 'src/dialogs/IconPicker.js';
 
+interface MenuItemWithIconElement {
+	iconEl?: HTMLElement;
+}
+
+interface WorkspaceSplitWithMobileTabs {
+	activeTabSelectEl?: HTMLElement;
+	activeTabIconEl?: HTMLElement;
+	activeTabHeaderEl?: HTMLElement;
+}
+
+interface WorkspaceWithMobileSplits {
+	leftSplit?: WorkspaceSplitWithMobileTabs;
+	rightSplit?: WorkspaceSplitWithMobileTabs;
+}
+
 /**
  * Handles icons in workspace tab headers.
  */
@@ -19,16 +34,15 @@ export default class TabIconManager extends IconManager {
 			const tabs = this.plugin.getTabItems().filter(tab => tab.isRoot);
 			this.plugin.menuManager?.forSection('tablist', (item, i) => {
 				const tab = tabs[i];
-				if (!tab) return;
+				const itemIconEl = (item as typeof item & MenuItemWithIconElement).iconEl;
+				if (!tab || !itemIconEl) return;
 				if (tab.category === 'file') {
 					const rule = this.plugin.ruleManager?.checkRuling('file', tab.id) ?? tab;
 					rule.iconDefault = rule.iconDefault ?? 'lucide-file';
-					// @ts-expect-error (Private API)
-					this.refreshIcon(rule, item.iconEl);
+					this.refreshIcon(rule, itemIconEl);
 				} else {
 					tab.iconDefault = tab.iconDefault ?? 'lucide-file';
-					// @ts-expect-error (Private API)
-					this.refreshIcon(tab, item.iconEl);
+					this.refreshIcon(tab, itemIconEl);
 				}
 			});
 		});
@@ -97,13 +111,13 @@ export default class TabIconManager extends IconManager {
 			const statusEl = tabEl.find(':scope > .workspace-tab-header-inner > .workspace-tab-header-status-container');
 			this.setMutationObserver(statusEl, { childList: true }, mutation => {
 				for (const addedNode of mutation.addedNodes) {
-					if (addedNode instanceof HTMLElement && addedNode.hasClass('mod-pinned')) {
+					if (addedNode.instanceOf(HTMLElement) && addedNode.hasClass('mod-pinned')) {
 						this.refreshIcons();
 						return;
 					}
 				}
 				for (const removedNode of mutation.removedNodes) {
-					if (removedNode instanceof HTMLElement && removedNode.hasClass('mod-pinned')) {
+					if (removedNode.instanceOf(HTMLElement) && removedNode.hasClass('mod-pinned')) {
 						this.refreshIcons();
 						return;
 					}
@@ -112,15 +126,15 @@ export default class TabIconManager extends IconManager {
 
 			// Update mobile sidebars
 			if (Platform.isMobile) {
-				// @ts-expect-error (Private API)
-				this.setEventListener(this.app.workspace.leftSplit.activeTabSelectEl, 'change', () => this.refreshIcons());
-				// @ts-expect-error (Private API)
-				this.setEventListener(this.app.workspace.rightSplit.activeTabSelectEl, 'change', () => this.refreshIcons());
+				const mobileWorkspace = this.app.workspace as unknown as WorkspaceWithMobileSplits;
+				const leftSplit = mobileWorkspace.leftSplit;
+				const rightSplit = mobileWorkspace.rightSplit;
+				if (leftSplit?.activeTabSelectEl) this.setEventListener(leftSplit.activeTabSelectEl, 'change', () => this.refreshIcons());
+				if (rightSplit?.activeTabSelectEl) this.setEventListener(rightSplit.activeTabSelectEl, 'change', () => this.refreshIcons());
 
-				// @ts-expect-error (Private API)
-				if (this.app.workspace.leftSplit.activeTabIconEl === iconEl) {
-					// @ts-expect-error (Private API)
-					const leftActiveTabEl = this.app.workspace.leftSplit.activeTabHeaderEl;
+				if (leftSplit?.activeTabIconEl === iconEl) {
+					const leftActiveTabEl = leftSplit.activeTabHeaderEl;
+					if (!leftActiveTabEl) continue;
 					if (this.plugin.settings.showMenuActions) {
 						this.setEventListener(leftActiveTabEl, 'contextmenu', () => {
 							this.onContextMenu(tab.id, tab.category);
@@ -128,10 +142,9 @@ export default class TabIconManager extends IconManager {
 					} else {
 						this.stopEventListener(leftActiveTabEl, 'contextmenu');
 					}
-					// @ts-expect-error (Private API)
-				} else if (this.app.workspace.rightSplit.activeTabIconEl === iconEl) {
-					// @ts-expect-error (Private API)
-					const rightActiveTabEl = this.app.workspace.rightSplit.activeTabHeaderEl;
+				} else if (rightSplit?.activeTabIconEl === iconEl) {
+					const rightActiveTabEl = rightSplit.activeTabHeaderEl;
+					if (!rightActiveTabEl) continue;
 					if (this.plugin.settings.showMenuActions) {
 						this.setEventListener(rightActiveTabEl, 'contextmenu', () => {
 							this.onContextMenu(tab.id, tab.category);
