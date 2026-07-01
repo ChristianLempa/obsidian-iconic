@@ -1,6 +1,6 @@
 {
 	"name": "better-icons",
-	"version": "0.0.1",
+	"version": "0.0.2",
 	"description": "Better icon customization with Simple Icons and Devicon support.",
 	"main": "main.js",
 	"type": "module",

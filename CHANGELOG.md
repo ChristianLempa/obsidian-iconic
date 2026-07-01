@@ -2,6 +2,8 @@
 
 ## Unreleased
 
+## 0.0.2
+
 - Change `authorUrl` to Christian Lempa's GitHub profile for plugin review compliance.
 - Compress bundled third-party icon data and omit Devicon wordmark variants to keep `main.js` under 5 MB.
 - Replace direct style assignments and document usage with review-friendly APIs.
