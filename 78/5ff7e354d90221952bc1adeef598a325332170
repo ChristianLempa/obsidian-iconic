@@ -1,0 +1,27 @@
+manifest.json
+  s_3a98ccf5f44952::t_3d23f74ee9f15d 4
+CHANGELOG.md
+  s_3a98ccf5f44952::t_76d8659898a479 5-6
+versions.json
+  s_3a98ccf5f44952::t_3d23f74ee9f15d 4-5
+package.json
+  s_3a98ccf5f44952::t_3d23f74ee9f15d 3
+package-lock.json
+  s_3a98ccf5f44952::t_0db88fd490de63 3,9
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.6.8",
+  "base_commit_sha": "785ff7e354d90221952bc1adeef598a325332170",
+  "prompts": {},
+  "sessions": {
+    "s_3a98ccf5f44952": {
+      "agent_id": {
+        "tool": "pi",
+        "id": "019f1d03-ec11-7c27-89ef-d5797fd07d5c",
+        "model": "gpt-5.5"
+      },
+      "human_author": "xcad <christian.lempa@clcreative.de>"
+    }
+  }
+}
