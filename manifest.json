@@ -1,10 +1,10 @@
 {
-	"id": "iconic-custom",
-	"name": "Iconic Custom",
+	"id": "better-icons",
+	"name": "Better Icons",
 	"version": "0.0.1",
 	"minAppVersion": "1.11.0",
-	"description": "Custom fork of Iconic with expanded icon library support for Simple Icons and Devicons.",
+	"description": "Better icon customization with Simple Icons and Devicon support.",
 	"author": "Christian Lempa",
-	"authorUrl": "https://github.com/ChristianLempa/obsidian-iconic",
+	"authorUrl": "https://github.com/ChristianLempa/better-icons",
 	"isDesktopOnly": false
 }

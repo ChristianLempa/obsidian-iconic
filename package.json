@@ -1,7 +1,7 @@
 {
-	"name": "iconic-custom",
+	"name": "better-icons",
 	"version": "0.0.1",
-	"description": "Custom fork of Iconic with expanded icon library support for Simple Icons and Devicons.",
+	"description": "Better icon customization with Simple Icons and Devicon support.",
 	"main": "main.js",
 	"type": "module",
 	"scripts": {

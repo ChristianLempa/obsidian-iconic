@@ -1,13 +1,13 @@
-# Iconic Custom
+# Better Icons
 
-A custom fork of [gfxholo/iconic](https://github.com/gfxholo/iconic) by Christian Lempa. It uses the unique plugin ID `iconic-custom` so it can coexist with the official Iconic plugin.
+A custom fork of [gfxholo/iconic](https://github.com/gfxholo/iconic) by Christian Lempa. It uses the unique plugin ID `better-icons` so it can coexist with the official Iconic plugin.
 
-A plugin for iconophiles, designed to blend seamlessly with vanilla Obsidian.
+A plugin for iconophiles, designed to blend seamlessly with your vault.
 
 **New in this fork:** Expanded icon support beyond Lucide + Emojis, including:
 
 - [Simple Icons](https://simpleicons.org/) (brand/product logos)
-- [Devicons](https://devicon.dev/) (technology & dev tool logos)
+- [Devicon](https://devicon.dev/) (technology & dev tool logos)
 
 Click almost any icon on a tab, sidebar, ribbon, or the title bar to swap in one of the 1,700+ [Lucide icons](https://lucide.dev/) included in the app, or one of the 1,900+ [emojis](https://www.unicode.org/emoji/charts/full-emoji-list.html) that your device supports.
 
@@ -17,16 +17,18 @@ Click almost any icon on a tab, sidebar, ribbon, or the title bar to swap in one
 
 Includes language support for English, Arabic, German, Spanish, French, Indonesian, Japanese, Russian, Ukrainian, and Simplified Chinese. Most of these languages are currently machine-translated, but if you can supply more accurate translations, absolutely send a message or a pull request :)
 
-## Custom Icon Libraries (this fork)
+## Supported icon libraries
 
-This version adds support for additional icon libraries:
+Better Icons currently supports:
 
-- **Simple Icons** — Popular brand and product logos
-- **Devicons** — Popular technology logos (programming languages, frameworks, tools, cloud providers, etc.)
+- **Lucide** — built-in app icons
+- **Emojis** — device-supported emoji glyphs
+- **Simple Icons** — popular brand and product logos
+- **Devicon** — popular technology logos (programming languages, frameworks, tools, cloud providers, etc.)
 
-Icon IDs for new libraries are registered using Obsidian's icon system, so they work everywhere Lucide icons do (including rules and colorization).
+The Simple Icons and Devicon sets are bundled into `main.js`; there are no separate icon-library files to upload to your vault.
 
-> Note: This is an early custom fork release (0.0.1). Icon sets will be expanded iteratively.
+> Note: This is an early release (0.0.1). Icon sets will be expanded iteratively.
 
 ## Supported items
 
@@ -118,7 +120,7 @@ This plugin is released under an [MIT No Attribution](https://choosealicense.com
 ## Attribution & Fork Notice
 
 - Original Iconic plugin: [gfxholo/iconic](https://github.com/gfxholo/iconic) by Holo
-- This is a custom fork by Christian Lempa focused on additional icon libraries (Simple Icons and Devicons).
+- This is a custom fork by Christian Lempa focused on additional icon libraries (Simple Icons and Devicon).
 
 ## Installation
 
@@ -131,7 +133,7 @@ After approval, install from Obsidian's Community Plugins browser.
 Download the latest release and copy these files into:
 
 ```text
-<vault>/.obsidian/plugins/iconic-custom/
+<vault>/.obsidian/plugins/better-icons/
 ```
 
 Required files:
@@ -142,7 +144,7 @@ manifest.json
 styles.css
 ```
 
-Then enable **Iconic Custom** in Obsidian settings.
+Then enable **Better Icons** in Obsidian settings.
 
 ## Development
 
@@ -169,4 +171,4 @@ The release workflow publishes the Obsidian-supported assets:
 - `manifest.json`
 - `styles.css`
 
-> The plugin ID is `iconic-custom` to allow installing this fork alongside the official Iconic plugin.
+> The plugin ID is `better-icons` to allow installing this fork alongside the official Iconic plugin.
