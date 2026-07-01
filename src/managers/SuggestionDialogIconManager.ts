@@ -3,6 +3,10 @@ import IconicPlugin, { Category, PLUGIN_TAB_TYPES } from 'src/IconicPlugin.js';
 import IconManager from 'src/managers/IconManager.js';
 
 type UnknownSuggestModal = SuggestModal<unknown>;
+type OnOpenMethod = (this: UnknownSuggestModal) => void | Promise<void>;
+type SetInstructionsMethod = (this: UnknownSuggestModal, instructions: Instruction[]) => void;
+type RenderSuggestionMethod = (this: UnknownSuggestModal, value: unknown, el: HTMLElement) => void;
+
 type PluginModal = UnknownSuggestModal & { plugin: Plugin };
 interface BookmarkSuggestionBase {
 	type?: Category;
@@ -14,6 +18,10 @@ interface SuggestionDialogValue {
 	item?: unknown;
 }
 
+interface SuggestModalPrototype<T> extends SuggestModal<T> {
+	onOpen: OnOpenMethod;
+	setInstructions: SetInstructionsMethod;
+}
 
 /**
  * Allow type-safe access to a modal.plugin property.
@@ -31,97 +39,103 @@ const MOVE_FILE_DIALOG = 'mfd';
  * Intercepts suggestion dialogs like quick switchers and "Move file" dialogs to add custom icons.
  */
 export default class SuggestionDialogIconManager extends IconManager {
-	private onOpenOriginal: typeof SuggestModal.prototype.onOpen;
-	private onOpenProxy: typeof SuggestModal.prototype.onOpen;
-	private setInstructionsOriginal: typeof SuggestModal.prototype.setInstructions;
-	private setInstructionsProxy: typeof SuggestModal.prototype.setInstructions;
+	private onOpenOriginal: OnOpenMethod;
+	private onOpenProxy: OnOpenMethod;
+	private setInstructionsOriginal: SetInstructionsMethod;
+	private setInstructionsProxy: SetInstructionsMethod;
 
 	constructor(plugin: IconicPlugin) {
 		super(plugin);
-		const manager = this;
+		const suggestPrototype = SuggestModal.prototype as SuggestModalPrototype<unknown>;
 
 		// Store original methods
-		this.onOpenOriginal = SuggestModal.prototype.onOpen;
-		this.setInstructionsOriginal = SuggestModal.prototype.setInstructions;
+		this.onOpenOriginal = suggestPrototype.onOpen;
+		this.setInstructionsOriginal = suggestPrototype.setInstructions;
 
 		// Catch Quick Switcher, Quick Switcher++, and "Move file" dialogs
-		this.onOpenProxy = new Proxy(SuggestModal.prototype.onOpen, {
-			apply(onOpen, modal) {
-				if (manager.isDisabled()) {
-					return onOpen.call(modal);
+		this.onOpenProxy = new Proxy(this.onOpenOriginal, {
+			apply: (onOpen, modal: UnknownSuggestModal, args: []) => {
+				if (this.isDisabled()) {
+					Reflect.apply(onOpen, modal, args);
+					return;
 				}
 
-				const modalType = manager.getModalType(modal);
+				const modalType = this.getModalType(modal);
 				if (!modalType) {
-					return onOpen.call(modal);
+					Reflect.apply(onOpen, modal, args);
+					return;
 				}
 
 				// Proxy renderSuggestion() for each instance
-				modal.renderSuggestion = new Proxy(modal.renderSuggestion, {
-					apply(renderSuggestion, modal: UnknownSuggestModal, args: [unknown, HTMLElement]) {
+				modal.renderSuggestion = new Proxy(modal.renderSuggestion as RenderSuggestionMethod, {
+					apply: (renderSuggestion, renderModal: UnknownSuggestModal, renderArgs: [unknown, HTMLElement]) => {
 						// Call base method first to pre-populate elements
-						const returnValue = renderSuggestion.call(modal, ...args);
+						Reflect.apply(renderSuggestion, renderModal, renderArgs);
 
 						switch (modalType) {
 							case QUICK_SWITCHER: {
-								modal.modalEl.addClass('iconic-prompt');
-								manager.refreshSuggestionIconQS(...args);
+								renderModal.modalEl.addClass('iconic-prompt');
+								this.refreshSuggestionIconQS(...renderArgs);
 								break;
 							}
 							case QUICK_SWITCHER_PP: {
-								modal.modalEl.addClass('iconic-prompt');
-								manager.refreshSuggestionIconQSPP(...args);
+								renderModal.modalEl.addClass('iconic-prompt');
+								this.refreshSuggestionIconQSPP(...renderArgs);
 								break;
 							}
 							case MOVE_FILE_DIALOG: {
-								modal.modalEl.addClass('iconic-prompt');
-								manager.refreshSuggestionIconMFD(...args);
+								renderModal.modalEl.addClass('iconic-prompt');
+								this.refreshSuggestionIconMFD(...renderArgs);
 								break;
 							}
 						}
-
-						return returnValue;
+						return;
 					}
 				});
 
-				return onOpen.call(modal);
+				Reflect.apply(onOpen, modal, args);
+				return;
 			}
 		});
 
-		// Catch Another Quick Switcher, which never call super.onOpen()
-		this.setInstructionsProxy = new Proxy(SuggestModal.prototype.setInstructions, {
-			apply(setInstructions, modal: UnknownSuggestModal, args: [Instruction[]]) {
-				if (manager.isDisabled()) {
-					return setInstructions.call(modal, ...args);
+		// Catch Another Quick Switcher, which never calls super.onOpen()
+		this.setInstructionsProxy = new Proxy(this.setInstructionsOriginal, {
+			apply: (setInstructions, modal: UnknownSuggestModal, args: [Instruction[]]) => {
+				if (this.isDisabled()) {
+					Reflect.apply(setInstructions, modal, args);
+					return;
 				}
 
-				const modalType = manager.getModalType(modal);
+				const modalType = this.getModalType(modal);
 				if (modalType !== ANOTHER_QUICK_SWITCHER) {
-					return setInstructions.call(modal, ...args);
+					Reflect.apply(setInstructions, modal, args);
+					return;
 				}
 
 				// Proxy renderSuggestion() for every instance
-				modal.renderSuggestion = new Proxy(modal.renderSuggestion, {
-					apply(renderSuggestion, modal: UnknownSuggestModal, args: [unknown, HTMLElement]) {
-						if (manager.isDisabled()) {
-							return renderSuggestion.call(modal, ...args);
+				modal.renderSuggestion = new Proxy(modal.renderSuggestion as RenderSuggestionMethod, {
+					apply: (renderSuggestion, renderModal: UnknownSuggestModal, renderArgs: [unknown, HTMLElement]) => {
+						if (this.isDisabled()) {
+							Reflect.apply(renderSuggestion, renderModal, renderArgs);
+							return;
 						}
 						// Call base method first to pre-populate elements
-						const returnValue = renderSuggestion.call(modal, ...args);
-						modal.modalEl.addClass('iconic-another-quick-switcher');
+						Reflect.apply(renderSuggestion, renderModal, renderArgs);
+						renderModal.modalEl.addClass('iconic-another-quick-switcher');
 						// Refresh suggestions
-						manager.refreshSuggestionIconAQS(...args);
-						return returnValue;
+						this.refreshSuggestionIconAQS(...renderArgs);
+						return;
 					}
 				});
 
-				return setInstructions.call(modal, ...args);
+				Reflect.apply(setInstructions, modal, args);
+				return;
 			}
 		});
 
 		// Replace original methods
-		SuggestModal.prototype.onOpen = this.onOpenProxy;
-		SuggestModal.prototype.setInstructions = this.setInstructionsProxy;
+		suggestPrototype.onOpen = this.onOpenProxy;
+		suggestPrototype.setInstructions = this.setInstructionsProxy;
 	}
 
 	/**
@@ -316,11 +330,12 @@ export default class SuggestionDialogIconManager extends IconManager {
 	 */
 	unload(): void {
 		super.unload();
-		if (SuggestModal.prototype.onOpen === this.onOpenProxy) {
-			SuggestModal.prototype.onOpen = this.onOpenOriginal;
+		const suggestPrototype = SuggestModal.prototype as SuggestModalPrototype<unknown>;
+		if (suggestPrototype.onOpen === this.onOpenProxy) {
+			suggestPrototype.onOpen = this.onOpenOriginal;
 		}
-		if (SuggestModal.prototype.setInstructions === this.setInstructionsProxy) {
-			SuggestModal.prototype.setInstructions = this.setInstructionsOriginal;
+		if (suggestPrototype.setInstructions === this.setInstructionsProxy) {
+			suggestPrototype.setInstructions = this.setInstructionsOriginal;
 		}
 	}
 }

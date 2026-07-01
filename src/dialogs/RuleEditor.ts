@@ -1021,12 +1021,13 @@ export default class RuleEditor extends Modal {
 	 * Update number displayed on the matches button.
 	 */
 	private updateMatchesButton(): void {
-		if (!this.matchesButton) return;
+		const matchesButton = this.matchesButton;
+		if (typeof matchesButton === 'undefined') return;
 
 		// Show a loading spinner if check takes longer than 100ms
 		const timeoutId = this.modalEl.win.setTimeout(() => {
 			this.setMatchesButtonLoading(true);
-			this.matchesButton.setDisabled(true);
+			matchesButton.setDisabled(true);
 		}, 100);
 
 		// Update matches
@@ -1038,17 +1039,17 @@ export default class RuleEditor extends Modal {
 
 		// Update button text
 		switch (this.matches.length) {
-			case 0: this.matchesButton.setButtonText(STRINGS.ruleEditor.buttonNoMatches); break;
-			case 1: this.matchesButton.setButtonText(STRINGS.ruleEditor.buttonMatch); break;
+			case 0: matchesButton.setButtonText(STRINGS.ruleEditor.buttonNoMatches); break;
+			case 1: matchesButton.setButtonText(STRINGS.ruleEditor.buttonMatch); break;
 			default: {
-				this.matchesButton.setButtonText(
+				matchesButton.setButtonText(
 					STRINGS.ruleEditor.buttonMatches.replace('{#}', this.matches.length.toString())
 				);
 				break;
 			}
 		}
 		this.setMatchesButtonLoading(false);
-		this.matchesButton.setDisabled(this.matches.length === 0);
+		matchesButton.setDisabled(this.matches.length === 0);
 	}
 
 	private setMatchesButtonLoading(loading: boolean): void {
