@@ -2,6 +2,8 @@
 
 ## Unreleased
 
+## 0.0.4
+
 - Clean up additional Obsidian review warnings in CSS and TypeScript source.
 - Remove broad CSS `:has()` selectors, `!important` declarations, and partially supported multicolumn usage.
 - Replace duplicated dialog hotkey private API access with a typed plugin helper.

@@ -1,7 +1,7 @@
 {
 	"id": "iconic-custom",
 	"name": "Better Icons",
-	"version": "0.0.3",
+	"version": "0.0.4",
 	"minAppVersion": "1.11.0",
 	"description": "Better icon customization with Simple Icons and Devicon support.",
 	"author": "Christian Lempa",
