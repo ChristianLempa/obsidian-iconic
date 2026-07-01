@@ -1,13 +1,24 @@
 import { Instruction, Plugin, SuggestModal, TFile, TFolder, WorkspaceLeaf } from 'obsidian';
-import IconicPlugin, { PLUGIN_TAB_TYPES } from 'src/IconicPlugin.js';
+import IconicPlugin, { Category, PLUGIN_TAB_TYPES } from 'src/IconicPlugin.js';
 import IconManager from 'src/managers/IconManager.js';
 
-type PluginModal = SuggestModal<any> & { plugin: Plugin };
+type UnknownSuggestModal = SuggestModal<unknown>;
+type PluginModal = UnknownSuggestModal & { plugin: Plugin };
+interface BookmarkSuggestionBase {
+	type?: Category;
+	path?: string;
+}
+interface SuggestionDialogValue {
+	type?: string;
+	file?: TFile;
+	item?: unknown;
+}
+
 
 /**
  * Allow type-safe access to a modal.plugin property.
  */
-function isPluginModal(modal: SuggestModal<any>): modal is PluginModal {
+function isPluginModal(modal: UnknownSuggestModal): modal is PluginModal {
 	return (modal as PluginModal).plugin instanceof Plugin;
 }
 
@@ -47,7 +58,7 @@ export default class SuggestionDialogIconManager extends IconManager {
 
 				// Proxy renderSuggestion() for each instance
 				modal.renderSuggestion = new Proxy(modal.renderSuggestion, {
-					apply(renderSuggestion, modal: SuggestModal<any>, args: [any, HTMLElement]) {
+					apply(renderSuggestion, modal: UnknownSuggestModal, args: [unknown, HTMLElement]) {
 						// Call base method first to pre-populate elements
 						const returnValue = renderSuggestion.call(modal, ...args);
 
@@ -79,7 +90,7 @@ export default class SuggestionDialogIconManager extends IconManager {
 
 		// Catch Another Quick Switcher, which never call super.onOpen()
 		this.setInstructionsProxy = new Proxy(SuggestModal.prototype.setInstructions, {
-			apply(setInstructions, modal: SuggestModal<any>, args: [Instruction[]]) {
+			apply(setInstructions, modal: UnknownSuggestModal, args: [Instruction[]]) {
 				if (manager.isDisabled()) {
 					return setInstructions.call(modal, ...args);
 				}
@@ -91,7 +102,7 @@ export default class SuggestionDialogIconManager extends IconManager {
 
 				// Proxy renderSuggestion() for every instance
 				modal.renderSuggestion = new Proxy(modal.renderSuggestion, {
-					apply(renderSuggestion, modal: SuggestModal<any>, args: [any, HTMLElement]) {
+					apply(renderSuggestion, modal: UnknownSuggestModal, args: [unknown, HTMLElement]) {
 						if (manager.isDisabled()) {
 							return renderSuggestion.call(modal, ...args);
 						}
@@ -116,7 +127,7 @@ export default class SuggestionDialogIconManager extends IconManager {
 	/**
 	 * Determine which type of modal this is.
 	 */
-	private getModalType(modal: SuggestModal<any>): string | null {
+	private getModalType(modal: UnknownSuggestModal): string | null {
 		// Check for Another Quick Switcher
 		if (modal.modalEl.hasClass('another-quick-switcher__modal-prompt')) {
 			return ANOTHER_QUICK_SWITCHER;
@@ -143,8 +154,9 @@ export default class SuggestionDialogIconManager extends IconManager {
 	/**
 	 * Refresh icon of a Quick Switcher suggestion.
 	 */
-	private refreshSuggestionIconQS(value: any, el: HTMLElement): void {
-		switch (value?.type) {
+	private refreshSuggestionIconQS(value: unknown, el: HTMLElement): void {
+		if (!this.isSuggestionDialogValue(value)) return;
+		switch (value.type) {
 			case 'alias': // Fallthrough
 			case 'file': {
 				if (value.file instanceof TFile) {
@@ -159,8 +171,8 @@ export default class SuggestionDialogIconManager extends IconManager {
 				break;
 			}
 			case 'bookmark': {
-				const bmarkBase = value.item;
-				if (bmarkBase.type === 'file') {
+				const bmarkBase = this.getBookmarkBase(value.item);
+				if (bmarkBase?.type === 'file' && bmarkBase.path) {
 					const file = this.plugin.getFileItem(bmarkBase.path);
 					const rule = this.plugin.ruleManager?.checkRuling('file', file.id) ?? file;
 					if (rule.icon || rule.color) {
@@ -176,8 +188,9 @@ export default class SuggestionDialogIconManager extends IconManager {
 	/**
 	 * Refresh icon of a Quick Switcher++ suggestion.
 	 */
-	private refreshSuggestionIconQSPP(value: any, el: HTMLElement): void {
-		switch (value?.type) {
+	private refreshSuggestionIconQSPP(value: unknown, el: HTMLElement): void {
+		if (!this.isSuggestionDialogValue(value)) return;
+		switch (value.type) {
 			case 'relatedItemsList': // Fallthrough
 			case 'file': {
 				if (value.file instanceof TFile) {
@@ -192,8 +205,8 @@ export default class SuggestionDialogIconManager extends IconManager {
 				break;
 			}
 			case 'bookmark': {
-				const bmarkBase = value.item;
-				if (bmarkBase.type === 'file' || bmarkBase.type === 'folder') {
+				const bmarkBase = this.getBookmarkBase(value.item);
+				if ((bmarkBase?.type === 'file' || bmarkBase?.type === 'folder') && bmarkBase.path) {
 					const file = this.plugin.getFileItem(bmarkBase.path);
 					const rule = this.plugin.ruleManager?.checkRuling(bmarkBase.type, file.id) ?? file;
 					if (rule.icon || rule.color) {
@@ -235,7 +248,8 @@ export default class SuggestionDialogIconManager extends IconManager {
 	/**
 	 * Refresh icon of Another Quick Switcher suggestion.
 	 */
-	private refreshSuggestionIconAQS(value: any, el: HTMLElement): void {
+	private refreshSuggestionIconAQS(value: unknown, el: HTMLElement): void {
+		if (!this.isSuggestionDialogValue(value)) return;
 		const tFile = value.file;
 		if (!(tFile instanceof TFile)) return;
 
@@ -253,8 +267,9 @@ export default class SuggestionDialogIconManager extends IconManager {
 	/**
 	 * Refresh icon of a "Move file" dialog suggestion.
 	 */
-	private refreshSuggestionIconMFD(value: any, el: HTMLElement): void {
-		const tFolder = value?.item;
+	private refreshSuggestionIconMFD(value: unknown, el: HTMLElement): void {
+		if (!this.isSuggestionDialogValue(value)) return;
+		const tFolder = value.item;
 		if (!(tFolder instanceof TFolder)) return;
 
 		el.addClass('mod-complex');
@@ -274,6 +289,19 @@ export default class SuggestionDialogIconManager extends IconManager {
 			el.prepend(iconEl);
 			this.refreshIcon(rule, iconEl);
 		}
+	}
+
+	private isSuggestionDialogValue(value: unknown): value is SuggestionDialogValue {
+		return value !== null && typeof value === 'object';
+	}
+
+	private getBookmarkBase(item: unknown): BookmarkSuggestionBase | null {
+		if (!item || typeof item !== 'object') return null;
+		const record = item as Record<string, unknown>;
+		return {
+			type: typeof record.type === 'string' ? record.type as Category : undefined,
+			path: typeof record.path === 'string' ? record.path : undefined,
+		};
 	}
 
 	/**

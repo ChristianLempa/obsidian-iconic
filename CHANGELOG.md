@@ -2,6 +2,11 @@
 
 ## Unreleased
 
+## 0.0.3
+
+- Restore the community plugin ID to `iconic-custom` so review releases match the existing plugin listing.
+- Update release metadata and installation docs for the `iconic-custom` plugin ID.
+
 ## 0.0.2
 
 - Change `authorUrl` to Christian Lempa's GitHub profile for plugin review compliance.
@@ -14,7 +19,7 @@
 
 Initial Better Icons release:
 
-- Uses a unique plugin ID (`better-icons`) so it can coexist with the official Iconic plugin.
+- Uses the custom plugin ID (`iconic-custom`) so it can be listed separately from the official Iconic plugin.
 - Adds expanded icon library support for Simple Icons.
 - Adds expanded icon library support for Devicon.
 - Keeps the upstream Iconic behavior for customizing icons and colors from the Obsidian UI.

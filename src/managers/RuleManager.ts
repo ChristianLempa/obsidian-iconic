@@ -1,5 +1,5 @@
 import { TFile } from 'obsidian';
-import IconicPlugin, { Category, Item, FileItem, ICONS, EMOJIS, STRINGS } from 'src/IconicPlugin.js';
+import IconicPlugin, { Category, ConditionBase, Item, FileItem, ICONS, EMOJIS, STRINGS, RuleBase } from 'src/IconicPlugin.js';
 
 const BASE62 = '0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz';
 
@@ -126,7 +126,15 @@ export default class RuleManager {
 	/**
 	 * Create rule definition.
 	 */
-	private defineRule(page: Category, ruleBase: any): RuleItem {
+	private defineRule(page: Category, ruleBase: RuleBase): RuleItem {
+		const match: RuleItem['match'] = ruleBase.match === 'any' || ruleBase.match === 'none'
+			? ruleBase.match
+			: 'all';
+		const conditions = (ruleBase.conditions ?? []).map(condition => ({
+			source: condition.source ?? '',
+			operator: condition.operator ?? '',
+			value: condition.value ?? '',
+		}));
 		return {
 			id: ruleBase.id ?? '0',
 			name: ruleBase.name ?? '',
@@ -134,8 +142,8 @@ export default class RuleManager {
 			iconDefault: this.getPageIcon(page),
 			icon: ruleBase.icon ?? null,
 			color: ruleBase.color ?? null,
-			match: ruleBase.match ?? 'all',
-			conditions: ruleBase.conditions ?? [],
+			match,
+			conditions,
 			enabled: ruleBase.enabled ?? false,
 		}
 	}
@@ -248,7 +256,7 @@ export default class RuleManager {
 		else delete ruleBase.match;
 		if (newRule.conditions.length > 0) {
 			ruleBase.conditions = newRule.conditions.map(({ source, operator, value }) => {
-				const conditionBase: any = {};
+				const conditionBase: ConditionBase = {};
 				if (source) conditionBase.source = source;
 				if (operator) conditionBase.operator = operator;
 				if (value) conditionBase.value = value;
@@ -515,13 +523,16 @@ export default class RuleManager {
 					return this.updateRulings(page);
 				}
 			}
+			break;
 			case 'folder': for (const trigger of triggers) {
 				if (this.folderTriggers.has(trigger)) {
 					return this.updateRulings(page);
 				}
 			}
+			break;
 			default: return false;
 		}
+		return false;
 	}
 
 	/**

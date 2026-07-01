@@ -436,7 +436,7 @@ export default class Strings {
 	 * Dynamically import strings for the current language.
 	 */
 	private static async localize(): Promise<void> {
-		let localizedStrings: any;
+		let localizedStrings: unknown;
 		switch (getLanguage()) {
 			case 'ar': localizedStrings = await import('i18n/ar.json'); break;
 			case 'de': localizedStrings = await import('i18n/de.json'); break;
@@ -450,18 +450,29 @@ export default class Strings {
 			case 'zh': localizedStrings = await import('i18n/zh.json'); break;
 			default: return;
 		}
-		this.localizeDefaultStrings(this, localizedStrings);
+		this.localizeDefaultStrings(this as unknown as Record<string, unknown>, this.getDefaultStrings(localizedStrings));
+	}
+
+	private static getDefaultStrings(module: unknown): Record<string, unknown> {
+		if (module && typeof module === 'object' && 'default' in module) {
+			const defaultExport = (module as { default?: unknown }).default;
+			if (defaultExport && typeof defaultExport === 'object') {
+				return defaultExport as Record<string, unknown>;
+			}
+		}
+		return {};
 	}
 
 	/**
 	 * Replace default strings with localized strings.
 	 * Strings and their keys are always type-safe, even if the localized JSON is incomplete or broken.
 	 */
-	private static localizeDefaultStrings(defaultStrings: any, localizedStrings: any): void {
+	private static localizeDefaultStrings(defaultStrings: Record<string, unknown>, localizedStrings: Record<string, unknown>): void {
 		for (const [key, value] of Object.entries(localizedStrings)) {
-			if (typeof defaultStrings[key] === 'object') {
-				if (typeof value === 'object') {
-					this.localizeDefaultStrings(defaultStrings[key], value);
+			const defaultValue = defaultStrings[key];
+			if (defaultValue && typeof defaultValue === 'object') {
+				if (value && typeof value === 'object') {
+					this.localizeDefaultStrings(defaultValue as Record<string, unknown>, value as Record<string, unknown>);
 				}
 			} else if (typeof value === 'string') {
 				defaultStrings[key] = value;

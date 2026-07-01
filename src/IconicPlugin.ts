@@ -1,4 +1,4 @@
-import { Command, Notice, Platform, Plugin, TAbstractFile, TFile, TFolder, View, WorkspaceFloating, WorkspaceLeaf, WorkspaceRoot, addIcon, getIconIds, getLanguage, normalizePath } from 'obsidian';
+import { Command, Notice, Platform, Plugin, TAbstractFile, TFile, TFolder, View, WorkspaceFloating, WorkspaceLeaf, WorkspaceRoot, getIconIds, getLanguage, normalizePath } from 'obsidian';
 import IconicSettingTab from 'src/IconicSettingTab.js';
 import EMOJIS from 'src/Emojis.js';
 import STRINGS from 'src/Strings.js';
@@ -77,6 +77,87 @@ export interface RibbonItem extends Item {
 	iconEl: HTMLElement | null;
 }
 
+interface IconSetting {
+	icon?: string | null;
+	color?: string | null;
+}
+
+type IconSettingMap = Record<string, IconSetting>;
+
+export interface ConditionBase {
+	source?: string;
+	operator?: string;
+	value?: string;
+}
+
+export interface RuleBase {
+	id?: string;
+	name?: string;
+	icon?: string;
+	color?: string;
+	match?: string;
+	conditions?: ConditionBase[];
+	enabled?: boolean;
+}
+
+interface BookmarkBase {
+	type?: Category;
+	path?: string;
+	subpath?: string;
+	ctime?: string;
+	title?: string;
+	query?: string;
+	url?: string;
+	items?: BookmarkBase[];
+}
+
+interface TagBase {
+	id: string;
+	name: string;
+}
+
+interface PropertyBase {
+	name?: string;
+	widget?: string;
+}
+
+interface MetadataWidget {
+	icon?: string;
+}
+
+interface RibbonItemBase {
+	id?: string;
+	title?: string;
+	icon?: string;
+	hidden?: boolean;
+	buttonEl?: HTMLElement;
+}
+
+interface AppWithInternalPlugins {
+	internalPlugins?: {
+		plugins?: {
+			bookmarks?: {
+				instance?: {
+					items?: BookmarkBase[];
+				};
+			};
+		};
+	};
+}
+
+interface AppWithMetadataTypes {
+	metadataTypeManager?: {
+		properties?: Record<string, PropertyBase>;
+		getWidget?: (type: string) => MetadataWidget | undefined;
+	};
+}
+
+interface WorkspaceWithRibbon {
+	leftRibbon?: {
+		items?: RibbonItemBase[];
+	};
+}
+
 /**
  * Interface for storing plugin settings and user-selected icons.
  */
@@ -108,39 +189,15 @@ interface IconicSettings {
 		emojiMode: boolean;
 		rulePage: Category;
 	},
-	appIcons: Record<string, { icon?: string, color?: string }>;
-	tabIcons: Record<string, { icon?: string, color?: string }>;
-	fileIcons: Record<string, { icon?: string, color?: string }>;
-	bookmarkIcons: Record<string, { icon?: string, color?: string }>;
-	tagIcons: Record<string, { icon?: string, color?: string }>;
-	propertyIcons: Record<string, { icon?: string, color?: string }>;
-	ribbonIcons: Record<string, { icon?: string, color?: string }>;
-	fileRules: Array<{
-		id?: string,
-		name?: string,
-		icon?: string,
-		color?: string,
-		match?: string,
-		conditions?: Array<{
-			source?: string,
-			operator?: string,
-			value?: string,
-		}>,
-		enabled?: boolean,
-	}>;
-	folderRules: Array<{
-		id?: string,
-		name?: string,
-		icon?: string,
-		color?: string,
-		match?: string,
-		conditions?: Array<{
-			source?: string,
-			operator?: string,
-			value?: string,
-		}>,
-		enabled?: boolean,
-	}>;
+	appIcons: IconSettingMap;
+	tabIcons: IconSettingMap;
+	fileIcons: IconSettingMap;
+	bookmarkIcons: IconSettingMap;
+	tagIcons: IconSettingMap;
+	propertyIcons: IconSettingMap;
+	ribbonIcons: IconSettingMap;
+	fileRules: RuleBase[];
+	folderRules: RuleBase[];
 }
 
 const DEFAULT_SETTINGS: IconicSettings = {
@@ -603,7 +660,7 @@ export default class IconicPlugin extends Plugin {
 	/**
 	 * @override
 	 */
-	async onExternalSettingsChange(): Promise<any> {
+	async onExternalSettingsChange(): Promise<void> {
 		await this.loadSettings();
 		this.refreshManagers();
 		this.refreshBody();
@@ -725,7 +782,7 @@ export default class IconicPlugin extends Plugin {
 	 */
 	isPluginEnabled(pluginId: string): boolean {
 		// @ts-expect-error (Private API)
-		return this.app.plugins?.plugins?.hasOwnProperty(pluginId) === true;
+		return Object.prototype.hasOwnProperty.call(this.app.plugins?.plugins ?? {}, pluginId);
 	}
 
 	/**
@@ -961,8 +1018,7 @@ export default class IconicPlugin extends Plugin {
 	 * Get array of bookmark definitions.
 	 */
 	getBookmarkItems(unloading?: boolean): BookmarkItem[] {
-		// @ts-expect-error (Private API)
-		const bmarkBases: any[] = this.app.internalPlugins?.plugins?.bookmarks?.instance?.items ?? [];
+		const bmarkBases = (this.app as unknown as AppWithInternalPlugins).internalPlugins?.plugins?.bookmarks?.instance?.items ?? [];
 		return bmarkBases.map(bmarkBase => this.defineBookmarkItem(bmarkBase, unloading));
 	}
 
@@ -970,8 +1026,8 @@ export default class IconicPlugin extends Plugin {
 	 * Get bookmark definition.
 	 */
 	getBookmarkItem(bmarkId: string, bmarkCategory: Category, unloading?: boolean): BookmarkItem {
-		// @ts-expect-error (Private API)
-		const bmarkBases = this.flattenBookmarks(this.app.internalPlugins?.plugins?.bookmarks?.instance?.items ?? []);
+		const rootBookmarks = (this.app as unknown as AppWithInternalPlugins).internalPlugins?.plugins?.bookmarks?.instance?.items ?? [];
+		const bmarkBases = this.flattenBookmarks(rootBookmarks);
 		const bmarkBase = bmarkBases.find(bmarkBase => {
 			switch (bmarkCategory) {
 				case 'file': // Fallthrough
@@ -985,10 +1041,13 @@ export default class IconicPlugin extends Plugin {
 	/**
 	 * Create bookmark definition.
 	 */
-	private defineBookmarkItem(bmarkBase: any, unloading?: boolean): BookmarkItem {
+	private defineBookmarkItem(bmarkBase: BookmarkBase, unloading?: boolean): BookmarkItem {
 		const { path, filename, basename, extension } = this.splitFilePath(bmarkBase.path);
 		const subpath = bmarkBase.subpath ?? '';
-		let id, name, bmarkIcon, iconDefault = null;
+		let id = '';
+		let name = '';
+		let bmarkIcon: IconSetting = {};
+		let iconDefault: string | null = null;
 
 		switch (bmarkBase.type) {
 			case 'file': {
@@ -1023,8 +1082,8 @@ export default class IconicPlugin extends Plugin {
 				break;
 			}
 			case 'group': {
-				id = bmarkBase.ctime;
-				name = bmarkBase.title;
+				id = bmarkBase.ctime ?? '';
+				name = bmarkBase.title ?? '';
 				bmarkIcon = this.settings.bookmarkIcons[id] ?? {};
 				if (bmarkIcon.color && !this.settings.minimalFolderIcons || this.settings.showAllFolderIcons) {
 					iconDefault = 'lucide-folder-closed';
@@ -1032,22 +1091,22 @@ export default class IconicPlugin extends Plugin {
 				break;
 			}
 			case 'search': {
-				id = bmarkBase.ctime;
-				name = bmarkBase.query;
+				id = bmarkBase.ctime ?? '';
+				name = bmarkBase.query ?? '';
 				bmarkIcon = this.settings.bookmarkIcons[id] ?? {};
 				iconDefault = 'lucide-search';
 				break;
 			}
 			case 'graph': {
-				id = bmarkBase.ctime;
-				name = bmarkBase.title;
+				id = bmarkBase.ctime ?? '';
+				name = bmarkBase.title ?? '';
 				bmarkIcon = this.settings.bookmarkIcons[id] ?? {};
 				iconDefault = 'lucide-git-fork';
 				break;
 			}
 			case 'url': {
-				id = bmarkBase.ctime;
-				name = bmarkBase.url;
+				id = bmarkBase.ctime ?? '';
+				name = bmarkBase.url ?? '';
 				bmarkIcon = this.settings.bookmarkIcons[id] ?? {};
 				iconDefault = 'lucide-globe-2';
 				break;
@@ -1060,15 +1119,15 @@ export default class IconicPlugin extends Plugin {
 			iconDefault: iconDefault,
 			icon: unloading ? null : bmarkIcon?.icon ?? null,
 			color: unloading ? null : bmarkIcon?.color ?? null,
-			items: bmarkBase.items?.map((bmark: any) => this.defineBookmarkItem(bmark, unloading)) ?? null,
+			items: bmarkBase.items?.map(bmark => this.defineBookmarkItem(bmark, unloading)) ?? null,
 		}
 	}
 
 	/**
 	 * Flatten an array of bookmark bases to include all children.
 	 */
-	private flattenBookmarks(bmarkBases: any[]): any[] {
-		const flatArray = [];
+	private flattenBookmarks(bmarkBases: BookmarkBase[]): BookmarkBase[] {
+		const flatArray: BookmarkBase[] = [];
 		for (const bmarkBase of bmarkBases) {
 			flatArray.push(bmarkBase);
 			if (bmarkBase.items) flatArray.push(...this.flattenBookmarks(bmarkBase.items));
@@ -1108,7 +1167,7 @@ export default class IconicPlugin extends Plugin {
 	/**
 	 * Create tag definition.
 	 */
-	private defineTagItem(tagBase: any, unloading?: boolean): TagItem {
+	private defineTagItem(tagBase: TagBase, unloading?: boolean): TagItem {
 		const tagIcon = this.settings.tagIcons[tagBase.id] ?? {};
 
 		return {
@@ -1125,8 +1184,8 @@ export default class IconicPlugin extends Plugin {
 	 * Get array of property definitions.
 	 */
 	getPropertyItems(unloading?: boolean): PropertyItem[] {
-		// @ts-expect-error (Private API)
-		const propBases: any[] = Object.values(this.app.metadataTypeManager?.properties) ?? [];
+		const properties = (this.app as unknown as AppWithMetadataTypes).metadataTypeManager?.properties ?? {};
+		const propBases = Object.values(properties);
 		return propBases.map(propBase => this.definePropertyItem(propBase, unloading));
 	}
 
@@ -1135,24 +1194,24 @@ export default class IconicPlugin extends Plugin {
 	 * @param propId Case-insensitive
 	 */
 	getPropertyItem(propId: string, unloading?: boolean): PropertyItem {
-		// @ts-expect-error (Private API)
-		const propBases: any[] = Object.values(this.app.metadataTypeManager?.properties) ?? [];
-		const propBase = propBases.find(propBase => propBase.name.toLowerCase() === propId.toLowerCase()) ?? {};
+		const properties = (this.app as unknown as AppWithMetadataTypes).metadataTypeManager?.properties ?? {};
+		const propBases = Object.values(properties);
+		const propBase = propBases.find(propBase => propBase.name?.toLowerCase() === propId.toLowerCase()) ?? {};
 		return this.definePropertyItem(propBase, unloading);
 	}
 
 	/**
 	 * Create property definition.
 	 */
-	private definePropertyItem(propBase: any, unloading?: boolean): PropertyItem {
-		const propIcon = this.settings.propertyIcons[propBase.name] ?? {};
-		// @ts-expect-error (Private API)
-		const widget = this.app.metadataTypeManager?.getWidget?.(propBase.widget ?? '');
+	private definePropertyItem(propBase: PropertyBase, unloading?: boolean): PropertyItem {
+		const propId = propBase.name ?? '';
+		const propIcon = this.settings.propertyIcons[propId] ?? {};
+		const widget = (this.app as unknown as AppWithMetadataTypes).metadataTypeManager?.getWidget?.(propBase.widget ?? '');
 		const iconDefault = widget?.icon ?? 'lucide-file-question';
 
 		return {
-			id: propBase.name,
-			name: propBase.name,
+			id: propId,
+			name: propId,
 			category: 'property',
 			iconDefault: iconDefault,
 			icon: unloading ? null : propIcon.icon ?? null,
@@ -1165,8 +1224,7 @@ export default class IconicPlugin extends Plugin {
 	 * Get array of ribbon command definitions.
 	 */
 	getRibbonItems(unloading?: boolean): RibbonItem[] {
-		// @ts-expect-error (Private API)
-		const itemBases: any[] = this.app.workspace.leftRibbon.items ?? [];
+		const itemBases = (this.app.workspace as unknown as WorkspaceWithRibbon).leftRibbon?.items ?? [];
 		return itemBases.map(item => this.defineRibbonItem(item, unloading));
 	}
 
@@ -1174,20 +1232,20 @@ export default class IconicPlugin extends Plugin {
 	 * Get ribbon command definition.
 	 */
 	getRibbonItem(itemId: string, unloading?: boolean): RibbonItem {
-		// @ts-expect-error (Private API)
-		const itemBase: any = this.app.workspace.leftRibbon.items
-			?.find((itemBase: any) => itemBase?.id === itemId) ?? {};
+		const itemBase = (this.app.workspace as unknown as WorkspaceWithRibbon).leftRibbon?.items
+			?.find(itemBase => itemBase.id === itemId) ?? {};
 		return this.defineRibbonItem(itemBase, unloading);
 	}
 
 	/**
 	 * Create ribbon command definition.
 	 */
-	private defineRibbonItem(itemBase: any, unloading?: boolean): RibbonItem {
-		const itemIcon = this.settings.ribbonIcons[itemBase.id] ?? {};
+	private defineRibbonItem(itemBase: RibbonItemBase, unloading?: boolean): RibbonItem {
+		const itemId = itemBase.id ?? '';
+		const itemIcon = this.settings.ribbonIcons[itemId] ?? {};
 		return {
-			id: itemBase.id,
-			name: itemBase.title ?? null,
+			id: itemId,
+			name: itemBase.title ?? '',
 			category: 'ribbon',
 			iconDefault: itemBase.icon ?? null,
 			icon: unloading ? null : itemIcon.icon ?? null,
@@ -1257,6 +1315,7 @@ export default class IconicPlugin extends Plugin {
 				if (icon !== bmarkBase?.icon) triggers.add('icon');
 				if (color !== bmarkBase?.color) triggers.add('color');
 				this.updateIconSetting(this.settings.fileIcons, bmark.id, icon, color);
+				break;
 			}
 			default: {
 				this.updateIconSetting(this.settings.bookmarkIcons, bmark.id, icon, color);
@@ -1283,6 +1342,7 @@ export default class IconicPlugin extends Plugin {
 					if (icon !== bmarkBase?.icon) triggers.add('icon');
 					if (color !== bmarkBase?.color) triggers.add('color');
 					this.updateIconSetting(this.settings.fileIcons, bmark.id, bmark.icon, bmark.color);
+					break;
 				}
 				default: {
 					this.updateIconSetting(this.settings.bookmarkIcons, bmark.id, bmark.icon, bmark.color);
@@ -1334,7 +1394,7 @@ export default class IconicPlugin extends Plugin {
 	/**
 	 * Update icon in a given settings object.
 	 */
-	private updateIconSetting(settings: any, itemId: string, icon: string | null, color: string | null): void {
+	private updateIconSetting(settings: IconSettingMap, itemId: string, icon: string | null, color: string | null): void {
 		if (icon || color) {
 			if (!settings[itemId]) settings[itemId] = {};
 
