@@ -1,13 +1,17 @@
 {
 	"name": "iconic-custom",
 	"version": "0.0.1",
-	"description": "Customized fork of Iconic with expanded icon library support (Simple Icons and Devicons). Private development version.",
+	"description": "Custom fork of Iconic with expanded icon library support for Simple Icons and Devicons.",
 	"main": "main.js",
 	"type": "module",
 	"scripts": {
 		"dev": "node esbuild.config.mjs",
 		"build": "tsc -noEmit -skipLibCheck && node esbuild.config.mjs production",
-		"version": "node version-bump.mjs && git add manifest.json versions.json"
+		"version": "node version-bump.mjs && git add manifest.json versions.json",
+		"typecheck": "tsc -noEmit -skipLibCheck",
+		"ci": "npm run build && npm run version:check",
+		"version:check": "node scripts/check-version.mjs",
+		"release:notes": "node scripts/extract-release-notes.mjs"
 	},
 	"keywords": [
 		"obsidian",
@@ -17,7 +21,7 @@
 		"simple-icons",
 		"devicon"
 	],
-	"author": "Christian Lempa (based on Holo's Iconic)",
+	"author": "Christian Lempa",
 	"license": "MIT-0",
 	"devDependencies": {
 		"@codemirror/language": "^6.12.3",

@@ -17,6 +17,14 @@ main.js
 
 # obsidian
 data.json
+data.json.backup*
+release-notes.md
+
+# Local Obsidian vault symlinks
+/AGENTS.md
+/docs
+/plan
+/obsidian-iconic.md
 
 # Exclude macOS Finder (System Explorer) View States
 .DS_Store

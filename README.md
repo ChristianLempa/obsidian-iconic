@@ -1,6 +1,6 @@
-# Iconic (Custom)
+# Iconic Custom
 
-> **Private customized fork** of [gfxholo/iconic](https://github.com/gfxholo/iconic). Starting at v0.0.1.
+A custom fork of [gfxholo/iconic](https://github.com/gfxholo/iconic) by Christian Lempa. It uses the unique plugin ID `iconic-custom` so it can coexist with the official Iconic plugin.
 
 A plugin for iconophiles, designed to blend seamlessly with vanilla Obsidian.
 
@@ -26,7 +26,7 @@ This version adds support for additional icon libraries:
 
 Icon IDs for new libraries are registered using Obsidian's icon system, so they work everywhere Lucide icons do (including rules and colorization).
 
-> Note: This is an early private development version (0.0.1). Icon sets will be expanded iteratively.
+> Note: This is an early custom fork release (0.0.1). Icon sets will be expanded iteratively.
 
 ## Supported items
 
@@ -118,17 +118,55 @@ This plugin is released under an [MIT No Attribution](https://choosealicense.com
 ## Attribution & Fork Notice
 
 - Original Iconic plugin: [gfxholo/iconic](https://github.com/gfxholo/iconic) by Holo
-- This is a private customized fork by Christian Lempa focused on additional icon libraries (Simple Icons and Devicons).
-- Not intended for public release at this time.
+- This is a custom fork by Christian Lempa focused on additional icon libraries (Simple Icons and Devicons).
 
-## Installing this private version
+## Installation
 
-1. Use [BRAT](https://github.com/TfTHacker/obsidian42-brat) (recommended for private repos):
-   - Add beta plugin: `ChristianLempa/obsidian-iconic-custom`
-   - Or specify the `main` branch.
-2. Or manually:
-   - Build with `npm run build`
-   - Copy `main.js`, `manifest.json`, and `styles.css` to your vault's `.obsidian/plugins/iconic-custom/`
-   - Enable the plugin (ID will be `iconic-custom` so it can coexist with the official Iconic).
+### Community plugins
 
-> The plugin ID is `iconic-custom` to allow testing alongside the official community plugin.
+After approval, install from Obsidian's Community Plugins browser.
+
+### Manual installation
+
+Download the latest release and copy these files into:
+
+```text
+<vault>/.obsidian/plugins/iconic-custom/
+```
+
+Required files:
+
+```text
+main.js
+manifest.json
+styles.css
+```
+
+Then enable **Iconic Custom** in Obsidian settings.
+
+## Development
+
+```bash
+npm ci
+npm run build
+npm run ci
+```
+
+## Release
+
+1. Update `manifest.json`, `package.json`, `versions.json`, and `CHANGELOG.md`.
+2. Run `npm run ci`.
+3. Create and push a matching SemVer tag without a leading `v`, for example:
+
+```bash
+git tag 0.0.1
+git push origin 0.0.1
+```
+
+The release workflow publishes the Obsidian-supported assets:
+
+- `main.js`
+- `manifest.json`
+- `styles.css`
+
+> The plugin ID is `iconic-custom` to allow installing this fork alongside the official Iconic plugin.
