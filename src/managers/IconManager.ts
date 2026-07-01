@@ -39,6 +39,8 @@ export default abstract class IconManager {
 				iconEl.empty();
 				const emojiEl = iconEl.createDiv({ cls: 'iconic-emoji', text: item.icon });
 				if (item.color) IconManager.colorFilter(emojiEl, item.color);
+			} else {
+				setIcon(iconEl, 'lucide-help-circle');
 			}
 			iconEl.show();
 		} else if (iconEl.hasClass('collapse-icon')) {

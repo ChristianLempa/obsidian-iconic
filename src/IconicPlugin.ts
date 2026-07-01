@@ -2,7 +2,7 @@ import { Command, Hotkey, Notice, Platform, Plugin, Scope, TAbstractFile, TFile,
 import IconicSettingTab from 'src/IconicSettingTab.js';
 import EMOJIS from 'src/Emojis.js';
 import STRINGS from 'src/Strings.js';
-import { registerIconLibraries, populateLibraryIcons } from 'src/IconLibraries.js';
+import { registerIconLibraries, populateLibraryIcons, isLibraryIcon } from 'src/IconLibraries.js';
 import MenuManager from 'src/managers/MenuManager.js';
 import RuleManager, { RuleTrigger } from 'src/managers/RuleManager.js';
 import IconManager from 'src/managers/IconManager.js';
@@ -23,6 +23,7 @@ export const ICONS = new Map<string, string>();
 export { EMOJIS };
 export { STRINGS };
 export type Category = 'app' | 'tab' | 'file' | 'folder' | 'group' | 'search' | 'graph' | 'url' | 'tag' | 'property' | 'ribbon' | 'rule';
+export type IconLibraryFilter = 'lucide' | 'devicon' | 'simple' | 'emoji';
 export type AppItemId = 'help' | 'settings' | 'pin' | 'sidebarLeft' | 'sidebarRight' | 'minimize' | 'maximize' | 'unmaximize' | 'close';
 
 // Plugin tabs that contain a file, but should still display a tab-specific icon
@@ -230,6 +231,7 @@ interface IconicSettings {
 	dialogState: {
 		iconMode: boolean;
 		emojiMode: boolean;
+		iconLibrary: IconLibraryFilter;
 		rulePage: Category;
 	},
 	appIcons: IconSettingMap;
@@ -269,6 +271,7 @@ const DEFAULT_SETTINGS: IconicSettings = {
 	dialogState: {
 		iconMode: true,
 		emojiMode: false,
+		iconLibrary: 'lucide',
 		rulePage: 'file',
 	},
 	appIcons: {},
@@ -309,11 +312,11 @@ export default class IconicPlugin extends Plugin {
 		await this.loadSettings();
 		this.addSettingTab(new IconicSettingTab(this));
 
-		// Register additional icon libraries (devicons, simple-icons)
-		registerIconLibraries();
-
-		// Populate custom icons into the ICONS map as early as possible
-		populateLibraryIcons(ICONS);
+		// Register only already-used library icons during startup. The full libraries
+		// are loaded lazily when the picker opens.
+		const usedLibraryIconIds = this.getUsedLibraryIconIds();
+		registerIconLibraries(usedLibraryIconIds);
+		populateLibraryIcons(ICONS, usedLibraryIconIds);
 
 		this.app.workspace.onLayoutReady(() => {
 			// Generate icon names from available icon IDs
@@ -1439,6 +1442,29 @@ export default class IconicPlugin extends Plugin {
 		void this.saveSettings();
 	}
 
+	private getUsedLibraryIconIds(): string[] {
+		const iconIds = new Set<string>();
+		const collect = (icon: string | null | undefined): void => {
+			if (icon && isLibraryIcon(icon)) iconIds.add(icon);
+		};
+
+		for (const iconMap of [
+			this.settings.appIcons,
+			this.settings.tabIcons,
+			this.settings.fileIcons,
+			this.settings.bookmarkIcons,
+			this.settings.tagIcons,
+			this.settings.propertyIcons,
+			this.settings.ribbonIcons,
+		]) {
+			for (const iconSetting of Object.values(iconMap)) collect(iconSetting.icon);
+		}
+		for (const rule of [...this.settings.fileRules, ...this.settings.folderRules]) {
+			collect(rule.icon);
+		}
+		return [...iconIds];
+	}
+
 	/**
 	 * Update icon in a given settings object.
 	 */
@@ -1490,6 +1516,7 @@ export default class IconicPlugin extends Plugin {
 			? loadedData as Partial<IconicSettings>
 			: {};
 		this.settings = Object.assign({}, DEFAULT_SETTINGS, settingsPatch);
+		this.settings.dialogState = Object.assign({}, DEFAULT_SETTINGS.dialogState, settingsPatch.dialogState);
 	}
 
 	/**

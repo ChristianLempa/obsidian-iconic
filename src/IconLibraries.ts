@@ -14,47 +14,67 @@ export interface IconDefinition {
 	library: LibraryId;
 }
 
+let cachedLibraryIcons: IconDefinition[] | null = null;
+let registeredAllLibraryIcons = false;
+const registeredLibraryIconIds = new Set<string>();
+
 function decodeIconData(): SerializedIconDefinition[] {
 	const binary = activeWindow.atob(COMPRESSED_ICON_LIBRARY_DATA);
 	const compressed = Uint8Array.from(binary, (char: string) => char.charCodeAt(0));
 	return JSON.parse(strFromU8(inflateSync(compressed))) as SerializedIconDefinition[];
 }
 
-function iconToSvg(body: string, dimensions: IconDimensions): string {
-	const [left, top, width, height] = dimensions || [0, 0, 16, 16];
-	return `<svg role="img" viewBox="${left} ${top} ${width} ${height}" xmlns="http://www.w3.org/2000/svg" fill="currentColor">${body}</svg>`;
-}
-
 function getLibrary(id: string): LibraryId {
 	return id.startsWith('simple-') ? 'simple' : 'devicon';
 }
 
-const ALL_LIBRARY_ICONS: IconDefinition[] = decodeIconData().map(([id, name, body, dimensions]) => ({
-	id,
-	name,
-	library: getLibrary(id),
-	svg: iconToSvg(body, dimensions),
-}));
+function iconToSvg(id: string, body: string, dimensions: IconDimensions): string {
+	const defaultSize = getLibrary(id) === 'simple' ? 24 : 128;
+	const [left, top, width, height] = dimensions || [0, 0, defaultSize, defaultSize];
+	return `<svg role="img" viewBox="${left} ${top} ${width} ${height}" xmlns="http://www.w3.org/2000/svg" fill="currentColor">${body}</svg>`;
+}
 
-export const SIMPLE_ICONS: IconDefinition[] = ALL_LIBRARY_ICONS.filter(icon => icon.library === 'simple');
-export const DEVICONS: IconDefinition[] = ALL_LIBRARY_ICONS.filter(icon => icon.library === 'devicon');
+function getLibraryIcons(): IconDefinition[] {
+	cachedLibraryIcons ??= decodeIconData().map(([id, name, body, dimensions]) => ({
+		id,
+		name,
+		library: getLibrary(id),
+		svg: iconToSvg(id, body, dimensions),
+	}));
+	return cachedLibraryIcons;
+}
 
-/**
- * Register all additional third-party icon library icons.
- * All SVG data is generated from package data, not hand-written custom SVGs.
- */
-export function registerIconLibraries(): void {
-	for (const icon of ALL_LIBRARY_ICONS) {
-		addIcon(icon.id, icon.svg);
-	}
+function toIdFilter(ids?: Iterable<string>): Set<string> | null {
+	if (!ids) return null;
+	const idSet = new Set([...ids].filter(isLibraryIcon));
+	return idSet.size > 0 ? idSet : null;
 }
 
 /**
- * Populate Iconic's search index with all third-party icon library icons.
+ * Register additional third-party icon library icons.
+ * All SVG data is generated from package data, not hand-written custom SVGs.
  */
-export function populateLibraryIcons(ICONS: Map<string, string>): void {
-	for (const icon of ALL_LIBRARY_ICONS) {
-		ICONS.set(icon.id, icon.name);
+export function registerIconLibraries(ids?: Iterable<string>): void {
+	if (!ids && registeredAllLibraryIcons) return;
+	const idFilter = toIdFilter(ids);
+	if (ids && !idFilter) return;
+	for (const icon of getLibraryIcons()) {
+		if (idFilter && !idFilter.has(icon.id)) continue;
+		if (registeredAllLibraryIcons || registeredLibraryIconIds.has(icon.id)) continue;
+		addIcon(icon.id, icon.svg);
+		registeredLibraryIconIds.add(icon.id);
+	}
+	if (!ids) registeredAllLibraryIcons = true;
+}
+
+/**
+ * Populate Iconic's search index with third-party icon library icons.
+ */
+export function populateLibraryIcons(ICONS: Map<string, string>, ids?: Iterable<string>): void {
+	const idFilter = toIdFilter(ids);
+	if (ids && !idFilter) return;
+	for (const icon of getLibraryIcons()) {
+		if (!idFilter || idFilter.has(icon.id)) ICONS.set(icon.id, icon.name);
 	}
 }
 

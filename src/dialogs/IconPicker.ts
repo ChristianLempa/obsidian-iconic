@@ -1,12 +1,13 @@
-import { ButtonComponent, ColorComponent, ExtraButtonComponent, Menu, Modal, Platform, Setting, TextComponent, displayTooltip, prepareFuzzySearch, setTooltip } from 'obsidian';
-import IconicPlugin, { Category, Item, Icon, ICONS, EMOJIS, STRINGS } from 'src/IconicPlugin.js';
-import { isLibraryIcon } from 'src/IconLibraries.js';
+import { ButtonComponent, ColorComponent, DropdownComponent, ExtraButtonComponent, Menu, Modal, Platform, Setting, TextComponent, displayTooltip, prepareFuzzySearch, setTooltip } from 'obsidian';
+import IconicPlugin, { Category, Item, Icon, IconLibraryFilter, ICONS, EMOJIS, STRINGS } from 'src/IconicPlugin.js';
+import { isLibraryIcon, populateLibraryIcons, registerIconLibraries } from 'src/IconLibraries.js';
 import ColorUtils, { COLORS } from 'src/ColorUtils.js';
 import { RuleItem } from 'src/managers/RuleManager.js';
 import IconManager from 'src/managers/IconManager.js';
 import RuleEditor from 'src/dialogs/RuleEditor.js';
 
 const COLOR_KEYS = [...COLORS.keys()];
+const ICON_LIBRARY_FILTERS: IconLibraryFilter[] = ['lucide', 'devicon', 'simple', 'emoji'];
 
 function isHTMLElement(value: EventTarget | Node | null): value is HTMLElement {
 	return value instanceof Node && value.instanceOf(HTMLElement);
@@ -95,14 +96,14 @@ export default class IconPicker extends Modal {
 	private colorResetButton!: ExtraButtonComponent;
 	private colorPicker!: ColorComponent;
 	private searchField!: TextComponent;
-	private iconModeButton!: ExtraButtonComponent;
-	private emojiModeButton!: ExtraButtonComponent;
-	private mobileModeButton!: ButtonComponent;
+	private libraryDropdown!: DropdownComponent;
 	private colorPickerEl!: HTMLElement;
 
 	// State
 	private colorPickerPaused = false;
 	private colorPickerHovered = false;
+	private selectedIconLibrary: IconLibraryFilter = 'lucide';
+	private readonly initialDialogStateJson: string;
 	private readonly searchResults: [icon: string, iconName: string][] = [];
 
 	private constructor(
@@ -122,6 +123,9 @@ export default class IconPicker extends Modal {
 		}
 		this.callback = callback;
 		this.multiCallback = multiCallback;
+		const iconLibrary = this.plugin.settings.dialogState.iconLibrary;
+		this.selectedIconLibrary = ICON_LIBRARY_FILTERS.includes(iconLibrary) ? iconLibrary : 'lucide';
+		this.initialDialogStateJson = JSON.stringify(this.plugin.settings.dialogState);
 
 		// Allow hotkeys in dialog
 		this.plugin.registerDialogHotkeys(this.scope);
@@ -236,7 +240,10 @@ export default class IconPicker extends Modal {
 	 * @override
 	 */
 	onOpen(): void {
-		const { dialogState } = this.plugin.settings;
+		// Load the full third-party libraries only when the picker is actually used.
+		registerIconLibraries();
+		populateLibraryIcons(ICONS);
+
 		this.containerEl.addClass('mod-confirmation');
 		this.modalEl.addClass('iconic-icon-picker');
 		this.setTitle(this.items.length === 1
@@ -319,6 +326,18 @@ export default class IconPicker extends Modal {
 				.onChange(() => this.updateSearchResults());
 				searchField.inputEl.enterKeyHint = 'go';
 				this.searchField = searchField;
+			})
+			.addDropdown(dropdown => { dropdown
+				.addOption('lucide', STRINGS.iconPicker.libraries.lucide)
+				.addOption('devicon', STRINGS.iconPicker.libraries.devicon)
+				.addOption('simple', STRINGS.iconPicker.libraries.simple)
+				.addOption('emoji', STRINGS.iconPicker.libraries.emoji)
+				.setValue(this.selectedIconLibrary)
+				.onChange(value => {
+					this.selectedIconLibrary = value as IconLibraryFilter;
+					this.updateLibrarySearchMode();
+				});
+				this.libraryDropdown = dropdown;
 			});
 		if (!Platform.isPhone) this.searchSetting.setName(STRINGS.iconPicker.search);
 
@@ -394,52 +413,26 @@ export default class IconPicker extends Modal {
 				);
 		}
 
-		// Auto-select the most useful mode
+		// Auto-select the most useful library
 		if (this.icon) {
 			if (ICONS.has(this.icon)) {
-				dialogState.iconMode = true;
+				if (this.icon.startsWith('devicon-')) {
+					this.selectedIconLibrary = 'devicon';
+				} else if (this.icon.startsWith('simple-')) {
+					this.selectedIconLibrary = 'simple';
+				} else {
+					this.selectedIconLibrary = 'lucide';
+				}
 				this.searchField.setValue(ICONS.get(this.icon) ?? '');
 			} else if (EMOJIS.has(this.icon)) {
-				dialogState.emojiMode = true;
+				this.selectedIconLibrary = 'emoji';
 				this.searchField.setValue(EMOJIS.get(this.icon) ?? '');
 			} else {
 				this.searchField.setValue(this.icon);
 			}
-		} else if (!dialogState.iconMode && !dialogState.emojiMode) {
-			dialogState.iconMode = true;
 		}
-
-		// BUTTONS: Toggle icons & emojis
-		if (Platform.isMobile && buttonRowEl) {
-			this.mobileModeButton = new ButtonComponent(buttonRowEl)
-				.onClick(() => this.toggleMobileSearchMode());
-			this.iconManager.setEventListener(this.mobileModeButton.buttonEl, 'pointerdown', event => {
-				event.preventDefault(); // Prevent focus theft
-			});
-			this.updateMobileSearchMode();
-		} else {
-			this.iconModeButton = new ExtraButtonComponent(buttonContainerEl)
-				.setTooltip(STRINGS.iconPicker.toggleIcons, { placement: 'top', delay: 300 })
-				.onClick(() => {
-					dialogState.iconMode = !dialogState.iconMode;
-					this.updateDesktopSearchMode();
-				});
-			this.iconModeButton.extraSettingsEl.tabIndex = 0;
-			this.emojiModeButton = new ExtraButtonComponent(buttonContainerEl)
-				.setTooltip(STRINGS.iconPicker.toggleEmojis, { placement: 'top', delay: 300 })
-				.onClick(() => {
-					dialogState.emojiMode = !dialogState.emojiMode;
-					this.updateDesktopSearchMode();
-				});
-			this.emojiModeButton.extraSettingsEl.tabIndex = 0;
-			this.iconManager.setEventListener(this.iconModeButton.extraSettingsEl, 'pointerdown', event => {
-				event.preventDefault(); // Prevent focus theft
-			});
-			this.iconManager.setEventListener(this.emojiModeButton.extraSettingsEl, 'pointerdown', event => {
-				event.preventDefault(); // Prevent focus theft
-			});
-			this.updateDesktopSearchMode();
-		}
+		this.libraryDropdown.setValue(this.selectedIconLibrary);
+		this.updateLibrarySearchMode();
 
 		// [Cancel]
 		new ButtonComponent(Platform.isPhone ? this.modalEl : buttonContainerEl)
@@ -536,77 +529,21 @@ export default class IconPicker extends Modal {
 		this.updateSearchResults();
 	}
 
-	private toggleMobileSearchMode(): void {
-		const { dialogState } = this.plugin.settings;
-		if (dialogState.iconMode && dialogState.emojiMode) {
-			dialogState.iconMode = true;
-			dialogState.emojiMode = false;
-		} else if (dialogState.iconMode) {
-			dialogState.iconMode = false;
-			dialogState.emojiMode = true;
-		} else {
-			dialogState.iconMode = true;
-			dialogState.emojiMode = true;
-		}
-
-		this.updateMobileSearchMode();
-	}
-
-	private updateMobileSearchMode(): void {
-		const { dialogState } = this.plugin.settings;
-		if (dialogState.iconMode && dialogState.emojiMode) {
-			this.setTitle(this.items.length === 1
-				? STRINGS.iconPicker.changeMix
-				: STRINGS.iconPicker.changeMixes.replace('{#}', this.items.length.toString())
-			);
-			this.searchField.setPlaceholder(STRINGS.iconPicker.searchMix);
-			this.mobileModeButton?.setButtonText(STRINGS.iconPicker.icons);
-		} else if (dialogState.iconMode) {
-			this.setTitle(this.items.length === 1
-				? STRINGS.iconPicker.changeIcon
-				: STRINGS.iconPicker.changeIcons.replace('{#}', this.items.length.toString())
-			);
-			this.searchField.setPlaceholder(STRINGS.iconPicker.searchIcons);
-			this.mobileModeButton?.setButtonText(STRINGS.iconPicker.emojis);
-		} else {
-			this.setTitle(this.items.length === 1
-				? STRINGS.iconPicker.changeEmoji
-				: STRINGS.iconPicker.changeEmojis.replace('{#}', this.items.length.toString())
-			);
-			this.searchField.setPlaceholder(STRINGS.iconPicker.searchEmojis);
-			this.mobileModeButton?.setButtonText(STRINGS.iconPicker.mixed);
-		}
-
-		this.updateSearchResults();
-	}
-
-	private updateDesktopSearchMode(): void {
-		const { dialogState } = this.plugin.settings;
-		this.iconModeButton.setIcon(dialogState.iconMode ? 'lucide-image' : 'lucide-square');
-		this.emojiModeButton.setIcon(dialogState.emojiMode ? 'lucide-smile' : 'lucide-circle');
-		this.iconModeButton.extraSettingsEl.toggleClass('iconic-mode-selected', dialogState.iconMode);
-		this.emojiModeButton.extraSettingsEl.toggleClass('iconic-mode-selected', dialogState.emojiMode);
-
-		if (dialogState.iconMode && dialogState.emojiMode) {
-			this.setTitle(this.items.length === 1
-				? STRINGS.iconPicker.changeMix
-				: STRINGS.iconPicker.changeMixes.replace('{#}', this.items.length.toString())
-			);
-			this.searchField.setPlaceholder(STRINGS.iconPicker.searchMix);
-		} else if (dialogState.emojiMode) {
-			this.setTitle(this.items.length === 1
-				? STRINGS.iconPicker.changeEmoji
-				: STRINGS.iconPicker.changeEmojis.replace('{#}', this.items.length.toString())
-			);
-			this.searchField.setPlaceholder(STRINGS.iconPicker.searchEmojis);
-		} else {
-			this.setTitle(this.items.length === 1
-				? STRINGS.iconPicker.changeIcon
-				: STRINGS.iconPicker.changeIcons.replace('{#}', this.items.length.toString())
-			);
-			this.searchField.setPlaceholder(STRINGS.iconPicker.searchIcons);
-		}
-
+	private updateLibrarySearchMode(): void {
+		const isEmojiLibrary = this.selectedIconLibrary === 'emoji';
+		this.plugin.settings.dialogState.iconMode = !isEmojiLibrary;
+		this.plugin.settings.dialogState.emojiMode = isEmojiLibrary;
+		this.plugin.settings.dialogState.iconLibrary = this.selectedIconLibrary;
+		this.setTitle(this.items.length === 1
+			? (isEmojiLibrary ? STRINGS.iconPicker.changeEmoji : STRINGS.iconPicker.changeIcon)
+			: (isEmojiLibrary
+				? STRINGS.iconPicker.changeEmojis.replace('{#}', this.items.length.toString())
+				: STRINGS.iconPicker.changeIcons.replace('{#}', this.items.length.toString()))
+		);
+		this.searchField.setPlaceholder(isEmojiLibrary
+			? STRINGS.iconPicker.searchEmojis
+			: STRINGS.iconPicker.searchIcons
+		);
 		this.updateSearchResults();
 	}
 
@@ -642,6 +579,15 @@ export default class IconPicker extends Modal {
 		}
 	}
 
+	private getSearchableIconEntries(): [string, string][] {
+		switch (this.selectedIconLibrary) {
+			case 'lucide': return [...ICONS].filter(([icon]) => !isLibraryIcon(icon));
+			case 'devicon': return [...ICONS].filter(([icon]) => icon.startsWith('devicon-'));
+			case 'simple': return [...ICONS].filter(([icon]) => icon.startsWith('simple-'));
+			case 'emoji': return [...EMOJIS];
+		}
+	}
+
 	/**
 	 * Update search results based on current query.
 	 */
@@ -649,29 +595,12 @@ export default class IconPicker extends Modal {
 		const query = this.searchField.getValue();
 		const fuzzySearch = prepareFuzzySearch(query);
 		const matches: [score: number, iconEntry: [string, string]][] = [];
-		const iconEntries = [
-			...(this.plugin.settings.dialogState.iconMode ? ICONS : []),
-			...(this.plugin.settings.dialogState.emojiMode ? EMOJIS : []),
-		];
+		const iconEntries = this.getSearchableIconEntries();
 
-		// When no query, show a selection of icons so libraries are visible immediately.
-		// Explicitly include icons from devicons / simple-icons.
+		// When no query, show the first icons from the selected library.
 		if (!query) {
 			const limit = Math.min(this.plugin.settings.maxSearchResults || 60, 80);
-			const libraryIcons = iconEntries.filter(([icon]) => 
-				icon.startsWith('devicon-') || icon.startsWith('simple-')
-			);
-			const otherIcons = iconEntries.filter(([icon]) => 
-				!icon.startsWith('devicon-') && !icon.startsWith('simple-')
-			);
-			// Prioritize showing icons from the custom libraries so they are discoverable
-			const libCount = Math.min(libraryIcons.length, Math.floor(limit * 0.55));
-			const otherCount = limit - libCount;
-			const toShow = [
-				...otherIcons.slice(0, otherCount),
-				...libraryIcons.slice(0, libCount),
-			];
-			for (const entry of toShow) {
+			for (const entry of iconEntries.slice(0, limit)) {
 				matches.push([0, entry]);
 			}
 		} else {
@@ -693,30 +622,8 @@ export default class IconPicker extends Modal {
 		// Sort matches by score
 		matches.sort(([scoreA,], [scoreB,]) => scoreA > scoreB ? -1 : +1);
 
-		// For searches: ensure ALL matching icons from the custom libraries (devicons, simple-icons)
-		// are ALWAYS included in the results. They come first. Then fill remaining slots with other matches.
-		let finalResults: [string, string][] = [];
-		if (query) {
-			const libMatches = matches.filter(([, [icon]]) => isLibraryIcon(icon));
-			const nonLibMatches = matches.filter(([, [icon]]) => !isLibraryIcon(icon));
-
-			// Sort each group by score desc
-			libMatches.sort(([a], [b]) => b - a);
-			nonLibMatches.sort(([a], [b]) => b - a);
-
-			// Add ALL library matches first (this is the key: search must find all from libraries)
-			finalResults = libMatches.map(m => m[1]);
-
-			// Then add non-library matches until we hit the limit
-			const max = this.plugin.settings.maxSearchResults || 60;
-			for (const m of nonLibMatches) {
-				if (finalResults.length >= max) break;
-				finalResults.push(m[1]);
-			}
-		} else {
-			// no query case - use the matches we already prepared (mixed)
-			finalResults = matches.map(m => m[1]).slice(0, this.plugin.settings.maxSearchResults || 60);
-		}
+		// Keep rendering bounded even for very broad searches in large libraries.
+		const finalResults = matches.map(m => m[1]).slice(0, this.plugin.settings.maxSearchResults || 60);
 
 		// Copy into searchResults
 		this.searchResults.length = 0;
@@ -850,6 +757,8 @@ export default class IconPicker extends Modal {
 		this.contentEl.empty();
 		this.iconManager.stopEventListeners();
 		this.iconManager.stopMutationObservers();
-		void this.plugin.saveSettings(); // Save any changes to dialogState
+		if (JSON.stringify(this.plugin.settings.dialogState) !== this.initialDialogStateJson) {
+			void this.plugin.saveSettings();
+		}
 	}
 }

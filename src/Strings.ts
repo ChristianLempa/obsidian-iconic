@@ -233,6 +233,12 @@ export default class Strings {
 		resetColor: 'Reset color',
 		toggleIcons: 'Toggle icons',
 		toggleEmojis: 'Toggle emojis',
+		libraries: {
+			lucide: 'Lucide',
+			devicon: 'Devicons',
+			simple: 'Simple Icons',
+			emoji: 'Emojis',
+		},
 		icons: 'Icons',
 		emojis: 'Emojis',
 		mixed: 'Mixed',
