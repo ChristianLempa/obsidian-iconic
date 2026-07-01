@@ -1,0 +1,88 @@
+src/managers/MenuManager.ts
+  s_3a98ccf5f44952::t_1a6dafa0319be8 3-10,71-72
+  s_3a98ccf5f44952::t_03fffb526f469a 107-108
+src/dialogs/RuleEditor.ts
+  s_3a98ccf5f44952::t_bd1e8f755204c6 564,576,588,648,660,665,669,682,1017
+  s_3a98ccf5f44952::t_9b8b264ff88143 873,1023,1028,1050,1054-1055
+  s_3a98ccf5f44952::t_676364d96c7562 490
+  s_3a98ccf5f44952::t_41b0acea2f9685 1056-1057
+src/components/PathComponent.ts
+  s_3a98ccf5f44952::t_bbba921d69f1c8 73-74,81,85
+src/managers/SuggestionIconManager.ts
+  s_3a98ccf5f44952::t_028f5e17060e2c 74,126
+  s_3a98ccf5f44952::t_4396649116a597 19-28,33-34,37-38,54-55,58-59,61-62,70-71,82,90-91,96,106-107,110-111,113-114,122-123,134,142-143,148,265-267,270-272
+src/managers/FileIconManager.ts
+  s_3a98ccf5f44952::t_028f5e17060e2c 54,114
+src/dialogs/UsageChecker.ts
+  s_3a98ccf5f44952::t_676364d96c7562 22
+src/dialogs/RuleChecker.ts
+  s_3a98ccf5f44952::t_676364d96c7562 21
+src/managers/AppIconManager.ts
+  s_3a98ccf5f44952::t_a7451813ac4c34 15-24,213-214
+styles.css
+  s_3a98ccf5f44952::t_df5a24dc83e6cc 262,265,305,310-312,316,527,530,534
+src/dialogs/IconPicker.ts
+  s_3a98ccf5f44952::t_676364d96c7562 1,127
+  s_3a98ccf5f44952::t_35da2191a2e616 13,15-18,491-492
+  s_3a98ccf5f44952::t_4f69a7ea72e00b 173,760
+  s_3a98ccf5f44952::t_bfcd0135a69fe8 358-362
+  s_3a98ccf5f44952::t_67c69e1ccbec4b 11-12
+  s_3a98ccf5f44952::t_f61d74f4ecd7ff 14
+  s_3a98ccf5f44952::t_10858d31f1ff7e 144,183,212
+src/managers/PropertyIconManager.ts
+  s_3a98ccf5f44952::t_028f5e17060e2c 33,50,110
+  s_3a98ccf5f44952::t_dc4adc36f6f920 123-124
+src/IconicSettingTab.ts
+  s_3a98ccf5f44952::t_206e4454fe590e 6-12,51,456
+  s_3a98ccf5f44952::t_e8022d5b444aa8 43,58,82,117,131,145,159,177,191,209,223,236,249,266,289,313,328,352,380,394,408,422,436,448,455,457
+src/managers/EditorIconManager.ts
+  s_3a98ccf5f44952::t_d702cf4f792e6f 10-18,108,208,229-230,232,335,358
+  s_3a98ccf5f44952::t_1cfa0bd5f94899 19-22,392
+  s_3a98ccf5f44952::t_4f69a7ea72e00b 149,170
+  s_3a98ccf5f44952::t_216b195f3a33cc 210,212
+  s_3a98ccf5f44952::t_028f5e17060e2c 48,50,133,138
+src/IconicPlugin.ts
+  s_3a98ccf5f44952::t_62a9d6aa476e24 1,161-180,186-202
+  s_3a98ccf5f44952::t_f57d0a3cc2a576 783-798
+  s_3a98ccf5f44952::t_0009a9276224f9 181-184,1192,1207
+  s_3a98ccf5f44952::t_a08a327286e131 957,979
+  s_3a98ccf5f44952::t_e219e3ebc2ff76 185,934
+  s_3a98ccf5f44952::t_9404adabf69ba7 807-808,821,842,922-924,926-929,937,1473-1478,1488-1492
+  s_3a98ccf5f44952::t_100692769430ca 203
+  s_3a98ccf5f44952::t_b224868dd4c490 782
+src/managers/BookmarkIconManager.ts
+  s_3a98ccf5f44952::t_028f5e17060e2c 50,59,109
+src/components/RuleSetting.ts
+  s_3a98ccf5f44952::t_68437a2f078762 253
+src/dialogs/RulePicker.ts
+  s_3a98ccf5f44952::t_676364d96c7562 66
+src/managers/RibbonIconManager.ts
+  s_3a98ccf5f44952::t_c56727f9160f3b 7-26,35-36,53-54,56,82,85,92-93,142
+  s_3a98ccf5f44952::t_028f5e17060e2c 66
+src/managers/TagIconManager.ts
+  s_3a98ccf5f44952::t_028f5e17060e2c 39
+src/managers/RuleManager.ts
+  s_3a98ccf5f44952::t_ca87461b33c91c 20-21,586,595-596,598,622-623,953-964
+  s_3a98ccf5f44952::t_3787e407de04ba 965
+CHANGELOG.md
+  s_3a98ccf5f44952::t_98c2cbd2f4c95e 5-8
+src/managers/TabIconManager.ts
+  s_3a98ccf5f44952::t_028f5e17060e2c 114,120
+  s_3a98ccf5f44952::t_128bee7a1d3ddd 7-21,37-38,42,45,129-133,135-137,145-147
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.6.8",
+  "base_commit_sha": "313343888956319be113f6fe567187100a037827",
+  "prompts": {},
+  "sessions": {
+    "s_3a98ccf5f44952": {
+      "agent_id": {
+        "tool": "pi",
+        "id": "019f1d03-ec11-7c27-89ef-d5797fd07d5c",
+        "model": "gpt-5.5"
+      },
+      "human_author": "xcad <christian.lempa@clcreative.de>"
+    }
+  }
+}
