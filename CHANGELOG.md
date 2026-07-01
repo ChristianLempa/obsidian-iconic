@@ -2,6 +2,10 @@
 
 ## Unreleased
 
+## 0.0.5
+
+- Fix remaining source review warnings around proxy typing, unbound methods, `this` aliasing, and RuleEditor promise-like condition checks.
+
 ## 0.0.4
 
 - Clean up additional Obsidian review warnings in CSS and TypeScript source.
